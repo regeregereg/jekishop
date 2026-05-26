@@ -3343,34 +3343,44 @@ if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
   st.textContent = '#galleryOuter::-webkit-scrollbar{display:none}';
   document.head.appendChild(st);
 
-  let isDown = false, startX = 0, baseScroll = 0, velX = 0, lastX = 0, lastT = 0, rafId;
+  let isDown = false, startX = 0, startY = 0, baseScroll = 0;
+  let velX = 0, lastX = 0, lastT = 0, rafId, lockAxis = null;
 
   outer.addEventListener('pointerdown', e => {
     cancelAnimationFrame(rafId);
     isDown     = true;
     startX     = e.clientX;
+    startY     = e.clientY;
     baseScroll = outer.scrollLeft;
     lastX      = e.clientX;
     lastT      = performance.now();
     velX       = 0;
-    outer.setPointerCapture(e.pointerId);
+    lockAxis   = null;
     outer.style.cursor = 'grabbing';
-    e.preventDefault();
   });
 
   outer.addEventListener('pointermove', e => {
     if (!isDown) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+
+    if (!lockAxis && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
+      lockAxis = Math.abs(dx) >= Math.abs(dy) ? 'h' : 'v';
+      if (lockAxis === 'h') outer.setPointerCapture(e.pointerId);
+    }
+    if (lockAxis !== 'h') return;
+
     const now = performance.now();
     velX = (e.clientX - lastX) / Math.max(now - lastT, 1);
     lastX = e.clientX; lastT = now;
-    outer.scrollLeft = baseScroll - (e.clientX - startX);
-  });
+    outer.scrollLeft = baseScroll - dx;
+    e.preventDefault();
+  }, { passive: false });
 
   function release() {
     if (!isDown) return;
-    isDown = false;
+    isDown = false; lockAxis = null;
     outer.style.cursor = 'grab';
-    /* Momentum inertia */
     const decel = 0.94;
     let v = -velX * 18;
     function coast() {
@@ -3385,7 +3395,6 @@ if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
 
   outer.addEventListener('pointerup',     release);
   outer.addEventListener('pointercancel', release);
-  outer.addEventListener('touchmove', e => { if (isDown) e.preventDefault(); }, { passive: false });
 
   function updateDots() {
     const max = outer.scrollWidth - outer.clientWidth;
@@ -3503,34 +3512,46 @@ document.getElementById('m1').checked = true;
     rafId = requestAnimationFrame(autoLoop);
 
     /* Drag */
+    let startY = 0, lockAxis = null; /* null | 'h' | 'v' */
+
     wrapEl.addEventListener('pointerdown', e => {
       isDown     = true;
       startX     = e.clientX;
+      startY     = e.clientY;
       baseScroll = wrapEl.scrollLeft;
       lastX      = e.clientX; lastT = performance.now(); velX = 0;
-      wrapEl.setPointerCapture(e.pointerId);
+      lockAxis   = null;
       wrapEl.style.cursor = 'grabbing';
-      e.preventDefault();
+      /* Jangan preventDefault di sini — biarkan browser tentukan arah dulu */
     });
 
     wrapEl.addEventListener('pointermove', e => {
       if (!isDown) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+
+      /* Tentukan axis setelah gerakan minimal 6px */
+      if (!lockAxis && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
+        lockAxis = Math.abs(dx) >= Math.abs(dy) ? 'h' : 'v';
+        if (lockAxis === 'h') wrapEl.setPointerCapture(e.pointerId);
+      }
+      if (lockAxis !== 'h') return; /* vertical — biarkan halaman scroll */
+
       const now = performance.now();
       velX  = (e.clientX - lastX) / Math.max(now - lastT, 1);
       lastX = e.clientX; lastT = now;
-      wrapEl.scrollLeft = baseScroll - (e.clientX - startX);
-      /* Jaga infinite range */
+      wrapEl.scrollLeft = baseScroll - dx;
       const total = marqueeEl.scrollWidth, set = total / 3;
       if (wrapEl.scrollLeft < set * 0.5)  wrapEl.scrollLeft += set;
       if (wrapEl.scrollLeft > set * 2.5)  wrapEl.scrollLeft -= set;
       e.preventDefault();
-    });
+    }, { passive: false });
 
     function release() {
       if (!isDown) return;
       isDown = false;
+      lockAxis = null;
       wrapEl.style.cursor = 'grab';
-      /* Momentum singkat */
       let v = -velX * 10;
       const decel = 0.88;
       function coast() {
@@ -3547,7 +3568,6 @@ document.getElementById('m1').checked = true;
 
     wrapEl.addEventListener('pointerup',     release);
     wrapEl.addEventListener('pointercancel', release);
-    wrapEl.addEventListener('touchmove', e => { if (isDown) e.preventDefault(); }, { passive: false });
 
     /* Pause saat hover (opsional — bisa dihapus kalau tidak mau) */
     wrapEl.addEventListener('mouseenter', () => { paused = true; });
