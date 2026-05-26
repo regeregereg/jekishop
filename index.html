@@ -1736,17 +1736,22 @@ footer {
 }
 .trust-item:hover .trust-num { transform: scale(1.18) translateY(-2px); color: #c4ff62; }
 
-/* Trust bar — subtle entrance slide from bottom */
+/* Trust bar — entrance slide, triggered via JS class .trust-bar-visible */
 @keyframes trustSlide {
   from { opacity:0; transform:translateY(16px); }
   to   { opacity:1; transform:translateY(0); }
 }
-.trust-item { animation: trustSlide 0.6s cubic-bezier(.22,.68,0,1.1) both; }
-.trust-item:nth-child(1) { animation-delay: 0.05s; }
-.trust-item:nth-child(3) { animation-delay: 0.15s; }
-.trust-item:nth-child(5) { animation-delay: 0.25s; }
-.trust-item:nth-child(7) { animation-delay: 0.35s; }
-.trust-item:nth-child(9) { animation-delay: 0.45s; }
+/* Default: tampil normal tanpa animasi (fallback jika JS tidak jalan) */
+.trust-item { opacity: 1; transform: translateY(0); }
+/* Saat JS aktif → sembunyikan dulu */
+.trust-bar.trust-bar-js .trust-item { opacity: 0; transform: translateY(16px); }
+/* Saat masuk viewport → trigger animasi */
+.trust-bar.trust-bar-visible .trust-item { animation: trustSlide 0.6s cubic-bezier(.22,.68,0,1.1) both; }
+.trust-bar.trust-bar-visible .trust-item:nth-child(1) { animation-delay: 0.05s; }
+.trust-bar.trust-bar-visible .trust-item:nth-child(3) { animation-delay: 0.15s; }
+.trust-bar.trust-bar-visible .trust-item:nth-child(5) { animation-delay: 0.25s; }
+.trust-bar.trust-bar-visible .trust-item:nth-child(7) { animation-delay: 0.35s; }
+.trust-bar.trust-bar-visible .trust-item:nth-child(9) { animation-delay: 0.45s; }
 
 /* Testi cards — elastic lift */
 .testi-card {
@@ -3641,9 +3646,9 @@ function floatNavClick(e, target) {
 }
 
 /* ══════════════════════════════════════
-   TRUST BAR COUNTER
-   Safely skips text-only items like "08–22", "Garansi", "< 1 Jam"
-   Only counts items that START with a digit
+   TRUST BAR COUNTER + SLIDE
+   Semua dikontrol JS — tidak ada CSS auto-play.
+   Threshold rendah (0.25) supaya work di semua ukuran layar mobile.
 ══════════════════════════════════════ */
 function animateCount(el) {
   const raw = el.textContent.trim();
@@ -3674,16 +3679,33 @@ function animateCount(el) {
   requestAnimationFrame(tick);
 }
 
-const counterObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.querySelectorAll('.trust-num').forEach(animateCount);
-      counterObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.6 });
 const trustBar = document.querySelector('.trust-bar');
-if (trustBar) counterObs.observe(trustBar);
+if (trustBar) {
+  /* Tandai bahwa JS aktif → CSS akan sembunyikan item dulu */
+  trustBar.classList.add('trust-bar-js');
+
+  /* Cek apakah trust bar sudah di viewport SEKARANG
+     (kasus: refresh saat sudah scroll ke bawah) */
+  const rect = trustBar.getBoundingClientRect();
+  const alreadyVisible = rect.top < window.innerHeight && rect.bottom > 0;
+
+  if (alreadyVisible) {
+    /* Langsung trigger tanpa observer */
+    trustBar.classList.add('trust-bar-visible');
+    trustBar.querySelectorAll('.trust-num').forEach(animateCount);
+  } else {
+    const counterObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          trustBar.classList.add('trust-bar-visible');
+          e.target.querySelectorAll('.trust-num').forEach(animateCount);
+          counterObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.25, rootMargin: '0px 0px -40px 0px' });
+    counterObs.observe(trustBar);
+  }
+}
 
 /* ══════════════════════════════════════
    HERO SPARKLES — lightweight canvas
