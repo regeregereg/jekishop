@@ -205,31 +205,58 @@ a { color: inherit; text-decoration: none; }
 .reveal.visible { opacity: 1; transform: none; }
 
 /* ═══════════════════════════════════════
-   NAVBAR
+   NAVBAR — Pill floating style
 ═══════════════════════════════════════ */
-nav {
+nav:not(.float-nav) {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 200;
-  padding: 0 60px;
-  height: 68px;
+  padding: 14px 24px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  pointer-events: none;
+}
+
+/* The pill container */
+.nav-pill {
+  display: flex;
+  align-items: center;
+  gap: 0;
   background: rgba(250,250,248,0.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 6px 6px 6px 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07), 0 8px 32px rgba(0,0,0,0.06);
+  pointer-events: all;
+  transition: box-shadow 0.32s ease, background 0.32s;
+  width: max-content;
+  max-width: calc(100vw - 48px);
+}
+
+nav:not(.float-nav).scrolled .nav-pill {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 12px 40px rgba(0,0,0,0.08);
+  background: rgba(250,250,248,0.99);
+  border-color: var(--border-dark);
 }
 
 .nav-logo {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 800;
   color: var(--ink);
   letter-spacing: -0.04em;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
+  flex-shrink: 0;
 }
 
 .nav-logo .logo-dot {
@@ -238,6 +265,7 @@ nav {
   border-radius: 50%;
   border: 2px solid var(--black);
   animation: blink 2.2s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
 @keyframes blink {
@@ -245,33 +273,58 @@ nav {
   50%      { opacity:0.5; transform:scale(0.75); }
 }
 
+.nav-divider-v {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 16px;
+  flex-shrink: 0;
+}
+
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 36px;
+  gap: 4px;
   list-style: none;
 }
 
 .nav-menu a {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: var(--ink-mid);
   letter-spacing: -0.01em;
-  transition: color 0.18s;
+  transition: color 0.18s, background 0.18s;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
 }
 
-.nav-menu a:hover { color: var(--ink); }
+.nav-menu a:hover {
+  color: var(--ink);
+  background: var(--surface-2);
+}
 
+/* CTA button — pill hitam dengan teks hijau */
 .nav-cta {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
   background: var(--black) !important;
   color: var(--green) !important;
-  padding: 9px 20px !important;
+  padding: 9px 18px !important;
   border-radius: var(--radius-pill) !important;
   font-size: 0.8125rem !important;
   font-weight: 700 !important;
+  letter-spacing: -0.01em;
+  transition: opacity 0.2s, transform 0.2s !important;
+  margin-left: 8px;
+  flex-shrink: 0;
 }
 
-.nav-cta:hover { opacity: 0.88; }
+.nav-cta:hover {
+  opacity: 0.88 !important;
+  background: var(--surface-2) !important;
+  color: var(--ink) !important;
+}
 
 /* ═══════════════════════════════════════
    HERO
@@ -1787,12 +1840,8 @@ footer {
 }
 
 /* Nav shrink on scroll — top nav only */
-nav:not(.float-nav) { transition: height 0.32s cubic-bezier(.22,.68,0,1), box-shadow 0.32s, background 0.32s; }
-nav:not(.float-nav).scrolled {
-  height: 54px;
-  box-shadow: 0 2px 24px rgba(0,0,0,0.08);
-  background: rgba(250,250,248,0.98);
-}
+/* nav wrapper transition disabled — pill handles its own transition */
+/* nav wrapper scroll state removed — pill handles it */
 
 /* Bottom padding so pill nav never covers footer content — mobile only */
 @media (max-width: 960px) {
@@ -1800,18 +1849,8 @@ nav:not(.float-nav).scrolled {
 }
 
 /* Nav links — underline grow from center */
-.nav-menu a { position: relative; }
-.nav-menu a:not(.nav-cta)::after {
-  content: '';
-  position: absolute;
-  bottom: -3px;
-  left: 50%; right: 50%;
-  height: 2px;
-  background: var(--green-deep);
-  border-radius: 2px;
-  transition: left 0.28s cubic-bezier(.22,.68,0,1.2), right 0.28s cubic-bezier(.22,.68,0,1.2);
-}
-.nav-menu a:not(.nav-cta):hover::after { left: 0; right: 0; }
+/* nav underline disabled — using bg highlight instead */
+.nav-menu a:not(.nav-cta)::after { display: none; }
 
 /* Hero entrance — staggered spring */
 .anim { opacity: 0; animation: fadeUp 0.72s cubic-bezier(.22,.68,0,1.2) forwards; }
@@ -1923,6 +1962,23 @@ nav:not(.float-nav).scrolled {
   will-change: transform;
   transition: none;
 }
+
+/* Gallery marquee track */
+.gallery-marquee {
+  display: inline-flex;
+  gap: 20px;
+  padding: 24px 40px;
+  white-space: nowrap;
+  align-items: flex-end;
+  will-change: scroll-position;
+}
+
+.gallery-marquee .gallery-item {
+  flex-shrink: 0;
+  white-space: normal;
+  /* Keep hover effects */
+}
+
 
 .gallery-item {
   flex-shrink: 0;
@@ -2357,17 +2413,20 @@ nav:not(.float-nav).scrolled {
 
 <!-- ══ NAVBAR ══ -->
 <nav>
-  <div class="nav-logo">
-    <div class="logo-dot"></div>
-    JekiStore
+  <div class="nav-pill">
+    <div class="nav-logo">
+      <div class="logo-dot"></div>
+      JekiStore
+    </div>
+    <div class="nav-divider-v"></div>
+    <ul class="nav-menu">
+      <li><a href="#produk">Produk</a></li>
+      <li><a href="#method">Method</a></li>
+      <li><a href="#testi">Testimoni</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="#order" class="nav-cta">Order Sekarang →</a>
   </div>
-  <ul class="nav-menu">
-    <li><a href="#produk">Produk</a></li>
-    <li><a href="#method">Method</a></li>
-    <li><a href="#testi">Testimoni</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#order" class="nav-cta">Order Sekarang →</a></li>
-  </ul>
 </nav>
 
 <!-- ══ HERO ══ -->
@@ -2897,113 +2956,74 @@ nav:not(.float-nav).scrolled {
     </div>
   </div>
 
-  <!-- SLIDER -->
-  <div class="gallery-slider-outer" id="galleryOuter">
-    <div class="gallery-slider" id="gallerySlider">
+  <!-- MARQUEE GALERI -->
+  <div class="testi-marquee-wrap" id="galleryMarqueeWrap">
+    <div class="gallery-marquee" id="galleryMarquee">
 
-      <!-- Card 1 -->
-      <div class="gallery-item featured reveal">
+      <div class="gallery-item featured">
         <div class="gallery-badge">Pelanggan ⭐</div>
-        <img class="gallery-img" src="testigaleri/1.webp" alt="Testimoni Pelanggan 1" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img class="gallery-img" src="testigaleri/1.webp" alt="Testimoni 1" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="gallery-placeholder" style="display:none"><i class="bi bi-image"></i><span>Testi 1</span></div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div>
-        </div>
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div></div>
       </div>
 
-      <!-- Card 2 -->
-      <div class="gallery-item portrait reveal">
-        <img class="gallery-img" src="testigaleri/2.webp" alt="Testimoni Pelanggan 2" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="gallery-item portrait">
+        <img class="gallery-img" src="testigaleri/2.webp" alt="Testimoni 2" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="gallery-placeholder" style="display:none"><i class="bi bi-image"></i><span>Testi 2</span></div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div>
-        </div>
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div></div>
       </div>
 
-      <!-- Card 3 -->
-      <div class="gallery-item reveal">
-        <img class="gallery-img" src="testigaleri/3.webp" alt="Testimoni Pelanggan 3" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="gallery-item">
+        <img class="gallery-img" src="testigaleri/3.webp" alt="Testimoni 3" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="gallery-placeholder" style="display:none"><i class="bi bi-image"></i><span>Testi 3</span></div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div>
-        </div>
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div></div>
       </div>
 
-      <!-- Card 4 -->
-      <div class="gallery-item portrait reveal">
+      <div class="gallery-item portrait">
         <div class="gallery-badge">Pelanggan ⭐</div>
-        <img class="gallery-img" src="testigaleri/4.webp" alt="Testimoni Pelanggan 4" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img class="gallery-img" src="testigaleri/4.webp" alt="Testimoni 4" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="gallery-placeholder" style="display:none"><i class="bi bi-image"></i><span>Testi 4</span></div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div>
-        </div>
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div></div>
       </div>
 
-      <!-- Card 5 -->
-      <div class="gallery-item reveal">
-        <img class="gallery-img" src="testigaleri/5.webp" alt="Testimoni Pelanggan 5" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="gallery-item">
+        <img class="gallery-img" src="testigaleri/5.webp" alt="Testimoni 5" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="gallery-placeholder" style="display:none"><i class="bi bi-image"></i><span>Testi 5</span></div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div>
-        </div>
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div></div>
       </div>
 
-      <!-- Card 6 -->
-      <div class="gallery-item portrait reveal">
-        <img class="gallery-img" src="testigaleri/6.webp" alt="Testimoni Pelanggan 6" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="gallery-item portrait">
+        <img class="gallery-img" src="testigaleri/6.webp" alt="Testimoni 6" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="gallery-placeholder" style="display:none"><i class="bi bi-image"></i><span>Testi 6</span></div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div>
-        </div>
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div></div>
       </div>
 
-      <!-- Card 7 -->
-      <div class="gallery-item featured reveal">
+      <div class="gallery-item featured">
         <div class="gallery-badge">Pelanggan ⭐</div>
-        <img class="gallery-img" src="testigaleri/7.webp" alt="Testimoni Pelanggan 7" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img class="gallery-img" src="testigaleri/7.webp" alt="Testimoni 7" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="gallery-placeholder" style="display:none"><i class="bi bi-image"></i><span>Testi 7</span></div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div>
-        </div>
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div></div>
       </div>
 
-      <!-- Card 8 landscape -->
-      <div class="gallery-item landscape reveal">
-        <img class="gallery-img" src="testigaleri/8.webp" alt="Testimoni Pelanggan 8" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="gallery-item landscape">
+        <img class="gallery-img" src="testigaleri/8.webp" alt="Testimoni 8" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="gallery-placeholder" style="display:none"><i class="bi bi-image"></i><span>Testi 8</span></div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div>
-        </div>
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div></div>
       </div>
 
-      <!-- Card 9 -->
-      <div class="gallery-item reveal">
-        <img class="gallery-img" src="testigaleri/9.webp" alt="Testimoni Pelanggan 9" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="gallery-item">
+        <img class="gallery-img" src="testigaleri/9.webp" alt="Testimoni 9" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="gallery-placeholder" style="display:none"><i class="bi bi-image"></i><span>Testi 9</span></div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div>
-        </div>
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div></div>
       </div>
 
-      <!-- Card 10 -->
-      <div class="gallery-item portrait reveal">
-        <img class="gallery-img" src="testigaleri/10.webp" alt="Testimoni Pelanggan 10" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="gallery-item portrait">
+        <img class="gallery-img" src="testigaleri/10.webp" alt="Testimoni 10" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="gallery-placeholder" style="display:none"><i class="bi bi-image"></i><span>Testi 10</span></div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div>
-        </div>
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div></div>
       </div>
 
-    </div><!-- /slider -->
-  </div><!-- /outer -->
-
-  <!-- Dots -->
-  <div class="gallery-dots" id="galleryDots">
-    <button class="gallery-dot active"></button>
-    <button class="gallery-dot"></button>
-    <button class="gallery-dot"></button>
-    <button class="gallery-dot"></button>
-    <button class="gallery-dot"></button>
+    </div>
   </div>
 
   <!-- CTA -->
@@ -3484,93 +3504,109 @@ if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
 }
 
 /* ══════════════════════════════════════
-   GALERI PELANGGAN — Drag / Swipe Slider
+   GALERI PELANGGAN — Infinite Marquee
 ══════════════════════════════════════ */
-(function initGallery() {
-  const outer = document.getElementById('galleryOuter');
-  const dots  = document.querySelectorAll('.gallery-dot');
-  if (!outer) return;
+(function initGalleryMarquee() {
+  const wrap = document.getElementById('galleryMarqueeWrap');
+  const marquee = document.getElementById('galleryMarquee');
+  if (!wrap || !marquee) return;
 
-  /* Aktifkan scroll horizontal */
-  outer.style.overflowX        = 'auto';
-  outer.style.overflowY        = 'hidden';
-  outer.style.scrollbarWidth   = 'none';
-  outer.style.msOverflowStyle  = 'none';
-  outer.style.webkitOverflowScrolling = 'touch';
+  /* Clone 3x untuk infinite loop */
+  const orig = marquee.innerHTML;
+  marquee.innerHTML = orig + orig + orig;
 
-  /* Sembunyikan scrollbar webkit */
-  const st = document.createElement('style');
-  st.textContent = '#galleryOuter::-webkit-scrollbar{display:none}';
-  document.head.appendChild(st);
+  marquee.style.display    = 'inline-flex';
+  marquee.style.gap        = '20px';
+  marquee.style.padding    = '24px 40px';
+  marquee.style.whiteSpace = 'nowrap';
+  marquee.style.alignItems = 'flex-end'; /* cards sejajar bawah */
 
-  let isDown = false, startX = 0, startY = 0, baseScroll = 0;
-  let velX = 0, lastX = 0, lastT = 0, rafId, lockAxis = null;
+  const oneSetW = () => marquee.scrollWidth / 3;
 
-  outer.addEventListener('pointerdown', e => {
-    cancelAnimationFrame(rafId);
-    isDown     = true;
-    startX     = e.clientX;
-    startY     = e.clientY;
-    baseScroll = outer.scrollLeft;
-    lastX      = e.clientX;
-    lastT      = performance.now();
-    velX       = 0;
-    lockAxis   = null;
-    outer.style.cursor = 'grabbing';
+  /* Mulai di set ke-2 */
+  requestAnimationFrame(() => { wrap.scrollLeft = oneSetW(); });
+
+  const SPEED = 0.7;
+  let paused = false, isDown = false;
+  let startX = 0, startY = 0, baseScroll = 0;
+  let velX = 0, lastX = 0, lastT = 0, lockAxis = null;
+
+  /* Auto scroll */
+  function autoLoop() {
+    if (!paused && !isDown) {
+      wrap.scrollLeft += SPEED;
+      const total = marquee.scrollWidth, set = total / 3;
+      if (wrap.scrollLeft >= set * 2) wrap.scrollLeft -= set;
+    }
+    requestAnimationFrame(autoLoop);
+  }
+  requestAnimationFrame(autoLoop);
+
+  /* Pause on hover */
+  wrap.addEventListener('mouseenter', () => { paused = true; });
+  wrap.addEventListener('mouseleave', () => { paused = false; });
+
+  /* Drag */
+  wrap.addEventListener('pointerdown', e => {
+    isDown = true; lockAxis = null;
+    startX = e.clientX; startY = e.clientY;
+    baseScroll = wrap.scrollLeft;
+    lastX = e.clientX; lastT = performance.now(); velX = 0;
+    wrap.style.cursor = 'grabbing';
   });
 
-  outer.addEventListener('pointermove', e => {
+  wrap.addEventListener('pointermove', e => {
     if (!isDown) return;
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
-
+    const dx = e.clientX - startX, dy = e.clientY - startY;
     if (!lockAxis && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
       lockAxis = Math.abs(dx) >= Math.abs(dy) ? 'h' : 'v';
-      if (lockAxis === 'h') outer.setPointerCapture(e.pointerId);
+      if (lockAxis === 'h') wrap.setPointerCapture(e.pointerId);
     }
     if (lockAxis !== 'h') return;
-
     const now = performance.now();
     velX = (e.clientX - lastX) / Math.max(now - lastT, 1);
     lastX = e.clientX; lastT = now;
-    outer.scrollLeft = baseScroll - dx;
+    wrap.scrollLeft = baseScroll - dx;
+    const total = marquee.scrollWidth, set = total / 3;
+    if (wrap.scrollLeft < set * 0.5) wrap.scrollLeft += set;
+    if (wrap.scrollLeft > set * 2.5) wrap.scrollLeft -= set;
     e.preventDefault();
   }, { passive: false });
 
   function release() {
     if (!isDown) return;
     isDown = false; lockAxis = null;
-    outer.style.cursor = 'grab';
-    const decel = 0.94;
-    let v = -velX * 18;
+    wrap.style.cursor = 'grab';
+    let v = -velX * 10;
+    const decel = 0.88;
     function coast() {
-      if (Math.abs(v) < 0.5) { updateDots(); return; }
-      outer.scrollLeft += v;
+      if (Math.abs(v) < 0.3) return;
+      wrap.scrollLeft += v;
+      const total = marquee.scrollWidth, set = total / 3;
+      if (wrap.scrollLeft < set * 0.5) wrap.scrollLeft += set;
+      if (wrap.scrollLeft > set * 2.5) wrap.scrollLeft -= set;
       v *= decel;
-      updateDots();
-      rafId = requestAnimationFrame(coast);
+      requestAnimationFrame(coast);
     }
-    rafId = requestAnimationFrame(coast);
+    requestAnimationFrame(coast);
   }
 
-  outer.addEventListener('pointerup',     release);
-  outer.addEventListener('pointercancel', release);
+  wrap.addEventListener('pointerup', release);
+  wrap.addEventListener('pointercancel', release);
 
-  function updateDots() {
-    const max = outer.scrollWidth - outer.clientWidth;
-    if (max <= 0) return;
-    const pct = outer.scrollLeft / max;
-    const idx = Math.round(pct * (dots.length - 1));
-    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-  }
-
-  outer.addEventListener('scroll', updateDots, { passive: true });
-
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      const max = outer.scrollWidth - outer.clientWidth;
-      outer.scrollTo({ left: (i / Math.max(dots.length - 1, 1)) * max, behavior: 'smooth' });
+  /* Re-attach lightbox clicks after clone */
+  wrap.querySelectorAll('.gallery-item').forEach((item, i) => {
+    item.style.cursor = 'zoom-in';
+    item.addEventListener('click', () => {
+      const idx = (i % 10) + 1;
+      /* Trigger lightbox open */
+      const event = new CustomEvent('galleryOpen', { detail: idx });
+      document.dispatchEvent(event);
     });
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) requestAnimationFrame(autoLoop);
   });
 })();
 
@@ -3804,14 +3840,17 @@ document.getElementById('m1').checked = true;
   function prev() { current = current > 1 ? current - 1 : TOTAL; loadImg(current); }
   function next() { current = current < TOTAL ? current + 1 : 1;  loadImg(current); }
 
-  /* Attach click on each gallery item */
+  /* Attach click on each gallery item (non-cloned) */
   function attachClicks() {
     document.querySelectorAll('.gallery-item').forEach((item, i) => {
       item.style.cursor = 'zoom-in';
-      item.addEventListener('click', () => open(i + 1));
+      item.addEventListener('click', () => open((i % 10) + 1));
     });
   }
   attachClicks();
+
+  /* Listen for marquee clone clicks */
+  document.addEventListener('galleryOpen', (e) => open(e.detail));
 
   /* Controls */
   btnClose.addEventListener('click', close);
