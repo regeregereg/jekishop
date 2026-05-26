@@ -1901,12 +1901,16 @@ nav:not(.float-nav).scrolled {
 .gallery-slider-outer {
   position: relative;
   width: 100%;
-  overflow: hidden;
+  overflow: auto;
+  overflow-y: hidden;
   /* Fade edges */
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
   mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
   cursor: grab;
   user-select: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .gallery-slider-outer:active { cursor: grabbing; }
@@ -2077,86 +2081,44 @@ nav:not(.float-nav).scrolled {
 ═══════════════════════════════════════ */
 .testi-marquee-wrap {
   width: 100%;
-  overflow: hidden;
+  overflow: auto;
+  overflow-y: hidden;
   margin-top: var(--space-6);
-  /* Fade edges kiri & kanan */
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 8%,
-    black 92%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 8%,
-    black 92%,
-    transparent 100%
-  );
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
   cursor: grab;
-  touch-action: pan-y; /* izinkan scroll vertikal, blokir horizontal agar kita handle */
   user-select: none;
   -webkit-user-select: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.testi-marquee-wrap::-webkit-scrollbar { display: none; }
 .testi-marquee-wrap:active { cursor: grabbing; }
 
 .testi-marquee {
-  display: flex;
-  gap: var(--space-4);
-  width: max-content;
-  animation: marqueeScroll 32s linear infinite;
-  will-change: transform;
-}
-
-/* Pause saat hover (desktop) */
-.testi-marquee-wrap:hover .testi-marquee {
-  animation-play-state: paused;
+  display: inline-flex;
+  gap: 20px;
+  padding: 16px 40px;
+  white-space: nowrap;
+  /* CSS animation dimatikan — JS yang kendalikan */
+  animation: none;
+  will-change: scroll-position;
 }
 
 /* Card di dalam marquee: lebar fixed agar rapi */
 .testi-marquee .testi-card {
   width: 320px;
   flex-shrink: 0;
-  /* Reset animasi reveal agar tidak invisible */
+  white-space: normal;
   opacity: 1 !important;
   animation: none !important;
   transform: none !important;
   user-select: none;
   -webkit-user-select: none;
-  pointer-events: none; /* biarkan pointer events ke wrap, bukan card */
-}
-/* Kecuali marquee sendiri boleh capture pointer */
-.testi-marquee {
-  pointer-events: auto;
 }
 
-@keyframes marqueeScroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); } /* geser tepat setengah = 1 set */
-}
-
-/* Mobile: card sedikit lebih kecil */
 @media (max-width: 960px) {
-  .testi-marquee .testi-card {
-    width: 280px;
-  }
-  .testi-marquee-wrap {
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      black 5%,
-      black 95%,
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      black 5%,
-      black 95%,
-      transparent 100%
-    );
-  }
+  .testi-marquee .testi-card { width: 270px; }
 }
 /* ═══════════════════════════════════════
    MOBILE RESPONSIVE
@@ -2671,135 +2633,102 @@ nav:not(.float-nav).scrolled {
     <div class="reveal" style="text-align:center;">
       <div class="label-tag" style="justify-content:center;">Testimoni Pelanggan</div>
       <h2>Dipercaya Para Trader<br>Pemula Maupun Expert</h2>
-      <p style="max-width:480px; margin: 12px auto 0;">Lebih dari puluhan pelanggan aktif. Ini beberapa cerita mereka setelah berlangganan di Jeki Store.</p>
+      <p style="max-width:480px; margin: 12px auto 0;">Lebih dari puluhan pelanggan aktif. Geser untuk baca cerita mereka.</p>
     </div>
+  </div>
 
-    <!-- Row 1 -->
-    <div class="testi-grid reveal">
+  <!-- ── ROW 1: marquee kanan ke kiri ── -->
+  <div class="testi-marquee-wrap" id="marqueeWrap1">
+    <div class="testi-marquee" id="testiMarquee1">
+      <div class="testi-card testi-featured">
+        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+        <p class="testi-text">"Sudah 6 bulan langganan, belum pernah kecewa. Waktu ada kendala admin langsung bantu dalam hitungan menit. Support yang real."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:var(--green);color:var(--black);">HK</div>
+          <div><div class="testi-name">Hendra K.</div><div class="testi-role">Futures Trader · Medan</div></div>
+        </div>
+      </div>
       <div class="testi-card">
         <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-text">"Method 1 beneran stabil sebulan penuh. Udah 3 bulan langganan di sini, setting chart bisa dilanjut terus. Puas banget, adminnya juga responsif banget."</p>
+        <p class="testi-text">"Method 1 beneran stabil sebulan penuh. Udah 3 bulan langganan, setting chart bisa dilanjut terus. Puas banget, adminnya responsif."</p>
         <div class="testi-author">
           <div class="testi-avatar">RD</div>
-          <div>
-            <div class="testi-name">Rudi D.</div>
-            <div class="testi-role">Swing Trader · Surabaya</div>
-          </div>
+          <div><div class="testi-name">Rudi D.</div><div class="testi-role">Swing Trader · Surabaya</div></div>
         </div>
       </div>
-      <div class="testi-card">
+      <div class="testi-card testi-featured">
         <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-text">"Awalnya ragu, tapi setelah coba Method 3 ternyata gampang banget setupnya. Back basic sesekali tapi langsung diproses admin. Worth it banget di harga segitu."</p>
+        <p class="testi-text">"Saya pakai Method 2 buat pantau dari HP juga. Stabil dan setup-nya gampang diikutin. Budget trading jadi lebih efisien."</p>
         <div class="testi-author">
-          <div class="testi-avatar">SR</div>
-          <div>
-            <div class="testi-name">Sari R.</div>
-            <div class="testi-role">Day Trader · Jakarta</div>
-          </div>
+          <div class="testi-avatar" style="background:var(--green);color:var(--black);">DM</div>
+          <div><div class="testi-name">Dinda M.</div><div class="testi-role">Saham Trader · Yogyakarta</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i></div>
+        <p class="testi-text">"Multi-chart-nya yang paling worth it. Bisa lihat 4 timeframe sekaligus. Analisa jadi jauh lebih cepat dan tidak miss sinyal."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">YP</div>
+          <div><div class="testi-name">Yudi P.</div><div class="testi-role">Forex Trader · Semarang</div></div>
         </div>
       </div>
       <div class="testi-card">
         <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-text">"Proses cepat, kurang dari 1 jam udah bisa dipakai. Admin jelasin cara loginnya sampai beneran paham. Harga jauh lebih murah dari beli langsung di TradingView."</p>
+        <p class="testi-text">"Proses cepat, kurang dari 1 jam udah bisa dipakai. Admin jelasin cara login sampai paham. Harga jauh lebih murah dari beli langsung."</p>
         <div class="testi-author">
           <div class="testi-avatar">AF</div>
-          <div>
-            <div class="testi-name">Andi F.</div>
-            <div class="testi-role">Crypto Trader · Bandung</div>
-          </div>
+          <div><div class="testi-name">Andi F.</div><div class="testi-role">Crypto Trader · Bandung</div></div>
         </div>
       </div>
     </div>
+  </div>
 
-  </div><!-- /container -->
-
-  <!-- ── MARQUEE SLIDESHOW — berjalan kanan ke kiri otomatis ── -->
-  <div class="testi-marquee-wrap">
-    <div class="testi-marquee" id="testiMarquee">
-      <!-- Set 1 -->
-      <div class="testi-card testi-featured">
-        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-text">"Sudah 6 bulan langganan, belum pernah kecewa. Waktu ada kendala admin langsung bantu dalam hitungan menit. Ini yang paling penting buat saya — support yang real."</p>
-        <div class="testi-author">
-          <div class="testi-avatar" style="background:var(--green);color:var(--black);">HK</div>
-          <div><div class="testi-name">Hendra K.</div><div class="testi-role">Futures Trader · Medan</div></div>
-        </div>
-      </div>
-      <div class="testi-card testi-featured">
-        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-text">"Saya pakai Method 2 buat pantau dari HP juga. Lumayan stabil dan setup-nya gampang diikutin karena admin kasih tutorial lengkap. Budget trading jadi lebih efisien."</p>
-        <div class="testi-author">
-          <div class="testi-avatar" style="background:var(--green);color:var(--black);">DM</div>
-          <div><div class="testi-name">Dinda M.</div><div class="testi-role">Saham Trader · Yogyakarta</div></div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i></div>
-        <p class="testi-text">"Multi-chart-nya yang paling worth it buat saya. Bisa lihat 4 timeframe sekaligus tanpa buka-tutup tab. Analisa jadi jauh lebih cepat dan tidak miss sinyal penting."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">YP</div>
-          <div><div class="testi-name">Yudi P.</div><div class="testi-role">Forex Trader · Semarang</div></div>
-        </div>
-      </div>
+  <!-- ── ROW 2: marquee kiri ke kanan (arah balik) ── -->
+  <div class="testi-marquee-wrap" id="marqueeWrap2" style="margin-top:16px;">
+    <div class="testi-marquee" id="testiMarquee2">
       <div class="testi-card">
         <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-text">"Fitur alert-nya yang bikin saya pilih premium. Dulu sering miss entry karena harus pantau terus, sekarang HP langsung notif kalau harga nyentuh level target saya."</p>
+        <p class="testi-text">"Fitur alert-nya yang bikin saya pilih premium. Dulu sering miss entry, sekarang HP langsung notif kalau harga nyentuh level target."</p>
         <div class="testi-author">
           <div class="testi-avatar">NW</div>
           <div><div class="testi-name">Nina W.</div><div class="testi-role">Crypto & Forex · Denpasar</div></div>
         </div>
       </div>
-      <div class="testi-card">
+      <div class="testi-card testi-featured">
         <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-text">"Awalnya takut tidak dipercaya karena bukan beli langsung. Tapi Jeki Store udah terbukti — sudah 4 bulan dan tidak ada masalah berarti. Recommended banget buat trader budget!"</p>
+        <p class="testi-text">"Awalnya takut tidak dipercaya. Tapi Jeki Store udah terbukti — sudah 4 bulan tidak ada masalah. Recommended buat trader budget!"</p>
         <div class="testi-author">
-          <div class="testi-avatar">BS</div>
+          <div class="testi-avatar" style="background:var(--green);color:var(--black);">BS</div>
           <div><div class="testi-name">Bagas S.</div><div class="testi-role">Pemula Trader · Malang</div></div>
         </div>
       </div>
-      <!-- Set 2 — duplikat untuk infinite loop mulus -->
+      <div class="testi-card">
+        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+        <p class="testi-text">"Awalnya ragu, tapi setelah coba Method 3 ternyata gampang banget. Back basic sesekali tapi langsung diproses admin. Worth it!"</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SR</div>
+          <div><div class="testi-name">Sari R.</div><div class="testi-role">Day Trader · Jakarta</div></div>
+        </div>
+      </div>
       <div class="testi-card testi-featured">
         <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-text">"Sudah 6 bulan langganan, belum pernah kecewa. Waktu ada kendala admin langsung bantu dalam hitungan menit. Ini yang paling penting buat saya — support yang real."</p>
+        <p class="testi-text">"Pine Script yang bisa buat indikator custom sendiri itu game changer. Udah 5 bulan langganan dan tidak ada niatan pindah ke tempat lain."</p>
         <div class="testi-author">
-          <div class="testi-avatar" style="background:var(--green);color:var(--black);">HK</div>
-          <div><div class="testi-name">Hendra K.</div><div class="testi-role">Futures Trader · Medan</div></div>
-        </div>
-      </div>
-      <div class="testi-card testi-featured">
-        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-text">"Saya pakai Method 2 buat pantau dari HP juga. Lumayan stabil dan setup-nya gampang diikutin karena admin kasih tutorial lengkap. Budget trading jadi lebih efisien."</p>
-        <div class="testi-author">
-          <div class="testi-avatar" style="background:var(--green);color:var(--black);">DM</div>
-          <div><div class="testi-name">Dinda M.</div><div class="testi-role">Saham Trader · Yogyakarta</div></div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i></div>
-        <p class="testi-text">"Multi-chart-nya yang paling worth it buat saya. Bisa lihat 4 timeframe sekaligus tanpa buka-tutup tab. Analisa jadi jauh lebih cepat dan tidak miss sinyal penting."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">YP</div>
-          <div><div class="testi-name">Yudi P.</div><div class="testi-role">Forex Trader · Semarang</div></div>
+          <div class="testi-avatar" style="background:var(--green);color:var(--black);">TW</div>
+          <div><div class="testi-name">Tomi W.</div><div class="testi-role">Algorithmic Trader · Surabaya</div></div>
         </div>
       </div>
       <div class="testi-card">
         <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-text">"Fitur alert-nya yang bikin saya pilih premium. Dulu sering miss entry karena harus pantau terus, sekarang HP langsung notif kalau harga nyentuh level target saya."</p>
+        <p class="testi-text">"Screener saham di versi premium bisa filter ratusan saham dalam detik. Jauh lebih efisien dari sebelumnya. Admin juga fast response!"</p>
         <div class="testi-author">
-          <div class="testi-avatar">NW</div>
-          <div><div class="testi-name">Nina W.</div><div class="testi-role">Crypto & Forex · Denpasar</div></div>
+          <div class="testi-avatar">LR</div>
+          <div><div class="testi-name">Lisa R.</div><div class="testi-role">Stock Trader · Bali</div></div>
         </div>
       </div>
-      <div class="testi-card">
-        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-text">"Awalnya takut tidak dipercaya karena bukan beli langsung. Tapi Jeki Store udah terbukti — sudah 4 bulan dan tidak ada masalah berarti. Recommended banget buat trader budget!"</p>
-        <div class="testi-author">
-          <div class="testi-avatar">BS</div>
-          <div><div class="testi-name">Bagas S.</div><div class="testi-role">Pemula Trader · Malang</div></div>
-        </div>
-      </div>
-    </div><!-- /marquee -->
-  </div><!-- /wrap -->
+    </div>
+  </div>
+
 </section>
 
 <!-- ══ GALERI PELANGGAN ══ -->
@@ -3398,99 +3327,82 @@ if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
    GALERI PELANGGAN — Drag / Swipe Slider
 ══════════════════════════════════════ */
 (function initGallery() {
-  const outer  = document.getElementById('galleryOuter');
-  const slider = document.getElementById('gallerySlider');
-  const dots   = document.querySelectorAll('.gallery-dot');
-  if (!outer || !slider) return;
+  const outer = document.getElementById('galleryOuter');
+  const dots  = document.querySelectorAll('.gallery-dot');
+  if (!outer) return;
 
-  let isDown   = false;
-  let startX   = 0;
-  let scrollLeft = 0;
-  let velX     = 0;
-  let lastX    = 0;
-  let lastT    = 0;
-  let rafId;
+  /* Aktifkan scroll horizontal */
+  outer.style.overflowX        = 'auto';
+  outer.style.overflowY        = 'hidden';
+  outer.style.scrollbarWidth   = 'none';
+  outer.style.msOverflowStyle  = 'none';
+  outer.style.webkitOverflowScrolling = 'touch';
 
-  /* ── Pointer drag ── */
+  /* Sembunyikan scrollbar webkit */
+  const st = document.createElement('style');
+  st.textContent = '#galleryOuter::-webkit-scrollbar{display:none}';
+  document.head.appendChild(st);
+
+  let isDown = false, startX = 0, baseScroll = 0, velX = 0, lastX = 0, lastT = 0, rafId;
+
   outer.addEventListener('pointerdown', e => {
+    cancelAnimationFrame(rafId);
     isDown     = true;
     startX     = e.clientX;
-    scrollLeft = outer.scrollLeft;
+    baseScroll = outer.scrollLeft;
     lastX      = e.clientX;
-    lastT      = Date.now();
+    lastT      = performance.now();
     velX       = 0;
-    outer.style.cursor = 'grabbing';
-    slider.style.transition = 'none';
     outer.setPointerCapture(e.pointerId);
-    cancelAnimationFrame(rafId);
+    outer.style.cursor = 'grabbing';
+    e.preventDefault();
   });
 
   outer.addEventListener('pointermove', e => {
     if (!isDown) return;
-    const dx  = e.clientX - startX;
-    const now = Date.now();
-    velX  = (e.clientX - lastX) / Math.max(now - lastT, 1);
-    lastX = e.clientX;
-    lastT = now;
-    outer.scrollLeft = scrollLeft - dx;
-    updateDots();
-    e.preventDefault();
+    const now = performance.now();
+    velX = (e.clientX - lastX) / Math.max(now - lastT, 1);
+    lastX = e.clientX; lastT = now;
+    outer.scrollLeft = baseScroll - (e.clientX - startX);
   });
 
-  function onUp(e) {
+  function release() {
     if (!isDown) return;
     isDown = false;
     outer.style.cursor = 'grab';
-    /* Momentum */
-    let momentum = velX * -320;
-    let start    = null;
-    const fromScroll = outer.scrollLeft;
-    function step(ts) {
-      if (!start) start = ts;
-      const progress = Math.min((ts - start) / 500, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      outer.scrollLeft = fromScroll + momentum * ease;
+    /* Momentum inertia */
+    const decel = 0.94;
+    let v = -velX * 18;
+    function coast() {
+      if (Math.abs(v) < 0.5) { updateDots(); return; }
+      outer.scrollLeft += v;
+      v *= decel;
       updateDots();
-      if (progress < 1) rafId = requestAnimationFrame(step);
+      rafId = requestAnimationFrame(coast);
     }
-    rafId = requestAnimationFrame(step);
+    rafId = requestAnimationFrame(coast);
   }
 
-  outer.addEventListener('pointerup',     onUp);
-  outer.addEventListener('pointercancel', onUp);
-
-  /* Prevent vertical scroll during horizontal swipe */
+  outer.addEventListener('pointerup',     release);
+  outer.addEventListener('pointercancel', release);
   outer.addEventListener('touchmove', e => { if (isDown) e.preventDefault(); }, { passive: false });
 
-  /* ── Dot indicator update ── */
   function updateDots() {
-    const max  = outer.scrollWidth - outer.clientWidth;
-    const pct  = max > 0 ? outer.scrollLeft / max : 0;
-    const idx  = Math.round(pct * (dots.length - 1));
+    const max = outer.scrollWidth - outer.clientWidth;
+    if (max <= 0) return;
+    const pct = outer.scrollLeft / max;
+    const idx = Math.round(pct * (dots.length - 1));
     dots.forEach((d, i) => d.classList.toggle('active', i === idx));
   }
 
   outer.addEventListener('scroll', updateDots, { passive: true });
 
-  /* Dot click — scroll to section */
   dots.forEach((dot, i) => {
     dot.addEventListener('click', () => {
       const max = outer.scrollWidth - outer.clientWidth;
-      const target = (i / (dots.length - 1)) * max;
-      outer.scrollTo({ left: target, behavior: 'smooth' });
+      outer.scrollTo({ left: (i / Math.max(dots.length - 1, 1)) * max, behavior: 'smooth' });
     });
   });
-
-  /* Make outer scrollable horizontally (for touch momentum via CSS) */
-  outer.style.overflowX = 'auto';
-  outer.style.scrollBehavior = 'smooth';
-  outer.style.webkitOverflowScrolling = 'touch';
-  /* Hide scrollbar */
-  outer.style.scrollbarWidth = 'none';
-  outer.style.msOverflowStyle = 'none';
-  const style = document.createElement('style');
-  style.textContent = '#galleryOuter::-webkit-scrollbar{display:none}';
-  document.head.appendChild(style);
 })();
 
 /* ── FAQ Toggle ── */
@@ -3532,104 +3444,132 @@ function orderViaWA() {
 document.getElementById('m1').checked = true;
 
 /* ══════════════════════════════════════
-   TESTI MARQUEE — drag/swipe + pause on hold
+   TESTI MARQUEE — 2 baris, arah berlawanan
+   Infinite loop via JS clone, drag/swipe support
 ══════════════════════════════════════ */
-(function initMarquee() {
-  const wrap    = document.querySelector('.testi-marquee-wrap');
-  const marquee = document.getElementById('testiMarquee');
-  if (!marquee || !wrap) return;
+(function initMarquees() {
+  function makeMarquee(marqueeEl, wrapEl, speed, reverse) {
+    if (!marqueeEl || !wrapEl) return;
 
-  /* ── State ── */
-  let isDown     = false;
-  let startX     = 0;
-  let currentX   = 0;       /* offset drag saat ini */
-  let baseOffset = 0;        /* offset sebelum drag dimulai */
-  let velX       = 0;        /* kecepatan untuk momentum */
-  let lastX      = 0;
-  let lastT      = 0;
-  let resumeTimer;
+    /* Setup wrap sebagai scroll container */
+    wrapEl.style.overflowX              = 'auto';
+    wrapEl.style.overflowY              = 'hidden';
+    wrapEl.style.scrollbarWidth         = 'none';
+    wrapEl.style.msOverflowStyle        = 'none';
+    wrapEl.style.webkitOverflowScrolling = 'touch';
+    wrapEl.style.cursor                 = 'grab';
 
-  /* Ambil current translateX dari animasi yang sedang jalan */
-  function getAnimatedX() {
-    const st  = window.getComputedStyle(marquee);
-    const mat = new DOMMatrix(st.transform);
-    return mat.m41; /* translateX */
-  }
+    /* Sembunyikan scrollbar webkit */
+    const st = document.createElement('style');
+    st.textContent = `#${wrapEl.id}::-webkit-scrollbar{display:none}`;
+    document.head.appendChild(st);
 
-  function pauseAnim() {
-    marquee.style.animationPlayState = 'paused';
-  }
+    /* Matikan CSS animation lama */
+    marqueeEl.style.animation   = 'none';
+    marqueeEl.style.transform   = 'none';
+    marqueeEl.style.whiteSpace  = 'nowrap';
+    marqueeEl.style.display     = 'inline-flex';
+    marqueeEl.style.gap         = '20px';
+    marqueeEl.style.padding     = '16px 40px';
 
-  function resumeAnim(delay = 1000) {
-    clearTimeout(resumeTimer);
-    resumeTimer = setTimeout(() => {
-      /* Reset transform manual sebelum resume animasi */
-      marquee.style.transform = '';
-      marquee.style.transition = '';
-      marquee.style.animationPlayState = 'running';
-    }, delay);
-  }
+    /* Clone konten untuk infinite loop — 3x cukup */
+    const orig = marqueeEl.innerHTML;
+    marqueeEl.innerHTML = orig + orig + orig;
 
-  function applyDrag(dx) {
-    marquee.style.transform = `translateX(${baseOffset + dx}px)`;
-  }
+    /* Mulai di tengah (set ke-2) agar bisa scroll 2 arah */
+    const oneSetW = () => marqueeEl.scrollWidth / 3;
 
-  /* ── POINTER EVENTS (mouse + touch) ── */
-  wrap.addEventListener('pointerdown', (e) => {
-    isDown   = true;
-    startX   = e.clientX;
-    lastX    = e.clientX;
-    lastT    = Date.now();
-    velX     = 0;
-    baseOffset = getAnimatedX();
-    pauseAnim();
-    marquee.style.transition = 'none';
-    marquee.setPointerCapture(e.pointerId);
-    e.preventDefault();
-  });
+    /* Tunggu layout selesai */
+    requestAnimationFrame(() => {
+      wrapEl.scrollLeft = oneSetW();
+    });
 
-  marquee.addEventListener('pointermove', (e) => {
-    if (!isDown) return;
-    const now = Date.now();
-    const dx  = e.clientX - startX;
-    /* Hitung velocity (px/ms) */
-    velX  = (e.clientX - lastX) / Math.max(now - lastT, 1);
-    lastX = e.clientX;
-    lastT = now;
-    applyDrag(dx);
-    e.preventDefault();
-  });
+    let isDown = false, startX = 0, baseScroll = 0;
+    let velX = 0, lastX = 0, lastT = 0, rafId;
+    let paused = false;
 
-  function onPointerUp(e) {
-    if (!isDown) return;
-    isDown = false;
-    const dragDx = e.clientX - startX;
-
-    /* Momentum: lempar sesuai kecepatan swipe */
-    const momentum = velX * 280; /* tuning: makin besar makin jauh */
-    const target   = baseOffset + dragDx + momentum;
-
-    marquee.style.transition = 'transform 0.55s cubic-bezier(.22,.68,0,1.1)';
-    marquee.style.transform  = `translateX(${target}px)`;
-
-    resumeAnim(1200);
-  }
-
-  marquee.addEventListener('pointerup',     onPointerUp);
-  marquee.addEventListener('pointercancel', onPointerUp);
-
-  /* Cegah scroll halaman saat swipe horizontal */
-  wrap.addEventListener('touchmove', (e) => {
-    if (isDown) e.preventDefault();
-  }, { passive: false });
-
-  /* ── Pause saat tab tidak aktif ── */
-  document.addEventListener('visibilitychange', () => {
-    if (!isDown) {
-      marquee.style.animationPlayState =
-        document.hidden ? 'paused' : 'running';
+    /* Auto-scroll */
+    function autoLoop() {
+      if (!paused && !isDown) {
+        wrapEl.scrollLeft += reverse ? -speed : speed;
+        /* Wrap: kalau terlalu jauh ke kanan, reset ke tengah */
+        const total = marqueeEl.scrollWidth;
+        const set   = total / 3;
+        if (!reverse && wrapEl.scrollLeft >= set * 2) wrapEl.scrollLeft -= set;
+        if (reverse  && wrapEl.scrollLeft <= 0)       wrapEl.scrollLeft += set;
+      }
+      rafId = requestAnimationFrame(autoLoop);
     }
-  });
+    rafId = requestAnimationFrame(autoLoop);
+
+    /* Drag */
+    wrapEl.addEventListener('pointerdown', e => {
+      isDown     = true;
+      startX     = e.clientX;
+      baseScroll = wrapEl.scrollLeft;
+      lastX      = e.clientX; lastT = performance.now(); velX = 0;
+      wrapEl.setPointerCapture(e.pointerId);
+      wrapEl.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+
+    wrapEl.addEventListener('pointermove', e => {
+      if (!isDown) return;
+      const now = performance.now();
+      velX  = (e.clientX - lastX) / Math.max(now - lastT, 1);
+      lastX = e.clientX; lastT = now;
+      wrapEl.scrollLeft = baseScroll - (e.clientX - startX);
+      /* Jaga infinite range */
+      const total = marqueeEl.scrollWidth, set = total / 3;
+      if (wrapEl.scrollLeft < set * 0.5)  wrapEl.scrollLeft += set;
+      if (wrapEl.scrollLeft > set * 2.5)  wrapEl.scrollLeft -= set;
+      e.preventDefault();
+    });
+
+    function release() {
+      if (!isDown) return;
+      isDown = false;
+      wrapEl.style.cursor = 'grab';
+      /* Momentum singkat */
+      let v = -velX * 10;
+      const decel = 0.88;
+      function coast() {
+        if (Math.abs(v) < 0.3) return;
+        wrapEl.scrollLeft += v;
+        const total = marqueeEl.scrollWidth, set = total / 3;
+        if (wrapEl.scrollLeft < set * 0.5)  wrapEl.scrollLeft += set;
+        if (wrapEl.scrollLeft > set * 2.5)  wrapEl.scrollLeft -= set;
+        v *= decel;
+        requestAnimationFrame(coast);
+      }
+      requestAnimationFrame(coast);
+    }
+
+    wrapEl.addEventListener('pointerup',     release);
+    wrapEl.addEventListener('pointercancel', release);
+    wrapEl.addEventListener('touchmove', e => { if (isDown) e.preventDefault(); }, { passive: false });
+
+    /* Pause saat hover (opsional — bisa dihapus kalau tidak mau) */
+    wrapEl.addEventListener('mouseenter', () => { paused = true; });
+    wrapEl.addEventListener('mouseleave', () => { paused = false; });
+
+    /* Pause saat tab tidak aktif */
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cancelAnimationFrame(rafId);
+      else rafId = requestAnimationFrame(autoLoop);
+    });
+  }
+
+  makeMarquee(
+    document.getElementById('testiMarquee1'),
+    document.getElementById('marqueeWrap1'),
+    0.6, false   /* kanan ke kiri */
+  );
+  makeMarquee(
+    document.getElementById('testiMarquee2'),
+    document.getElementById('marqueeWrap2'),
+    0.55, true   /* kiri ke kanan */
+  );
 })();
 </script>
 </body>
