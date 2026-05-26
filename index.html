@@ -2770,10 +2770,8 @@ footer {
   /* Sembunyikan navbar atas di HP — navigasi pakai floating pill nav di bawah */
   nav:not(.float-nav) { display: none; }
   .hero { padding: 74px 24px 60px; } /* tambah padding-top untuk mobile logo bar */
-  /* Offset anchor scroll agar tidak tertutup fixed top nav */
-  #produk, #method, #order, #testi, #galeri, #faq {
-    scroll-margin-top: 72px;
-  }
+  /* Pastikan section tidak tersembunyi di balik fixed top nav saat scroll */
+  section[id] { scroll-margin-top: 74px; }
   .hero h1 { font-size: 2.2rem; }
   .hero-sub { font-size: 1rem; }
 
@@ -4206,12 +4204,7 @@ function floatNavClick(e, target) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } else {
     const el = document.getElementById(target);
-    if (el) {
-      const mobileBar = document.querySelector('.mobile-logo-bar');
-      const offset = (mobileBar && window.innerWidth <= 960) ? mobileBar.offsetHeight : 0;
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   /* Lepas kunci setelah animasi scroll selesai (~800ms) */
