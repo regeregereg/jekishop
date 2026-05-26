@@ -2772,7 +2772,7 @@ footer {
   .hero { padding: 142px 24px 60px; } /* tambah padding-top untuk mobile logo bar */
   /* Kompensasi fixed top nav saat scroll ke anchor */
   #produk, #method, #order, #testi, #galeri, #faq {
-    scroll-margin-top: 80px;
+    scroll-margin-top: 68px;
   }
   .hero h1 { font-size: 2.2rem; }
   .hero-sub { font-size: 1rem; }
@@ -4207,9 +4207,7 @@ function floatNavClick(e, target) {
   } else {
     const el = document.getElementById(target);
     if (el) {
-      /* Kompensasi fixed mobile nav bar (~64px) + extra breathing room */
-      const navOffset = window.innerWidth <= 960 ? 80 : 20;
-      const top = el.getBoundingClientRect().top + window.scrollY - navOffset;
+      const top = el.getBoundingClientRect().top + window.scrollY - 68;
       window.scrollTo({ top, behavior: 'smooth' });
     }
   }
