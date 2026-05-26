@@ -1,0 +1,14 @@
+# robots.txt — Jeki Store
+# https://jekistore.com/
+
+# Izinkan semua crawler mengakses seluruh situs
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://jekistore.com/sitemap.xml
+
+# Disallow halaman yang tidak perlu diindeks (jika ada)
+# Uncomment baris di bawah jika kamu punya folder admin/private
+# Disallow: /admin/
+# Disallow: /private/
