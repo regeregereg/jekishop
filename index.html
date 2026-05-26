@@ -1314,279 +1314,667 @@ footer {
 }
 
 /* ═══════════════════════════════════════
-   ANIMATIONS — CSS-only, GPU-friendly
-   All transforms use translate/opacity only
-   (compositor-only = zero layout thrash)
+   ANIMATIONS v3 — Fluid, Natural, Alive
+   Pure CSS transforms/opacity = GPU only,
+   zero layout reflow, silky 60fps
 ═══════════════════════════════════════ */
 
-/* Hero entrance */
+/* ─── KEYFRAMES LIBRARY ─── */
+
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(22px); }
+  from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.anim { opacity: 0; animation: fadeUp 0.68s cubic-bezier(.22,.68,0,1.2) forwards; }
-.a1 { animation-delay: 0.1s; }
-.a2 { animation-delay: 0.24s; }
-.a3 { animation-delay: 0.40s; }
-.a4 { animation-delay: 0.56s; }
-.a5 { animation-delay: 0.72s; }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
 
-/* ── Hero blob drift ── */
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Blob — organic, never repeats exactly */
 @keyframes blobDrift {
-  0%,100% { transform: translate(-50%,-55%) scale(1)   rotate(0deg);  }
-  33%      { transform: translate(-52%,-53%) scale(1.06) rotate(3deg);  }
-  66%      { transform: translate(-48%,-57%) scale(0.97) rotate(-2deg); }
+  0%   { transform: translate(-50%,-55%) scale(1.00) rotate(0deg);   }
+  20%  { transform: translate(-51%,-53%) scale(1.05) rotate(2deg);   }
+  45%  { transform: translate(-49%,-57%) scale(0.96) rotate(-3deg);  }
+  70%  { transform: translate(-52%,-54%) scale(1.08) rotate(1.5deg); }
+  100% { transform: translate(-50%,-55%) scale(1.00) rotate(0deg);   }
 }
-.hero-blob { animation: blobDrift 12s ease-in-out infinite; }
-
-/* ── Nav logo dot pulse ── */
-@keyframes blink {
-  0%,100% { opacity:1; transform:scale(1); box-shadow: 0 0 0 0 rgba(168,255,62,0); }
-  50%      { opacity:0.7; transform:scale(0.78); }
-  70%      { box-shadow: 0 0 0 6px rgba(168,255,62,0); }
-}
-.logo-dot { animation: blink 2.4s ease-in-out infinite; }
-
-/* ── Marquee ticker for trust bar ── */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+.hero-blob {
+  animation: blobDrift 16s cubic-bezier(.45,.05,.55,.95) infinite;
+  will-change: transform;
 }
 
-/* ── Shimmer on WA button ── */
-@keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position:  200% center; }
+/* Logo dot — gentle heartbeat with ring ripple */
+@keyframes heartbeat {
+  0%,100% { transform: scale(1);    box-shadow: 0 0 0 0   rgba(168,255,62,0.6); }
+  14%      { transform: scale(1.15); }
+  28%      { transform: scale(1);    box-shadow: 0 0 0 8px rgba(168,255,62,0); }
+  42%      { transform: scale(1.08); }
+  70%      { transform: scale(1);    }
 }
+.logo-dot { animation: heartbeat 2.8s ease-in-out infinite; }
 
+/* WA button — rolling shimmer sweep */
+@keyframes shimmerSweep {
+  0%   { background-position: -300% center; }
+  100% { background-position:  300% center; }
+}
 #wa-btn {
   background: linear-gradient(
-    90deg,
-    var(--green) 0%,
-    #c8ff6e 40%,
-    var(--green) 60%,
-    #b8ff50 100%
+    100deg,
+    var(--green)  0%,
+    var(--green) 30%,
+    #d4ff80      46%,
+    #ffffff      50%,
+    #d4ff80      54%,
+    var(--green) 70%,
+    var(--green) 100%
   );
-  background-size: 200% auto;
-  animation: shimmer 3.2s linear infinite;
+  background-size: 300% 100%;
+  animation: shimmerSweep 2.8s ease-in-out infinite;
+  transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.22s;
 }
-
 #wa-btn:hover {
   animation-play-state: paused;
-  background: #bbff5a;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 32px rgba(168,255,62,0.5);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 40px rgba(168,255,62,0.55);
 }
+#wa-btn:active { transform: translateY(-1px) scale(0.99); }
 
-/* ── Feature card icon bounce on hover ── */
+/* Feature icon — spring lift + colour fill */
 .feature-icon-wrap {
-  transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), background 0.25s;
+  transition:
+    transform  0.35s cubic-bezier(.34,1.56,.64,1),
+    background 0.28s ease,
+    color      0.28s ease;
+  will-change: transform;
 }
 .feature-card:hover .feature-icon-wrap {
-  transform: translateY(-4px) scale(1.08);
+  transform: translateY(-6px) scale(1.12) rotate(-4deg);
   background: var(--green);
   color: var(--black);
 }
 .feature-card:hover .feature-icon-wrap i { color: var(--black); }
 
-/* ── FL items slide in from left stagger ── */
+/* Feature card — tilted 3-D lift */
+.feature-card {
+  transition:
+    border-color 0.28s,
+    box-shadow   0.28s,
+    transform    0.32s cubic-bezier(.22,.68,0,1.15);
+  will-change: transform;
+}
+.feature-card:hover { transform: translateY(-6px) rotate3d(1,0,0,2deg); }
+
+/* FL items — glide right with depth */
 .fl-item {
-  transition: background 0.2s, border-color 0.2s, transform 0.25s;
+  transition:
+    background    0.22s,
+    border-color  0.22s,
+    transform     0.3s cubic-bezier(.22,.68,0,1.2),
+    box-shadow    0.3s;
+  will-change: transform;
 }
 .fl-item:hover {
-  transform: translateX(4px);
+  transform: translateX(6px);
+  box-shadow: -3px 0 0 0 var(--green);
 }
 
-/* ── Method card shimmer border on featured ── */
-@keyframes borderGlow {
-  0%,100% { box-shadow: 0 0 0 0 rgba(168,255,62,0); }
-  50%      { box-shadow: 0 0 0 4px rgba(168,255,62,0.18); }
+/* FL icon — spin on hover */
+.fl-item:hover .fl-icon {
+  animation: spinOnce 0.4s cubic-bezier(.34,1.56,.64,1) forwards;
 }
-.method-card.featured { animation: borderGlow 3.5s ease-in-out infinite; }
+@keyframes spinOnce {
+  0%   { transform: rotate(0deg)   scale(1); }
+  50%  { transform: rotate(-18deg) scale(1.2); }
+  100% { transform: rotate(0deg)   scale(1); }
+}
 
-/* ── Step numbers pop on scroll reveal ── */
-@keyframes popIn {
-  0%   { transform: scale(0.6); opacity:0; }
-  70%  { transform: scale(1.12); }
-  100% { transform: scale(1); opacity:1; }
+/* Method featured — breathing glow */
+@keyframes breatheGlow {
+  0%,100% { box-shadow: 0 0  0  0   rgba(168,255,62,0.00), var(--shadow-lg); }
+  50%      { box-shadow: 0 0 24px 4px rgba(168,255,62,0.20), var(--shadow-lg); }
 }
-.step-num {
-  opacity: 0;
-  transition: none;
-}
-.steps-row.visible .step-num {
-  animation: popIn 0.55s cubic-bezier(.34,1.56,.64,1) forwards;
-}
-.steps-row.visible .step-card:nth-child(1) .step-num { animation-delay: 0.05s; }
-.steps-row.visible .step-card:nth-child(2) .step-num { animation-delay: 0.18s; }
-.steps-row.visible .step-card:nth-child(3) .step-num { animation-delay: 0.31s; }
-.steps-row.visible .step-card:nth-child(4) .step-num { animation-delay: 0.44s; }
+.method-card.featured { animation: breatheGlow 4s ease-in-out infinite; }
+.method-card { will-change: transform; }
 
-/* ── Trust numbers count-up feel (CSS only) ── */
+/* Steps — staggered pop-in */
+@keyframes popBounce {
+  0%   { opacity: 0; transform: scale(0.5) translateY(10px); }
+  60%  { transform: scale(1.15) translateY(-4px); }
+  80%  { transform: scale(0.95) translateY(2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.step-num { opacity: 0; }
+.steps-row.visible .step-card:nth-child(1) .step-num { animation: popBounce 0.6s cubic-bezier(.22,.68,0,1.2) 0.08s forwards; }
+.steps-row.visible .step-card:nth-child(2) .step-num { animation: popBounce 0.6s cubic-bezier(.22,.68,0,1.2) 0.22s forwards; }
+.steps-row.visible .step-card:nth-child(3) .step-num { animation: popBounce 0.6s cubic-bezier(.22,.68,0,1.2) 0.36s forwards; }
+.steps-row.visible .step-card:nth-child(4) .step-num { animation: popBounce 0.6s cubic-bezier(.22,.68,0,1.2) 0.50s forwards; }
+
+/* Steps connector line draw */
+@keyframes drawLine {
+  from { transform: scaleX(0); transform-origin: left; }
+  to   { transform: scaleX(1); transform-origin: left; }
+}
+.steps-row::before { transform: scaleX(0); }
+.steps-row.visible::before { animation: drawLine 0.8s cubic-bezier(.22,.68,0,1) 0.3s forwards; }
+
+/* Trust bar hover — spring scale */
 .trust-num {
   display: inline-block;
-  transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), color 0.2s;
+  transition: transform 0.35s cubic-bezier(.34,1.56,.64,1), color 0.25s;
+  will-change: transform;
 }
-.trust-item:hover .trust-num { transform: scale(1.12); color: #c8ff6e; }
+.trust-item:hover .trust-num { transform: scale(1.18) translateY(-2px); color: #c4ff62; }
 
-/* ── Testi card lift ── */
+/* Trust bar — subtle entrance slide from bottom */
+@keyframes trustSlide {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.trust-item { animation: trustSlide 0.6s cubic-bezier(.22,.68,0,1.1) both; }
+.trust-item:nth-child(1) { animation-delay: 0.05s; }
+.trust-item:nth-child(3) { animation-delay: 0.15s; }
+.trust-item:nth-child(5) { animation-delay: 0.25s; }
+.trust-item:nth-child(7) { animation-delay: 0.35s; }
+.trust-item:nth-child(9) { animation-delay: 0.45s; }
+
+/* Testi cards — elastic lift */
 .testi-card {
-  transition: border-color 0.25s, box-shadow 0.25s, transform 0.28s cubic-bezier(.22,.68,0,1.1);
+  transition:
+    border-color 0.28s,
+    box-shadow   0.28s,
+    transform    0.35s cubic-bezier(.22,.68,0,1.2);
+  will-change: transform;
 }
-.testi-card:hover { transform: translateY(-5px); }
+.testi-card:hover { transform: translateY(-7px); }
 
-/* ── Avatar wiggle on testi hover ── */
-@keyframes wiggle {
-  0%,100% { transform: rotate(0deg); }
-  25%      { transform: rotate(-6deg); }
-  75%      { transform: rotate(6deg); }
+/* Avatar — bounce on testi hover */
+@keyframes avatarPop {
+  0%   { transform: scale(1) rotate(0deg); }
+  30%  { transform: scale(1.2) rotate(-8deg); }
+  60%  { transform: scale(0.95) rotate(5deg); }
+  100% { transform: scale(1) rotate(0deg); }
 }
-.testi-card:hover .testi-avatar { animation: wiggle 0.45s ease; }
+.testi-card:hover .testi-avatar { animation: avatarPop 0.5s cubic-bezier(.34,1.56,.64,1); }
 
-/* ── FAQ icon spin smooth ── */
+/* Star shimmer on testi hover */
+@keyframes starBlink {
+  0%,100% { opacity:1; transform: scale(1); }
+  50%      { opacity:0.6; transform: scale(0.85); }
+}
+.testi-card:hover .testi-stars i {
+  animation: starBlink 0.5s ease-in-out both;
+}
+.testi-card:hover .testi-stars i:nth-child(1) { animation-delay: 0.00s; }
+.testi-card:hover .testi-stars i:nth-child(2) { animation-delay: 0.06s; }
+.testi-card:hover .testi-stars i:nth-child(3) { animation-delay: 0.12s; }
+.testi-card:hover .testi-stars i:nth-child(4) { animation-delay: 0.18s; }
+.testi-card:hover .testi-stars i:nth-child(5) { animation-delay: 0.24s; }
+
+/* FAQ icon — smooth spring rotate */
 .faq-q-icon {
-  transition: transform 0.32s cubic-bezier(.34,1.56,.64,1), background 0.25s, color 0.25s, border-color 0.25s;
+  transition:
+    transform    0.38s cubic-bezier(.34,1.56,.64,1),
+    background   0.28s,
+    color        0.28s,
+    border-color 0.28s;
 }
-.faq-item.open .faq-q-icon { transform: rotate(45deg) scale(1.08); }
+.faq-item.open .faq-q-icon { transform: rotate(45deg) scale(1.1); }
 
-/* ── CTA banner floating orbs ── */
-.cta-orb {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
+/* FAQ answer — smooth slide with fade */
+.faq-a {
+  transition: max-height 0.42s cubic-bezier(.22,.68,0,1), padding 0.42s, opacity 0.3s;
+  opacity: 0;
 }
+.faq-item.open .faq-a { opacity: 1; }
+
+/* FAQ hover — subtle background drift */
+.faq-item { transition: border-color 0.22s, transform 0.22s; }
+.faq-item:hover { transform: translateX(2px); }
+.faq-item.open { transform: translateX(0); }
+
+/* CTA orbs — slow drift */
+.cta-orb { position: absolute; border-radius: 50%; pointer-events: none; }
 .cta-orb-1 {
-  width: 280px; height: 280px;
-  background: radial-gradient(circle, rgba(168,255,62,0.14) 0%, transparent 70%);
-  top: -80px; left: -60px;
-  animation: orbFloat1 9s ease-in-out infinite;
+  width: 340px; height: 340px;
+  background: radial-gradient(circle, rgba(168,255,62,0.18) 0%, transparent 65%);
+  top: -100px; left: -80px;
+  animation: orbA 11s ease-in-out infinite;
 }
 .cta-orb-2 {
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, rgba(168,255,62,0.10) 0%, transparent 70%);
-  bottom: -60px; right: -40px;
-  animation: orbFloat2 11s ease-in-out infinite;
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(168,255,62,0.12) 0%, transparent 65%);
+  bottom: -70px; right: -50px;
+  animation: orbB 14s ease-in-out infinite;
 }
-@keyframes orbFloat1 {
-  0%,100% { transform: translate(0,0); }
-  50%      { transform: translate(30px, 20px); }
+@keyframes orbA {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(28px,18px) scale(1.06); }
+  66%      { transform: translate(-12px,30px) scale(0.94); }
 }
-@keyframes orbFloat2 {
-  0%,100% { transform: translate(0,0); }
-  50%      { transform: translate(-24px,-18px); }
+@keyframes orbB {
+  0%,100% { transform: translate(0,0) scale(1); }
+  40%      { transform: translate(-22px,-15px) scale(1.08); }
+  75%      { transform: translate(10px,-28px) scale(0.96); }
 }
 
-/* ── Floating WA button (sticky helper) ── */
-.wa-float {
+/* ════════════════════════════════════════
+   FLOATING PILL NAV v2
+   Reference: light pill, black circles,
+   divider, labels always visible
+════════════════════════════════════════ */
+
+.float-nav {
   position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 300;
-  width: 56px; height: 56px;
-  background: var(--green);
-  border-radius: 50%;
+  bottom: 24px;
+  /* Center pakai inset 0 + margin auto agar bisa expand bebas */
+  left: 0;
+  right: 0;
+  top: auto;
+  margin: 0 auto;
+  z-index: 400;
+  opacity: 0;
+  pointer-events: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #ffffff;
+  border-radius: 999px;
+  border: 1.5px solid rgba(0,0,0,0.09);
+  box-shadow:
+    0 2px 4px  rgba(0,0,0,0.04),
+    0 8px 32px rgba(0,0,0,0.10),
+    0 24px 56px rgba(0,0,0,0.08);
+  padding: 6px 6px;
+  width: max-content;
+  white-space: nowrap;
+  transition:
+    opacity 0.45s cubic-bezier(.22,.68,0,1),
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
+  will-change: transform, opacity;
+  transform: translateY(90px);
+}
+
+/* ── Show / hide ── */
+.float-nav.show {
+  opacity: 1;
+  pointer-events: all;
+  animation: pillRise 0.72s cubic-bezier(.22,.68,0,1.2) forwards;
+}
+.float-nav.show.settled {
+  animation: none;
+  transform: translateY(0);
+}
+
+@keyframes pillRise {
+  0%   { transform: translateY(80px) scale(0.9);  opacity: 0; }
+  55%  { opacity: 1; }
+  78%  { transform: translateY(-5px) scale(1.015); }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Hover: subtle lift */
+.float-nav.show.settled:hover {
+  box-shadow:
+    0 4px 8px  rgba(0,0,0,0.06),
+    0 16px 48px rgba(0,0,0,0.14),
+    0 32px 64px rgba(0,0,0,0.08);
+  transform: translateY(-3px);
+  transition: transform 0.3s cubic-bezier(.22,.68,0,1.2), box-shadow 0.3s ease;
+}
+
+/* ── Divider ── */
+.fn-divider {
+  width: 1px;
+  height: 26px;
+  background: rgba(0,0,0,0.10);
+  flex-shrink: 0;
+  margin: 0 2px;
+  border-radius: 1px;
+}
+
+/* ── Tab item ── */
+.fn-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: 3px 3px;
+  border-radius: 999px;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.22s ease;
+  position: relative;
+  flex-shrink: 0;
+}
+.fn-item:hover { background: transparent; }
+
+/* ── Icon + label dibungkus pill saat active ── */
+.fn-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--black);
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  color: var(--black);
-  box-shadow: 0 6px 28px rgba(168,255,62,0.5);
-  cursor: pointer;
-  text-decoration: none;
-  opacity: 0;
-  transform: scale(0.5);
-  transition: opacity 0.4s, transform 0.4s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  transition:
+    background 0.35s cubic-bezier(.34,1.56,.64,1),
+    color      0.25s ease,
+    transform  0.42s cubic-bezier(.34,1.56,.64,1),
+    box-shadow 0.3s ease,
+    border-radius 0.35s cubic-bezier(.34,1.56,.64,1),
+    width 0.42s cubic-bezier(.34,1.56,.64,1),
+    padding 0.35s cubic-bezier(.34,1.56,.64,1);
+  will-change: transform, width;
+  overflow: hidden;
+  white-space: nowrap;
+  /* Agar label bisa di dalam fn-icon saat expand */
+  justify-content: flex-start;
+  padding-left: 0;
 }
-.wa-float.show { opacity: 1; transform: scale(1); }
-.wa-float:hover { box-shadow: 0 10px 36px rgba(168,255,62,0.65); transform: scale(1.08); }
 
-@keyframes waPing {
-  0%   { box-shadow: 0 6px 28px rgba(168,255,62,0.5), 0 0 0 0   rgba(168,255,62,0.45); }
-  70%  { box-shadow: 0 6px 28px rgba(168,255,62,0.5), 0 0 0 18px rgba(168,255,62,0); }
+/* Wrapper dalam icon untuk posisi ikon di tengah */
+.fn-icon-inner {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.fn-item:hover .fn-icon {
+  background: #2a2a2a;
+}
+
+/* Active: melebar jadi pill hijau dengan label */
+.fn-item.active .fn-icon {
+  background: var(--green);
+  color: var(--black);
+  width: auto;
+  padding-right: 16px;
+  border-radius: 999px;
+  box-shadow: 0 4px 18px rgba(168,255,62,0.45);
+  animation: pillExpand 0.48s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+
+@keyframes pillExpand {
+  0%   { transform: scale(0.88); }
+  55%  { transform: scale(1.06); }
+  78%  { transform: scale(0.98); }
+  100% { transform: scale(1); }
+}
+
+.fn-item:active .fn-icon {
+  transform: scale(0.90) !important;
+  transition-duration: 0.08s !important;
+}
+
+/* ── Label — di dalam fn-icon, muncul saat active ── */
+.fn-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--black);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-width 0.42s cubic-bezier(.34,1.56,.64,1),
+    opacity   0.2s ease;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.fn-item.active .fn-label {
+  max-width: 120px;
+  opacity: 1;
+  animation: labelWipe 0.42s cubic-bezier(.34,1.56,.64,1) 0.05s both;
+}
+
+@keyframes labelWipe {
+  0%   { opacity: 0; transform: translateX(-10px); }
+  55%  { opacity: 1; transform: translateX(2px); }
+  80%  { transform: translateX(-1px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Stagger entrance saat pill pertama muncul ── */
+.float-nav.show .fn-item {
+  animation: itemBounceIn 0.55s cubic-bezier(.34,1.56,.64,1) both;
+}
+.float-nav.show .fn-item:nth-child(1) { animation-delay: 0.10s; }
+.float-nav.show .fn-item:nth-child(3) { animation-delay: 0.20s; }
+.float-nav.show .fn-item:nth-child(5) { animation-delay: 0.30s; }
+
+@keyframes itemBounceIn {
+  0%   { opacity:0; transform: scale(0.4) translateY(8px); }
+  60%  { transform: scale(1.15) translateY(-3px); }
+  80%  { transform: scale(0.97) translateY(1px); }
+  100% { opacity:1; transform: scale(1) translateY(0); }
+}
+
+.float-nav.show .fn-divider {
+  animation: dividerFade 0.3s ease 0.25s both;
+}
+@keyframes dividerFade {
+  from { opacity:0; transform: scaleY(0.4); }
+  to   { opacity:1; transform: scaleY(1); }
+}
+
+@keyframes waPulse {
+  0%   { box-shadow: 0 6px 28px rgba(168,255,62,0.5), 0 0 0 0   rgba(168,255,62,0.55); }
+  60%  { box-shadow: 0 6px 28px rgba(168,255,62,0.4), 0 0 0 20px rgba(168,255,62,0); }
   100% { box-shadow: 0 6px 28px rgba(168,255,62,0.5), 0 0 0 0   rgba(168,255,62,0); }
 }
-.wa-float.show { animation: waPing 2.5s ease-out infinite; }
-.wa-float:hover { animation: none; }
 
-/* ── Nav scroll shrink ── */
-nav { transition: height 0.28s ease, box-shadow 0.28s ease, background 0.28s; }
-nav.scrolled {
-  height: 56px;
-  box-shadow: 0 2px 20px rgba(0,0,0,0.07);
-  background: rgba(250,250,248,0.97);
+/* Nav shrink on scroll — top nav only */
+nav:not(.float-nav) { transition: height 0.32s cubic-bezier(.22,.68,0,1), box-shadow 0.32s, background 0.32s; }
+nav:not(.float-nav).scrolled {
+  height: 54px;
+  box-shadow: 0 2px 24px rgba(0,0,0,0.08);
+  background: rgba(250,250,248,0.98);
 }
 
-/* ── Underline slide on nav links ── */
-.nav-menu a {
-  position: relative;
+/* Bottom padding so pill nav never covers footer content — mobile only */
+@media (max-width: 960px) {
+  body { padding-bottom: 110px; }
 }
+
+/* Nav links — underline grow from center */
+.nav-menu a { position: relative; }
 .nav-menu a:not(.nav-cta)::after {
   content: '';
   position: absolute;
-  bottom: -3px; left: 0;
-  width: 0; height: 2px;
+  bottom: -3px;
+  left: 50%; right: 50%;
+  height: 2px;
   background: var(--green-deep);
   border-radius: 2px;
-  transition: width 0.25s ease;
+  transition: left 0.28s cubic-bezier(.22,.68,0,1.2), right 0.28s cubic-bezier(.22,.68,0,1.2);
 }
-.nav-menu a:not(.nav-cta):hover::after { width: 100%; }
+.nav-menu a:not(.nav-cta):hover::after { left: 0; right: 0; }
 
-/* ── Order widget entrance glow ── */
-@keyframes widgetGlow {
+/* Hero entrance — staggered spring */
+.anim { opacity: 0; animation: fadeUp 0.72s cubic-bezier(.22,.68,0,1.2) forwards; }
+.a1 { animation-delay: 0.08s; }
+.a2 { animation-delay: 0.22s; }
+.a3 { animation-delay: 0.38s; }
+.a4 { animation-delay: 0.54s; }
+.a5 { animation-delay: 0.70s; }
+
+/* Order widget — subtle breathing glow */
+@keyframes widgetBreath {
   0%,100% { box-shadow: var(--shadow-lg); }
-  50%      { box-shadow: 0 12px 48px rgba(168,255,62,0.12), var(--shadow-lg); }
+  50%      { box-shadow: 0 16px 56px rgba(168,255,62,0.14), var(--shadow-lg); }
 }
-.order-widget { animation: widgetGlow 4s ease-in-out infinite; }
+.order-widget { animation: widgetBreath 5s ease-in-out infinite; }
 
-/* ── Scroll reveal with stagger for grids ── */
-.features-grid.visible .feature-card,
-.testi-grid.visible .testi-card,
-.testi-grid-2.visible .testi-card,
-.feature-list-grid.visible .fl-item {
-  animation: fadeUp 0.6s cubic-bezier(.22,.68,0,1.1) forwards;
-}
-.features-grid.visible .feature-card:nth-child(1),
-.testi-grid.visible .testi-card:nth-child(1),
-.feature-list-grid.visible .fl-item:nth-child(1) { animation-delay: 0.05s; }
-.features-grid.visible .feature-card:nth-child(2),
-.testi-grid.visible .testi-card:nth-child(2),
-.feature-list-grid.visible .fl-item:nth-child(2) { animation-delay: 0.14s; }
-.features-grid.visible .feature-card:nth-child(3),
-.testi-grid.visible .testi-card:nth-child(3),
-.feature-list-grid.visible .fl-item:nth-child(3) { animation-delay: 0.23s; }
-.features-grid.visible .feature-card:nth-child(4),
-.feature-list-grid.visible .fl-item:nth-child(4) { animation-delay: 0.32s; }
-.features-grid.visible .feature-card:nth-child(5),
-.feature-list-grid.visible .fl-item:nth-child(5) { animation-delay: 0.41s; }
-.features-grid.visible .feature-card:nth-child(6),
-.feature-list-grid.visible .fl-item:nth-child(6) { animation-delay: 0.50s; }
-.feature-list-grid.visible .fl-item:nth-child(7) { animation-delay: 0.59s; }
-.feature-list-grid.visible .fl-item:nth-child(8) { animation-delay: 0.68s; }
-
-/* Grid children start hidden, reveal parent triggers them */
+/* Scroll-reveal stagger for grid children */
 .features-grid .feature-card,
 .feature-list-grid .fl-item,
 .testi-grid .testi-card,
 .testi-grid-2 .testi-card { opacity: 0; }
 
-/* ── Respect reduced motion ── */
+.features-grid.visible .feature-card   { animation: fadeUp 0.65s cubic-bezier(.22,.68,0,1.2) forwards; }
+.feature-list-grid.visible .fl-item    { animation: slideRight 0.6s cubic-bezier(.22,.68,0,1.2) forwards; }
+.testi-grid.visible .testi-card        { animation: scaleIn 0.6s cubic-bezier(.22,.68,0,1.2) forwards; }
+.testi-grid-2.visible .testi-card      { animation: scaleIn 0.6s cubic-bezier(.22,.68,0,1.2) forwards; }
+
+/* Stagger delays — features */
+.features-grid.visible .feature-card:nth-child(1) { animation-delay: 0.04s; }
+.features-grid.visible .feature-card:nth-child(2) { animation-delay: 0.12s; }
+.features-grid.visible .feature-card:nth-child(3) { animation-delay: 0.20s; }
+.features-grid.visible .feature-card:nth-child(4) { animation-delay: 0.28s; }
+.features-grid.visible .feature-card:nth-child(5) { animation-delay: 0.36s; }
+.features-grid.visible .feature-card:nth-child(6) { animation-delay: 0.44s; }
+
+/* Stagger delays — feature list (dark section) */
+.feature-list-grid.visible .fl-item:nth-child(1) { animation-delay: 0.04s; }
+.feature-list-grid.visible .fl-item:nth-child(2) { animation-delay: 0.10s; }
+.feature-list-grid.visible .fl-item:nth-child(3) { animation-delay: 0.16s; }
+.feature-list-grid.visible .fl-item:nth-child(4) { animation-delay: 0.22s; }
+.feature-list-grid.visible .fl-item:nth-child(5) { animation-delay: 0.28s; }
+.feature-list-grid.visible .fl-item:nth-child(6) { animation-delay: 0.34s; }
+.feature-list-grid.visible .fl-item:nth-child(7) { animation-delay: 0.40s; }
+.feature-list-grid.visible .fl-item:nth-child(8) { animation-delay: 0.46s; }
+
+/* Stagger delays — testimonials */
+.testi-grid.visible .testi-card:nth-child(1)   { animation-delay: 0.05s; }
+.testi-grid.visible .testi-card:nth-child(2)   { animation-delay: 0.14s; }
+.testi-grid.visible .testi-card:nth-child(3)   { animation-delay: 0.23s; }
+.testi-grid-2.visible .testi-card:nth-child(1) { animation-delay: 0.08s; }
+.testi-grid-2.visible .testi-card:nth-child(2) { animation-delay: 0.18s; }
+
+/* Respect reduced motion — one rule covers all */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .features-grid .feature-card,
+  .feature-list-grid .fl-item,
+  .testi-grid .testi-card,
+  .testi-grid-2 .testi-card { opacity: 1; }
+  .step-num { opacity: 1; }
+  .anim { opacity: 1; }
 }
 
+
+/* ═══════════════════════════════════════
+   TESTI MARQUEE SLIDESHOW
+   Infinite scroll kanan ke kiri, pause on hover/touch
+═══════════════════════════════════════ */
+.testi-marquee-wrap {
+  width: 100%;
+  overflow: hidden;
+  margin-top: var(--space-6);
+  /* Fade edges kiri & kanan */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  cursor: grab;
+  touch-action: pan-y; /* izinkan scroll vertikal, blokir horizontal agar kita handle */
+  user-select: none;
+  -webkit-user-select: none;
+}
+.testi-marquee-wrap:active { cursor: grabbing; }
+
+.testi-marquee {
+  display: flex;
+  gap: var(--space-4);
+  width: max-content;
+  animation: marqueeScroll 32s linear infinite;
+  will-change: transform;
+}
+
+/* Pause saat hover (desktop) */
+.testi-marquee-wrap:hover .testi-marquee {
+  animation-play-state: paused;
+}
+
+/* Card di dalam marquee: lebar fixed agar rapi */
+.testi-marquee .testi-card {
+  width: 320px;
+  flex-shrink: 0;
+  /* Reset animasi reveal agar tidak invisible */
+  opacity: 1 !important;
+  animation: none !important;
+  transform: none !important;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none; /* biarkan pointer events ke wrap, bukan card */
+}
+/* Kecuali marquee sendiri boleh capture pointer */
+.testi-marquee {
+  pointer-events: auto;
+}
+
+@keyframes marqueeScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* geser tepat setengah = 1 set */
+}
+
+/* Mobile: card sedikit lebih kecil */
+@media (max-width: 960px) {
+  .testi-marquee .testi-card {
+    width: 280px;
+  }
+  .testi-marquee-wrap {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 5%,
+      black 95%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 5%,
+      black 95%,
+      transparent 100%
+    );
+  }
+}
 /* ═══════════════════════════════════════
    MOBILE RESPONSIVE
 ═══════════════════════════════════════ */
 @media (max-width: 960px) {
   .container { padding: 0 24px; }
-  nav { padding: 0 24px; }
-  .nav-menu { display: none; }
-  .hero { padding: 100px 24px 60px; }
+  /* Sembunyikan navbar atas di HP — navigasi pakai floating pill nav di bawah */
+  nav:not(.float-nav) { display: none; }
+  .hero { padding: 60px 24px 60px; }
   .hero h1 { font-size: 2.2rem; }
   .hero-sub { font-size: 1rem; }
   .trust-bar { gap: 28px; padding: 24px; }
@@ -1634,7 +2022,7 @@ nav.scrolled {
       TradingView Premium · Sejak Maret 2025
     </div>
     <h1 class="anim a2">
-     Backtest Semua <br><span class="accent">Timeframe</span>.
+      Backtest Semua<br><span class="accent">Timeframe</span>.
     </h1>
     <p class="hero-sub anim a3">
       Akses penuh fitur TradingView Premium — Replay Mode (Semua Timeframe), indikator tak terbatas, multi-chart, alert realtime — dengan harga yang masuk akal. Proses cepat, garansi aktif selama berlangganan.
@@ -1679,8 +2067,8 @@ nav.scrolled {
   </div>
   <div class="trust-divider"></div>
   <div class="trust-item">
-    <div class="trust-num">08–22</div>
-    <div class="trust-label">Layanan WIB</div>
+    <div class="trust-num">08–22 WIB</div>
+    <div class="trust-label">Jam Layanan Admin</div>
   </div>
 </div>
 
@@ -1899,7 +2287,7 @@ nav.scrolled {
       <div class="step-card">
         <div class="step-num">03</div>
         <h4>Transfer & Konfirmasi</h4>
-        <p>Admin kirim info pembayaran. Transfer ke ShopeePay 085163582709 a/n Bablash / Reg.</p>
+        <p>Admin kirim info pembayaran. Scan QRIS.</p>
       </div>
       <div class="step-card">
         <div class="step-num">04</div>
@@ -2031,7 +2419,7 @@ nav.scrolled {
         </button>
 
         <p class="widget-note">
-          <i class="bi bi-credit-card"></i> Pembayaran via ShopeePay &nbsp;·&nbsp; Proses &lt; 1 jam &nbsp;·&nbsp; Layanan 08.00–22.00 WIB
+          <i class="bi bi-credit-card"></i> Pembayaran via QRIS &nbsp;·&nbsp; Proses &lt; 1 jam &nbsp;·&nbsp; Layanan 08.00–22.00 WIB
         </p>
       </div>
     </div>
@@ -2043,8 +2431,8 @@ nav.scrolled {
   <div class="container">
     <div class="reveal" style="text-align:center;">
       <div class="label-tag" style="justify-content:center;">Testimoni Pelanggan</div>
-      <h2>Dipercaya Para Trader<br>di Seluruh Indonesia</h2>
-      <p style="max-width:480px; margin: 12px auto 0;">Lebih dari ratusan pelanggan aktif. Ini cerita mereka setelah berlangganan di Jeki Store.</p>
+      <h2>Dipercaya Para Trader<br>Pemula Maupun Expert</h2>
+      <p style="max-width:480px; margin: 12px auto 0;">Lebih dari puluhan pelanggan aktif. Ini beberapa cerita mereka setelah berlangganan di Jeki Store.</p>
     </div>
 
     <!-- Row 1 -->
@@ -2084,43 +2472,34 @@ nav.scrolled {
       </div>
     </div>
 
-    <!-- Row 2 -->
-    <div class="testi-grid-2 reveal">
-      <div class="testi-card testi-featured">
-        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-text">"Sudah 6 bulan langganan, belum pernah kecewa. Waktu ada kendala admin langsung bantu dalam hitungan menit. Ini yang paling penting buat saya — support yang real. Tidak perlu khawatir soal garansinya."</p>
-        <div class="testi-author">
-          <div class="testi-avatar" style="background: var(--green); color:var(--black);">HK</div>
-          <div>
-            <div class="testi-name">Hendra K.</div>
-            <div class="testi-role">Futures Trader · Medan</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card testi-featured">
-        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-text">"Saya pakai Method 2 buat pantau dari HP juga. Lumayan stabil dan setup-nya gampang diikutin karena admin kasih tutorial lengkap. Budget trading jadi lebih efisien karena hemat biaya tools."</p>
-        <div class="testi-author">
-          <div class="testi-avatar" style="background: var(--green); color:var(--black);">DM</div>
-          <div>
-            <div class="testi-name">Dinda M.</div>
-            <div class="testi-role">Saham Trader · Yogyakarta</div>
-          </div>
-        </div>
-      </div>
-    </div>
+  </div><!-- /container -->
 
-    <!-- Row 3 -->
-    <div class="testi-grid reveal">
+  <!-- ── MARQUEE SLIDESHOW — berjalan kanan ke kiri otomatis ── -->
+  <div class="testi-marquee-wrap">
+    <div class="testi-marquee" id="testiMarquee">
+      <!-- Set 1 -->
+      <div class="testi-card testi-featured">
+        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+        <p class="testi-text">"Sudah 6 bulan langganan, belum pernah kecewa. Waktu ada kendala admin langsung bantu dalam hitungan menit. Ini yang paling penting buat saya — support yang real."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:var(--green);color:var(--black);">HK</div>
+          <div><div class="testi-name">Hendra K.</div><div class="testi-role">Futures Trader · Medan</div></div>
+        </div>
+      </div>
+      <div class="testi-card testi-featured">
+        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+        <p class="testi-text">"Saya pakai Method 2 buat pantau dari HP juga. Lumayan stabil dan setup-nya gampang diikutin karena admin kasih tutorial lengkap. Budget trading jadi lebih efisien."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:var(--green);color:var(--black);">DM</div>
+          <div><div class="testi-name">Dinda M.</div><div class="testi-role">Saham Trader · Yogyakarta</div></div>
+        </div>
+      </div>
       <div class="testi-card">
         <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i></div>
         <p class="testi-text">"Multi-chart-nya yang paling worth it buat saya. Bisa lihat 4 timeframe sekaligus tanpa buka-tutup tab. Analisa jadi jauh lebih cepat dan tidak miss sinyal penting."</p>
         <div class="testi-author">
           <div class="testi-avatar">YP</div>
-          <div>
-            <div class="testi-name">Yudi P.</div>
-            <div class="testi-role">Forex Trader · Semarang</div>
-          </div>
+          <div><div class="testi-name">Yudi P.</div><div class="testi-role">Forex Trader · Semarang</div></div>
         </div>
       </div>
       <div class="testi-card">
@@ -2128,10 +2507,7 @@ nav.scrolled {
         <p class="testi-text">"Fitur alert-nya yang bikin saya pilih premium. Dulu sering miss entry karena harus pantau terus, sekarang HP langsung notif kalau harga nyentuh level target saya."</p>
         <div class="testi-author">
           <div class="testi-avatar">NW</div>
-          <div>
-            <div class="testi-name">Nina W.</div>
-            <div class="testi-role">Crypto & Forex · Denpasar</div>
-          </div>
+          <div><div class="testi-name">Nina W.</div><div class="testi-role">Crypto & Forex · Denpasar</div></div>
         </div>
       </div>
       <div class="testi-card">
@@ -2139,14 +2515,52 @@ nav.scrolled {
         <p class="testi-text">"Awalnya takut tidak dipercaya karena bukan beli langsung. Tapi Jeki Store udah terbukti — sudah 4 bulan dan tidak ada masalah berarti. Recommended banget buat trader budget!"</p>
         <div class="testi-author">
           <div class="testi-avatar">BS</div>
-          <div>
-            <div class="testi-name">Bagas S.</div>
-            <div class="testi-role">Pemula Trader · Malang</div>
-          </div>
+          <div><div class="testi-name">Bagas S.</div><div class="testi-role">Pemula Trader · Malang</div></div>
         </div>
       </div>
-    </div>
-  </div>
+      <!-- Set 2 — duplikat untuk infinite loop mulus -->
+      <div class="testi-card testi-featured">
+        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+        <p class="testi-text">"Sudah 6 bulan langganan, belum pernah kecewa. Waktu ada kendala admin langsung bantu dalam hitungan menit. Ini yang paling penting buat saya — support yang real."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:var(--green);color:var(--black);">HK</div>
+          <div><div class="testi-name">Hendra K.</div><div class="testi-role">Futures Trader · Medan</div></div>
+        </div>
+      </div>
+      <div class="testi-card testi-featured">
+        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+        <p class="testi-text">"Saya pakai Method 2 buat pantau dari HP juga. Lumayan stabil dan setup-nya gampang diikutin karena admin kasih tutorial lengkap. Budget trading jadi lebih efisien."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:var(--green);color:var(--black);">DM</div>
+          <div><div class="testi-name">Dinda M.</div><div class="testi-role">Saham Trader · Yogyakarta</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i></div>
+        <p class="testi-text">"Multi-chart-nya yang paling worth it buat saya. Bisa lihat 4 timeframe sekaligus tanpa buka-tutup tab. Analisa jadi jauh lebih cepat dan tidak miss sinyal penting."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">YP</div>
+          <div><div class="testi-name">Yudi P.</div><div class="testi-role">Forex Trader · Semarang</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+        <p class="testi-text">"Fitur alert-nya yang bikin saya pilih premium. Dulu sering miss entry karena harus pantau terus, sekarang HP langsung notif kalau harga nyentuh level target saya."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">NW</div>
+          <div><div class="testi-name">Nina W.</div><div class="testi-role">Crypto & Forex · Denpasar</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+        <p class="testi-text">"Awalnya takut tidak dipercaya karena bukan beli langsung. Tapi Jeki Store udah terbukti — sudah 4 bulan dan tidak ada masalah berarti. Recommended banget buat trader budget!"</p>
+        <div class="testi-author">
+          <div class="testi-avatar">BS</div>
+          <div><div class="testi-name">Bagas S.</div><div class="testi-role">Pemula Trader · Malang</div></div>
+        </div>
+      </div>
+    </div><!-- /marquee -->
+  </div><!-- /wrap -->
 </section>
 
 <!-- ══ FAQ ══ -->
@@ -2223,7 +2637,7 @@ nav.scrolled {
 <div class="cta-banner reveal">
   <div class="cta-orb cta-orb-1"></div>
   <div class="cta-orb cta-orb-2"></div>
-  <h2>Siap Upgrade Analisa Kamu?</h2>
+  <h2>Siap Naik Level?</h2>
   <p>TradingView Premium dengan harga terjangkau.<br>Proses cepat, garansi aktif, admin responsif.</p>
   <a href="#order" class="btn-green">
     <i class="bi bi-whatsapp"></i>
@@ -2238,8 +2652,8 @@ nav.scrolled {
     JekiStore
   </div>
   <div class="footer-center">
-    TradingView Premium Terpercaya<br>
-    <span>Pembayaran via · Qris</span>
+    TradingView Premium Terpercaya · Sejak Maret 2025<br>
+    <span>Pembayaran Via · QRIS</span>
   </div>
   <div class="footer-right">
     <strong style="color:var(--ink-mid);">Jam Operasional</strong><br>
@@ -2248,13 +2662,34 @@ nav.scrolled {
   </div>
 </footer>
 
-<!-- ══ FLOATING WA BUTTON ══ -->
-<a class="wa-float" href="https://wa.me/6285163582709" target="_blank" title="Order via WhatsApp">
-  <i class="bi bi-whatsapp"></i>
-</a>
+<!-- ══ FLOATING PILL NAV ══ -->
+<nav class="float-nav" id="floatNav" aria-label="Quick navigation">
+  <a class="fn-item" href="#" onclick="floatNavClick(event,'top')">
+    <span class="fn-icon">
+      <span class="fn-icon-inner"><i class="bi bi-house-fill"></i></span>
+      <span class="fn-label">Home</span>
+    </span>
+  </a>
+  <span class="fn-divider" aria-hidden="true"></span>
+  <a class="fn-item" href="#testi" onclick="floatNavClick(event,'testi')">
+    <span class="fn-icon">
+      <span class="fn-icon-inner"><i class="bi bi-chat-quote-fill"></i></span>
+      <span class="fn-label">Testimoni</span>
+    </span>
+  </a>
+  <span class="fn-divider" aria-hidden="true"></span>
+  <a class="fn-item fn-order" href="#order" onclick="floatNavClick(event,'order')">
+    <span class="fn-icon">
+      <span class="fn-icon-inner"><i class="bi bi-whatsapp"></i></span>
+      <span class="fn-label">Order</span>
+    </span>
+  </a>
+</nav>
 
 <script>
-/* ── Scroll Reveal with stagger support ── */
+/* ══════════════════════════════════════
+   SCROLL REVEAL — stagger + unobserve
+══════════════════════════════════════ */
 const obs = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -2262,37 +2697,170 @@ const obs = new IntersectionObserver((entries) => {
       obs.unobserve(e.target);
     }
   });
-}, { threshold: 0.08 });
+}, { threshold: 0.07, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-/* ── Nav shrink on scroll ── */
-const nav = document.querySelector('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
+/* ══════════════════════════════════════
+   NAV SHRINK + FLOATING PILL NAV
+══════════════════════════════════════ */
+const navEl    = document.querySelector('nav:not(.float-nav)');
+const floatNav = document.getElementById('floatNav');
 
-  /* Floating WA button — show after 300px scroll */
-  const waFloat = document.querySelector('.wa-float');
-  waFloat.classList.toggle('show', window.scrollY > 300);
+/* Section targets for active state */
+const sections = [
+  { id: 'top',   el: document.querySelector('.hero'),     idx: 0 },
+  { id: 'order', el: document.getElementById('order'),    idx: 1 },
+  { id: 'testi', el: document.getElementById('testi'),    idx: 2 },
+];
+
+function updateActiveTab() {
+  if (scrollLock) return; /* Jangan override saat user baru klik */
+  const mid = window.innerHeight * 0.45;
+
+  /* Cari section yang paling bawah masih di atas mid */
+  let activeKey = 'top';
+  sections.forEach((s) => {
+    if (!s.el) return;
+    const rect = s.el.getBoundingClientRect();
+    if (rect.top <= mid) activeKey = s.id;
+  });
+
+  /* Map section id -> fn-item index (urutan di HTML: Home=0, Testi=1, Order=2) */
+  const keyToItem = { top: 0, testi: 1, order: 2 };
+  const activeItemIdx = keyToItem[activeKey];
+
+  floatNav.querySelectorAll('.fn-item').forEach((item, i) => {
+    const wasActive = item.classList.contains('active');
+    const isActive  = i === activeItemIdx;
+    if (isActive && !wasActive) {
+      item.classList.add('active');
+      const label = item.querySelector('.fn-label');
+      if (label) {
+        label.style.animation = 'none';
+        label.offsetHeight;
+        label.style.animation = '';
+      }
+    } else if (!isActive) {
+      item.classList.remove('active');
+    }
+  });
+}
+
+const isMobile = window.matchMedia('(max-width: 960px)').matches;
+
+/* Fungsi show/hide pill nav */
+function showPill() {
+  if (!floatNav.classList.contains('show')) {
+    floatNav.classList.add('show');
+    floatNav.classList.remove('settled');
+    clearTimeout(floatNav._settleTimer);
+    floatNav._settleTimer = setTimeout(() => floatNav.classList.add('settled'), 750);
+  }
+}
+function hidePill() {
+  floatNav.classList.remove('show', 'settled');
+}
+
+/* Di mobile: muncul setelah scroll sedikit (50px) */
+const mobileThreshold  = 50;
+/* Di desktop: muncul setelah lewat hero (280px) */
+const desktopThreshold = 280;
+
+window.addEventListener('scroll', () => {
+  const y         = window.scrollY;
+  const threshold = isMobile ? mobileThreshold : desktopThreshold;
+
+  /* Top nav shrink — hanya jika ada navbar atas */
+  if (navEl) navEl.classList.toggle('scrolled', y > 60);
+
+  /* Show/hide pill nav */
+  if (y > threshold) {
+    showPill();
+  } else {
+    hidePill();
+  }
+
+  /* Active tab tracking */
+  updateActiveTab();
 }, { passive: true });
 
-/* ── Animated counter for trust-num ── */
+/* Trigger scroll check sekali saat load (untuk kasus halaman sudah di-scroll) */
+window.dispatchEvent(new Event('scroll'));
+
+/* Smooth scroll handler + bounce wipe label animation */
+let scrollLock = false; /* Lock updateActiveTab saat user klik manual */
+
+function setActive(targetKey) {
+  const items = floatNav.querySelectorAll('.fn-item');
+  const map = { top: 0, testi: 1, order: 2 };
+  items.forEach((item, i) => {
+    const isActive = i === map[targetKey];
+    const wasActive = item.classList.contains('active');
+    if (isActive && !wasActive) {
+      item.classList.add('active');
+      const label = item.querySelector('.fn-label');
+      if (label) {
+        label.style.animation = 'none';
+        label.offsetHeight;
+        label.style.animation = '';
+      }
+    } else if (!isActive) {
+      item.classList.remove('active');
+    }
+  });
+}
+
+function floatNavClick(e, target) {
+  e.preventDefault();
+
+  /* Set active langsung, kunci scroll handler sementara */
+  setActive(target);
+  scrollLock = true;
+  clearTimeout(floatNav._lockTimer);
+
+  if (target === 'top') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    const el = document.getElementById(target);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* Lepas kunci setelah animasi scroll selesai (~800ms) */
+  floatNav._lockTimer = setTimeout(() => { scrollLock = false; }, 900);
+}
+
+/* ══════════════════════════════════════
+   TRUST BAR COUNTER
+   Safely skips text-only items like "08–22", "Garansi", "< 1 Jam"
+   Only counts items that START with a digit
+══════════════════════════════════════ */
 function animateCount(el) {
   const raw = el.textContent.trim();
-  const num  = parseFloat(raw.replace(/[^0-9.]/g, ''));
-  if (isNaN(num) || num === 0) return;
-  const prefix = raw.match(/^[^0-9]*/)?.[0] || '';
-  const suffix = raw.slice((prefix + String(num)).length);
-  let start = null;
-  const dur = 1200;
-  const ease = t => 1 - Math.pow(1 - t, 3);
-  function step(ts) {
-    if (!start) start = ts;
-    const p = Math.min((ts - start) / dur, 1);
-    const v = num % 1 !== 0 ? (ease(p) * num).toFixed(1) : Math.round(ease(p) * num);
-    el.textContent = prefix + v + suffix;
-    if (p < 1) requestAnimationFrame(step);
+
+  /* Skip if the value doesn't start with a digit (e.g. "08–22", "Garansi") */
+  if (!/^\d/.test(raw)) return;
+
+  const match = raw.match(/^(\d+(?:\.\d+)?)(.*)/);
+  if (!match) return;
+
+  const num    = parseFloat(match[1]);
+  const suffix = match[2];           /* " Hari", " Method", "+" etc. */
+  const original = raw;
+  let startTs = null;
+  const dur = 1100;
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+  function tick(ts) {
+    if (!startTs) startTs = ts;
+    const p = Math.min((ts - startTs) / dur, 1);
+    const v = Number.isInteger(num)
+      ? Math.round(easeOut(p) * num)
+      : (easeOut(p) * num).toFixed(1);
+    el.textContent = v + suffix;
+    if (p < 1) requestAnimationFrame(tick);
+    else el.textContent = original; /* snap to exact original on finish */
   }
-  requestAnimationFrame(step);
+  requestAnimationFrame(tick);
 }
 
 const counterObs = new IntersectionObserver((entries) => {
@@ -2302,9 +2870,142 @@ const counterObs = new IntersectionObserver((entries) => {
       counterObs.unobserve(e.target);
     }
   });
-}, { threshold: 0.5 });
+}, { threshold: 0.6 });
 const trustBar = document.querySelector('.trust-bar');
 if (trustBar) counterObs.observe(trustBar);
+
+/* ══════════════════════════════════════
+   HERO SPARKLES — lightweight canvas
+   Tiny glowing dots drift upward then fade.
+   Only active in hero viewport.
+══════════════════════════════════════ */
+(function initSparkles() {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = `
+    position:absolute;inset:0;width:100%;height:100%;
+    pointer-events:none;z-index:0;opacity:0.55;
+  `;
+  hero.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d');
+  let W, H, dots = [], raf;
+
+  function resize() {
+    W = canvas.width  = hero.offsetWidth;
+    H = canvas.height = hero.offsetHeight;
+  }
+
+  function mkDot() {
+    return {
+      x: Math.random() * W,
+      y: H + 10,
+      r: Math.random() * 2.2 + 0.6,
+      sp: Math.random() * 0.6 + 0.25,
+      op: Math.random() * 0.7 + 0.3,
+      drift: (Math.random() - 0.5) * 0.35,
+      life: 1,
+      decay: Math.random() * 0.003 + 0.002,
+    };
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    /* Spawn ~1 dot every 4 frames */
+    if (Math.random() < 0.25) dots.push(mkDot());
+
+    dots = dots.filter(d => d.life > 0);
+    dots.forEach(d => {
+      d.y   -= d.sp;
+      d.x   += d.drift;
+      d.life -= d.decay;
+
+      const a = d.life * d.op;
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(168,255,62,${a})`;
+      ctx.shadowColor = `rgba(168,255,62,${a * 0.8})`;
+      ctx.shadowBlur  = 6;
+      ctx.fill();
+    });
+
+    raf = requestAnimationFrame(draw);
+  }
+
+  /* Only run when hero is in viewport */
+  const heroObs = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { resize(); draw(); }
+    else { cancelAnimationFrame(raf); }
+  }, { threshold: 0.1 });
+  heroObs.observe(hero);
+
+  window.addEventListener('resize', resize, { passive: true });
+})();
+
+/* ══════════════════════════════════════
+   MAGNETIC HOVER — btn-green & wa-float
+   Cards gently pull toward cursor
+══════════════════════════════════════ */
+document.querySelectorAll('.btn-green, .btn-outline, .btn-primary').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const r   = btn.getBoundingClientRect();
+    const dx  = e.clientX - (r.left + r.width  / 2);
+    const dy  = e.clientY - (r.top  + r.height / 2);
+    btn.style.transform = `translate(${dx * 0.18}px, ${dy * 0.24}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+    btn.style.transition = 'transform 0.5s cubic-bezier(.22,.68,0,1.2)';
+  });
+  btn.addEventListener('mouseenter', () => {
+    btn.style.transition = 'transform 0.12s ease';
+  });
+});
+
+/* ══════════════════════════════════════
+   CURSOR TRAIL — subtle green dot follows
+   (disabled on touch/mobile)
+══════════════════════════════════════ */
+if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+  const trail = document.createElement('div');
+  trail.style.cssText = `
+    position:fixed;width:8px;height:8px;
+    background:rgba(168,255,62,0.65);
+    border-radius:50%;pointer-events:none;
+    z-index:9999;transform:translate(-50%,-50%);
+    transition:transform 0.12s ease,opacity 0.3s;
+    mix-blend-mode:multiply;
+  `;
+  document.body.appendChild(trail);
+
+  let tx = 0, ty = 0, cx = 0, cy = 0;
+
+  document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+
+  /* Lerp the dot so it lags slightly behind cursor — feels alive */
+  (function lerp() {
+    cx += (tx - cx) * 0.18;
+    cy += (ty - cy) * 0.18;
+    trail.style.left = cx + 'px';
+    trail.style.top  = cy + 'px';
+    requestAnimationFrame(lerp);
+  })();
+
+  /* Grow on hoverable elements */
+  document.querySelectorAll('a,button,.feature-card,.testi-card,.method-card,.faq-item').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      trail.style.transform = 'translate(-50%,-50%) scale(3)';
+      trail.style.opacity   = '0.4';
+    });
+    el.addEventListener('mouseleave', () => {
+      trail.style.transform = 'translate(-50%,-50%) scale(1)';
+      trail.style.opacity   = '1';
+    });
+  });
+}
 
 /* ── FAQ Toggle ── */
 function toggleFaq(el) {
@@ -2343,6 +3044,107 @@ function orderViaWA() {
 
 /* ── Default Method 1 ── */
 document.getElementById('m1').checked = true;
+
+/* ══════════════════════════════════════
+   TESTI MARQUEE — drag/swipe + pause on hold
+══════════════════════════════════════ */
+(function initMarquee() {
+  const wrap    = document.querySelector('.testi-marquee-wrap');
+  const marquee = document.getElementById('testiMarquee');
+  if (!marquee || !wrap) return;
+
+  /* ── State ── */
+  let isDown     = false;
+  let startX     = 0;
+  let currentX   = 0;       /* offset drag saat ini */
+  let baseOffset = 0;        /* offset sebelum drag dimulai */
+  let velX       = 0;        /* kecepatan untuk momentum */
+  let lastX      = 0;
+  let lastT      = 0;
+  let resumeTimer;
+
+  /* Ambil current translateX dari animasi yang sedang jalan */
+  function getAnimatedX() {
+    const st  = window.getComputedStyle(marquee);
+    const mat = new DOMMatrix(st.transform);
+    return mat.m41; /* translateX */
+  }
+
+  function pauseAnim() {
+    marquee.style.animationPlayState = 'paused';
+  }
+
+  function resumeAnim(delay = 1000) {
+    clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(() => {
+      /* Reset transform manual sebelum resume animasi */
+      marquee.style.transform = '';
+      marquee.style.transition = '';
+      marquee.style.animationPlayState = 'running';
+    }, delay);
+  }
+
+  function applyDrag(dx) {
+    marquee.style.transform = `translateX(${baseOffset + dx}px)`;
+  }
+
+  /* ── POINTER EVENTS (mouse + touch) ── */
+  wrap.addEventListener('pointerdown', (e) => {
+    isDown   = true;
+    startX   = e.clientX;
+    lastX    = e.clientX;
+    lastT    = Date.now();
+    velX     = 0;
+    baseOffset = getAnimatedX();
+    pauseAnim();
+    marquee.style.transition = 'none';
+    marquee.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+
+  marquee.addEventListener('pointermove', (e) => {
+    if (!isDown) return;
+    const now = Date.now();
+    const dx  = e.clientX - startX;
+    /* Hitung velocity (px/ms) */
+    velX  = (e.clientX - lastX) / Math.max(now - lastT, 1);
+    lastX = e.clientX;
+    lastT = now;
+    applyDrag(dx);
+    e.preventDefault();
+  });
+
+  function onPointerUp(e) {
+    if (!isDown) return;
+    isDown = false;
+    const dragDx = e.clientX - startX;
+
+    /* Momentum: lempar sesuai kecepatan swipe */
+    const momentum = velX * 280; /* tuning: makin besar makin jauh */
+    const target   = baseOffset + dragDx + momentum;
+
+    marquee.style.transition = 'transform 0.55s cubic-bezier(.22,.68,0,1.1)';
+    marquee.style.transform  = `translateX(${target}px)`;
+
+    resumeAnim(1200);
+  }
+
+  marquee.addEventListener('pointerup',     onPointerUp);
+  marquee.addEventListener('pointercancel', onPointerUp);
+
+  /* Cegah scroll halaman saat swipe horizontal */
+  wrap.addEventListener('touchmove', (e) => {
+    if (isDown) e.preventDefault();
+  }, { passive: false });
+
+  /* ── Pause saat tab tidak aktif ── */
+  document.addEventListener('visibilitychange', () => {
+    if (!isDown) {
+      marquee.style.animationPlayState =
+        document.hidden ? 'paused' : 'running';
+    }
+  });
+})();
 </script>
 </body>
 </html>
