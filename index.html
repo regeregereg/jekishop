@@ -1531,6 +1531,211 @@ nav:not(.float-nav).scrolled .nav-pill {
 /* ═══════════════════════════════════════
    FOOTER
 ═══════════════════════════════════════ */
+/* ═══════════════════════════════════════
+   TIKTOK STRIP — di atas footer
+═══════════════════════════════════════ */
+.tiktok-strip {
+  background: var(--black);
+  padding: 44px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle gradient accent */
+.tiktok-strip::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(105,201,208,0.12) 0%, transparent 65%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.tiktok-strip::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: 10%;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(238,29,82,0.10) 0%, transparent 65%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.tiktok-strip-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  position: relative;
+  z-index: 1;
+}
+
+.tiktok-icon-wrap {
+  width: 56px; height: 56px;
+  background: linear-gradient(135deg, #010101 0%, #1a1a1a 100%);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* TikTok logo via CSS — dua lingkaran warna */
+.tiktok-logo {
+  font-size: 1.6rem;
+  line-height: 1;
+  position: relative;
+  display: inline-block;
+  color: white;
+  /* tiktok note icon dari bootstrap-icons */
+}
+
+.tiktok-strip-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tiktok-handle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.tiktok-handle span {
+  color: rgba(255,255,255,0.45);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.tiktok-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.tiktok-stat {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  font-weight: 500;
+}
+
+.tiktok-stat strong {
+  color: rgba(255,255,255,0.85);
+  font-weight: 700;
+}
+
+.tiktok-stat-dot {
+  width: 3px; height: 3px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+}
+
+.tiktok-strip-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
+}
+
+.tiktok-strip-label {
+  font-size: 0.8125rem;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.55;
+  max-width: 200px;
+}
+
+.btn-tiktok {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #ee1d52, #69c9d0);
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+  padding: 13px 24px;
+  border-radius: var(--radius-pill);
+  transition: opacity 0.22s, transform 0.22s;
+  text-decoration: none;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+  box-shadow: 0 4px 20px rgba(238,29,82,0.35);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-tiktok:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(238,29,82,0.45);
+}
+
+.btn-tiktok:active { transform: scale(0.95); }
+
+.btn-tiktok i { font-size: 1rem; }
+
+/* mobile */
+@media (max-width: 768px) {
+  .tiktok-strip {
+    padding: 36px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+  }
+  .tiktok-strip-right {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  .tiktok-strip-label { max-width: 100%; }
+  .btn-tiktok { width: 100%; justify-content: center; }
+}
+
+/* ─── footer social icon ─── */
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--surface-3);
+  color: var(--ink-mid);
+  font-size: 0.95rem;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.footer-social a:hover {
+  background: var(--black);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.footer-social a.tiktok-icon:hover {
+  background: linear-gradient(135deg, #ee1d52, #69c9d0);
+}
+
 footer {
   background: var(--surface-2);
   border-top: 1.5px solid var(--border);
@@ -2525,6 +2730,8 @@ footer {
   .cta-banner { padding: 60px 24px; }
   footer { grid-template-columns: 1fr; text-align: center; padding: 36px 24px; }
   .footer-right { text-align: center; }
+  .footer-logo { flex-direction: column; align-items: center; gap: 8px; }
+  .footer-social { justify-content: center; }
   .hero-actions { flex-direction: column; }
   .btn-primary, .btn-green, .btn-outline { width: 100%; justify-content: center; }
 }
@@ -2727,7 +2934,7 @@ footer {
   <div class="hero-inner">
     <div class="hero-badge anim a1">
       <i class="bi bi-patch-check-fill"></i>
-      Backtest Semua Timeframe · Sejak Maret 2025
+      TradingView Premium · Sejak Maret 2025
     </div>
     <h1 class="anim a2" itemprop="headline">
       TradingView Premium Murah<br><span class="accent">Rp 185.000/bulan</span>
@@ -3415,10 +3622,46 @@ footer {
 </div>
 
 <!-- ══ FOOTER ══ -->
+<!-- ══ TIKTOK STRIP ══ -->
+<section class="tiktok-strip reveal" aria-label="Ikuti Jeki Store di TikTok">
+  <div class="tiktok-strip-left">
+    <div class="tiktok-icon-wrap">
+      <i class="bi bi-tiktok tiktok-logo" aria-hidden="true"></i>
+    </div>
+    <div class="tiktok-strip-info">
+      <div class="tiktok-handle">@jekistore.com <span>· TikTok</span></div>
+      <div class="tiktok-meta">
+        <div class="tiktok-stat"><strong>362</strong> Followers</div>
+        <div class="tiktok-stat-dot"></div>
+        <div class="tiktok-stat"><strong>9.173</strong> Likes</div>
+        <div class="tiktok-stat-dot"></div>
+        <div class="tiktok-stat"><strong>Tips & Trik</strong> Trading</div>
+      </div>
+    </div>
+  </div>
+  <div class="tiktok-strip-right">
+    <p class="tiktok-strip-label">
+      Tutorial TradingView, tips trading, dan update produk terbaru. Gratis.
+    </p>
+    <a href="https://www.tiktok.com/@jekistore.com" target="_blank" rel="noopener noreferrer" class="btn-tiktok" aria-label="Follow Jeki Store di TikTok">
+      <i class="bi bi-tiktok" aria-hidden="true"></i>
+      Follow di TikTok
+    </a>
+  </div>
+</section>
+
 <footer role="contentinfo" aria-label="Footer Jeki Store">
   <div class="footer-logo">
     <div class="dot"></div>
     JekiStore
+    <div class="footer-social">
+      <a href="https://www.tiktok.com/@jekistore.com" target="_blank" rel="noopener noreferrer" class="tiktok-icon" aria-label="TikTok Jeki Store">
+        <i class="bi bi-tiktok"></i>
+      </a>
+      <a href="https://wa.me/6283119686482" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Jeki Store">
+        <i class="bi bi-whatsapp"></i>
+      </a>
+    </div>
   </div>
   <div class="footer-center">
     TradingView Premium Terpercaya · Sejak Maret 2025<br>
