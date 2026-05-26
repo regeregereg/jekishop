@@ -2211,7 +2211,21 @@ footer {
       0 2px 8px rgba(0,0,0,0.18),
       0 8px 32px rgba(0,0,0,0.22);
     pointer-events: all;
-    animation: pillRise 0.72s cubic-bezier(.22,.68,0,1.2) 0.2s both;
+  }
+
+  /* Wrap — handles show/hide transition */
+  .mobile-logo-bar {
+    transition: transform 0.4s cubic-bezier(.22,.68,0,1.2), opacity 0.32s ease;
+    will-change: transform, opacity;
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Hide state — slide up & fade */
+  .mobile-logo-bar.hidden {
+    transform: translateY(-130%);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .mob-logo {
@@ -3328,6 +3342,11 @@ const mobileThreshold  = 50;
 /* Di desktop: muncul setelah lewat hero (280px) */
 const desktopThreshold = 280;
 
+/* ── Mobile top nav: hide on scroll down, show on scroll up ── */
+const mobBar = document.querySelector('.mobile-logo-bar');
+let lastScrollY = 0;
+let mobNavHidden = false;
+
 window.addEventListener('scroll', () => {
   const y         = window.scrollY;
   const threshold = isMobile ? mobileThreshold : desktopThreshold;
@@ -3335,12 +3354,29 @@ window.addEventListener('scroll', () => {
   /* Top nav shrink — hanya jika ada navbar atas */
   if (navEl) navEl.classList.toggle('scrolled', y > 60);
 
-  /* Show/hide pill nav */
+  /* Show/hide pill nav bawah */
   if (y > threshold) {
     showPill();
   } else {
     hidePill();
   }
+
+  /* Mobile top navbar: hide scroll down, show scroll up */
+  if (mobBar && y > 80) {
+    const scrollingDown = y > lastScrollY;
+    if (scrollingDown && !mobNavHidden) {
+      mobBar.classList.add('hidden');
+      mobNavHidden = true;
+    } else if (!scrollingDown && mobNavHidden) {
+      mobBar.classList.remove('hidden');
+      mobNavHidden = false;
+    }
+  } else if (mobBar) {
+    mobBar.classList.remove('hidden');
+    mobNavHidden = false;
+  }
+
+  lastScrollY = y;
 
   /* Active tab tracking */
   updateActiveTab();
