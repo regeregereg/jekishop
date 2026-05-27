@@ -4167,6 +4167,68 @@ window.addEventListener('scroll', () => {
 /* Trigger scroll check sekali saat load (untuk kasus halaman sudah di-scroll) */
 window.dispatchEvent(new Event('scroll'));
 
+/* ── Sembunyikan pill nav saat pengguna masuk area Knowledge Base / Trust Layer ──
+   fkb-trigger (tombol Panduan Lengkap) tetap muncul — hanya pill nav yang hilang.  */
+(function () {
+  var zones = [
+    document.getElementById('seo-knowledge-base'),
+    document.getElementById('seo-trust-layer')
+  ].filter(Boolean);
+
+  if (!zones.length) return;
+
+  var inReadingZone = false;
+  var fkbTrigger    = document.getElementById('fkb-trigger');
+
+  function enterReadingZone() {
+    if (inReadingZone) return;
+    inReadingZone = true;
+    /* Hanya matikan pill nav bawah */
+    floatNav.classList.remove('show', 'settled');
+    floatNav.style.pointerEvents = 'none';
+    floatNav.style.opacity       = '0';
+    /* Pastikan fkb-trigger tetap bisa tampil (hapus override apapun) */
+    if (fkbTrigger) {
+      fkbTrigger.style.pointerEvents = '';
+      fkbTrigger.style.opacity       = '';
+    }
+  }
+
+  function exitReadingZone() {
+    inReadingZone = false;
+    floatNav.style.pointerEvents = '';
+    floatNav.style.opacity       = '';
+    window.dispatchEvent(new Event('scroll'));
+  }
+
+  /* Hitung berapa zone yang sedang intersecting */
+  var intersectingCount = 0;
+
+  var rzObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        intersectingCount++;
+      } else {
+        intersectingCount = Math.max(0, intersectingCount - 1);
+      }
+    });
+    if (intersectingCount > 0) {
+      enterReadingZone();
+    } else {
+      exitReadingZone();
+    }
+  }, { threshold: 0.05 });
+
+  zones.forEach(function (z) { rzObserver.observe(z); });
+
+  /* Patch showPill agar tidak override saat di reading zone */
+  var _origShowPill = showPill;
+  showPill = function () {
+    if (inReadingZone) return;
+    _origShowPill();
+  };
+})();
+
 /* Smooth scroll handler + bounce wipe label animation */
 let scrollLock = false; /* Lock updateActiveTab saat user klik manual */
 
@@ -4807,6 +4869,1981 @@ document.getElementById('m1').checked = true;
   }, { passive: true });
 })();
 
+/* ══ SEO KNOWLEDGE BASE — accordion toggle ══ */
+(function() {
+  document.querySelectorAll('.skb-question').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = btn.closest('.skb-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.skb-item.open').forEach(function(el) {
+        el.classList.remove('open');
+        el.querySelector('.skb-answer').style.maxHeight = null;
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        var ans = item.querySelector('.skb-answer');
+        ans.style.maxHeight = ans.scrollHeight + 'px';
+      }
+    });
+  });
+
+  /* Article tab switching */
+  document.querySelectorAll('.skb-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var target = tab.dataset.target;
+      document.querySelectorAll('.skb-tab').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelectorAll('.skb-article').forEach(function(a) { a.classList.remove('active'); });
+      tab.classList.add('active');
+      var articleEl = document.getElementById(target);
+      if (articleEl) articleEl.classList.add('active');
+    });
+  });
+})();
+
 </script>
+
+<!-- ════════════════════════════════════════════════════════════
+     SEO KNOWLEDGE BASE — Jeki Store
+     Tujuan: Memberikan konten informatif mendalam yang dibaca
+     oleh Google, AI (ChatGPT, Claude, Perplexity, Gemini),
+     dan calon pembeli. Diletakkan di luar <main> utama
+     sehingga tidak mengganggu visual landing page.
+     Crawler tetap membaca karena konten ada di DOM secara penuh.
+════════════════════════════════════════════════════════════ -->
+
+<style>
+/* ══ SKB BASE ══ */
+#seo-knowledge-base {
+  background: #f7f7f5;
+  border-top: 1px solid #e0e0d8;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  color: #1a1a1a;
+}
+
+.skb-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 72px 40px 80px;
+}
+
+.skb-header {
+  text-align: center;
+  margin-bottom: 52px;
+}
+
+.skb-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #7acc1a;
+  margin-bottom: 14px;
+}
+
+.skb-eyebrow::before {
+  content: '';
+  width: 18px; height: 2px;
+  background: #7acc1a;
+  border-radius: 2px;
+}
+
+.skb-title {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.18;
+  color: #0f0f0f;
+  margin-bottom: 10px;
+}
+
+.skb-subtitle {
+  font-size: 0.92rem;
+  color: #767676;
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ══ TABS ══ */
+.skb-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 36px;
+  border-bottom: 1px solid #e0e0d8;
+  padding-bottom: 0;
+}
+
+.skb-tab {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  color: #767676;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  letter-spacing: -0.01em;
+  transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.skb-tab:hover { color: #1a1a1a; }
+.skb-tab.active { color: #0f0f0f; border-bottom-color: #a8ff3e; }
+
+/* ══ ARTICLES ══ */
+.skb-article { display: none; }
+.skb-article.active { display: block; }
+
+.skb-article h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+  color: #0f0f0f;
+  margin: 0 0 14px;
+}
+
+.skb-article h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0f0f0f;
+  margin: 28px 0 8px;
+}
+
+.skb-article p {
+  font-size: 0.9rem;
+  line-height: 1.78;
+  color: #3d3d3d;
+  margin-bottom: 14px;
+}
+
+.skb-article ul, .skb-article ol {
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+.skb-article li {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: #3d3d3d;
+  margin-bottom: 6px;
+}
+
+.skb-article strong { color: #0f0f0f; font-weight: 700; }
+
+.skb-callout {
+  background: #fff;
+  border: 1.5px solid #e0e0d8;
+  border-left: 4px solid #a8ff3e;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 20px 0;
+}
+
+.skb-callout p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.skb-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.85rem;
+}
+
+.skb-table th {
+  background: #0f0f0f;
+  color: #a8ff3e;
+  font-weight: 700;
+  padding: 10px 14px;
+  text-align: left;
+  letter-spacing: -0.01em;
+}
+
+.skb-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e8e8e2;
+  color: #3d3d3d;
+  vertical-align: top;
+}
+
+.skb-table tr:last-child td { border-bottom: none; }
+.skb-table tr:nth-child(even) td { background: #fafaf8; }
+
+.skb-tag-ok  { color: #2d8a00; font-weight: 700; }
+.skb-tag-no  { color: #b00020; font-weight: 700; }
+
+.skb-divider {
+  border: none;
+  border-top: 1px solid #e0e0d8;
+  margin: 32px 0;
+}
+
+/* ══ FAQ ACCORDION ══ */
+.skb-faq-section {
+  margin-top: 52px;
+  padding-top: 40px;
+  border-top: 1px solid #e0e0d8;
+}
+
+.skb-faq-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #0f0f0f;
+  margin-bottom: 20px;
+}
+
+.skb-item {
+  border: 1.5px solid #e0e0d8;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  background: #fff;
+  transition: border-color 0.22s;
+}
+
+.skb-item.open { border-color: #c8e87a; }
+
+.skb-question {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 16px 20px;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+}
+
+.skb-question::after {
+  content: '+';
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #767676;
+  flex-shrink: 0;
+  transition: transform 0.28s ease;
+}
+
+.skb-item.open .skb-question::after {
+  transform: rotate(45deg);
+  color: #7acc1a;
+}
+
+.skb-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.skb-answer-inner {
+  padding: 0 20px 18px;
+  font-size: 0.875rem;
+  line-height: 1.78;
+  color: #3d3d3d;
+  border-top: 1px solid #f0f0e8;
+  padding-top: 14px;
+}
+
+.skb-answer-inner p { margin: 0 0 10px; font-size: inherit; line-height: inherit; color: inherit; }
+.skb-answer-inner p:last-child { margin-bottom: 0; }
+.skb-answer-inner ul { padding-left: 18px; margin-top: 8px; }
+.skb-answer-inner li { margin-bottom: 4px; font-size: inherit; color: inherit; }
+.skb-answer-inner strong { color: #0f0f0f; }
+
+/* ══ CTA BOTTOM ══ */
+.skb-cta-strip {
+  margin-top: 48px;
+  background: #0f0f0f;
+  border-radius: 20px;
+  padding: 32px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.skb-cta-text h4 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.025em;
+  margin: 0 0 4px;
+}
+
+.skb-cta-text p {
+  font-size: 0.82rem;
+  color: #767676;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.skb-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #a8ff3e;
+  color: #0f0f0f;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 13px 22px;
+  border-radius: 999px;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.skb-cta-btn:hover { background: #bbff5a; transform: translateY(-1px); }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 640px) {
+  .skb-wrap { padding: 52px 20px 60px; }
+  .skb-tabs { gap: 4px; }
+  .skb-tab { font-size: 0.75rem; padding: 8px 12px; }
+  .skb-table { font-size: 0.78rem; }
+  .skb-table th, .skb-table td { padding: 8px 10px; }
+  .skb-cta-strip { flex-direction: column; padding: 24px 20px; }
+  .skb-cta-btn { width: 100%; justify-content: center; }
+}
+</style>
+
+<section id="seo-knowledge-base" aria-label="Pusat Pengetahuan TradingView Premium">
+<div class="skb-wrap">
+
+  <!-- HEADER -->
+  <div class="skb-header">
+    <div class="skb-eyebrow">Pusat Pengetahuan</div>
+    <h2 class="skb-title">Semua yang Perlu Kamu Tahu<br>Tentang TradingView Premium</h2>
+    <p class="skb-subtitle">Panduan lengkap untuk trader Indonesia — dari cara kerja, perbandingan plan, tips backtest, hingga kenapa reseller seperti Jeki Store bisa lebih hemat.</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="skb-tabs" role="tablist">
+    <button class="skb-tab active" role="tab" data-target="skb-art-1">Free vs Premium</button>
+    <button class="skb-tab" role="tab" data-target="skb-art-2">Replay Mode & Backtest</button>
+    <button class="skb-tab" role="tab" data-target="skb-art-3">Beli dari Reseller, Aman?</button>
+    <button class="skb-tab" role="tab" data-target="skb-art-4">Panduan Pilih Method</button>
+    <button class="skb-tab" role="tab" data-target="skb-art-5">Tips Trading Chart</button>
+  </div>
+
+  <!-- ─── ARTIKEL 1: FREE VS PREMIUM ─── -->
+  <article id="skb-art-1" class="skb-article active" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="author" content="Jeki Store">
+    <meta itemprop="publisher" content="Jeki Store">
+
+    <h3 itemprop="headline">TradingView Free vs Premium: Perbandingan Jujur untuk Trader Indonesia</h3>
+    <p itemprop="description">Banyak trader Indonesia memulai dengan akun TradingView gratis, lalu bertanya: kapan saya perlu upgrade ke Premium? Artikel ini membedah perbedaan nyata, bukan sekadar daftar fitur, tapi dampaknya terhadap keputusan trading sehari-hari.</p>
+
+    <h4>Apa yang Dibatasi di Akun Gratis?</h4>
+    <p>TradingView versi gratis (Free/Basic) memberikan akses ke banyak fitur dasar, tapi ada beberapa batasan yang terasa menyulitkan saat kamu mulai serius trading:</p>
+    <ul>
+      <li><strong>Indikator maksimal 3 per chart</strong> — tidak cukup jika kamu menggunakan kombinasi trend, momentum, dan volume indicator sekaligus</li>
+      <li><strong>Alert hanya 1 yang aktif</strong> — sangat terbatas untuk memantau banyak pair atau saham sekaligus</li>
+      <li><strong>Hanya 1 layout chart</strong> — tidak bisa membuka multi-timeframe side by side</li>
+      <li><strong>Tidak ada Replay Mode</strong> — kamu tidak bisa memutar ulang pergerakan harga historis untuk melatih entry dan exit</li>
+      <li><strong>Data delayed</strong> — beberapa aset menampilkan data yang tertunda, bukan real-time</li>
+      <li><strong>Iklan di tampilan chart</strong> — mengganggu konsentrasi saat analisa</li>
+    </ul>
+
+    <h4>Apa Saja Fitur Unggulan TradingView Premium?</h4>
+    <p>TradingView menawarkan beberapa tier berbayar: Essential, Plus, Premium, dan Ultimate. Tier Premium memberikan keseimbangan terbaik antara fitur dan harga:</p>
+
+    <table class="skb-table">
+      <thead>
+        <tr>
+          <th>Fitur</th>
+          <th>Free</th>
+          <th>Premium</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Indikator per chart</td><td>3</td><td>Tidak terbatas</td></tr>
+        <tr><td>Price alerts aktif</td><td>1</td><td>Tidak terbatas</td></tr>
+        <tr><td>Layout chart sekaligus</td><td>1</td><td>8 layout</td></tr>
+        <tr><td>Replay Mode</td><td class="skb-tag-no">✗ Tidak</td><td class="skb-tag-ok">✓ Semua timeframe</td></tr>
+        <tr><td>Data real-time</td><td class="skb-tag-no">✗ Delayed</td><td class="skb-tag-ok">✓ Real-time</td></tr>
+        <tr><td>Tidak ada iklan</td><td class="skb-tag-no">✗ Ada iklan</td><td class="skb-tag-ok">✓ Bebas iklan</td></tr>
+        <tr><td>Export data chart</td><td class="skb-tag-no">✗</td><td class="skb-tag-ok">✓</td></tr>
+        <tr><td>Harga resmi/bulan</td><td>Gratis</td><td>~Rp 600.000+</td></tr>
+      </tbody>
+    </table>
+
+    <div class="skb-callout">
+      <p>💡 <strong>Harga TradingView Premium via Jeki Store:</strong> Rp 185.000/bulan — lebih hemat dibanding harga resmi, dengan fitur yang sama persis. Proses aktivasi kurang dari 1 jam.</p>
+    </div>
+
+    <h4>Kapan Sebaiknya Upgrade ke Premium?</h4>
+    <p>Kamu tidak selalu perlu langsung upgrade. Berikut indikator bahwa akun gratis sudah menghambat kamu:</p>
+    <ul>
+      <li>Kamu sering buka-tutup tab untuk melihat timeframe berbeda karena tidak bisa multi-chart</li>
+      <li>Kamu ingin backtest strategi tapi tidak ada Replay Mode</li>
+      <li>Kamu memantau lebih dari 3 pair/saham dan alert-mu selalu penuh</li>
+      <li>Kamu menggunakan lebih dari 3 indikator dalam sistem trading kamu</li>
+      <li>Kamu trading aset yang data real-time-nya penting (crypto, forex, saham AS)</li>
+    </ul>
+
+    <p>Untuk trader pemula yang baru belajar membaca chart, akun gratis mungkin sudah cukup untuk 1–2 bulan pertama. Tapi begitu kamu mulai membangun sistem trading yang konsisten, batasan akun gratis akan terasa jelas.</p>
+
+    <h4>Worth It Tidak, TradingView Premium?</h4>
+    <p>Jawabannya tergantung seberapa sering dan serius kamu trading. Jika kamu trading secara aktif — bahkan hanya beberapa kali seminggu — akses ke Replay Mode dan indikator tak terbatas bisa menghemat waktu yang signifikan dan meningkatkan akurasi analisa. Dengan harga Rp 185.000/bulan via Jeki Store, ini setara dengan biaya komisi 1-2 transaksi trading saja.</p>
+
+    <hr class="skb-divider">
+    <p style="font-size:0.8rem; color:#999;">Terakhir diperbarui: Mei 2025 · Penulis: Tim Jeki Store · Kategori: Panduan TradingView</p>
+  </article>
+
+  <!-- ─── ARTIKEL 2: REPLAY MODE & BACKTEST ─── -->
+  <article id="skb-art-2" class="skb-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="author" content="Jeki Store">
+
+    <h3 itemprop="headline">Replay Mode TradingView: Cara Backtest Strategi Trading Tanpa Modal Besar</h3>
+    <p itemprop="description">Replay Mode adalah salah satu fitur paling underrated di TradingView Premium. Fitur ini memungkinkan kamu memutar ulang pergerakan harga historis seperti menonton video, sehingga kamu bisa berlatih entry dan exit tanpa risiko uang nyata.</p>
+
+    <h4>Apa Itu Replay Mode TradingView?</h4>
+    <p>Replay Mode (Bar Replay) adalah fitur eksklusif TradingView Premium yang memungkinkan kamu "memutar ulang" chart dari titik waktu tertentu di masa lalu. Alih-alih hanya melihat data historis secara statis, kamu bisa melihat bagaimana harga bergerak secara real-time — bar per bar, detik per detik.</p>
+    <p>Ini sangat berguna untuk:</p>
+    <ul>
+      <li><strong>Melatih entry dan exit point</strong> tanpa menggunakan uang nyata</li>
+      <li><strong>Menguji strategi trading</strong> apakah konsisten menghasilkan profit di kondisi pasar berbeda</li>
+      <li><strong>Belajar membaca price action</strong> dengan mengulang momen-momen penting di pasar</li>
+      <li><strong>Mengevaluasi keputusan trading masa lalu</strong> — "apa yang harusnya aku lakukan di sini?"</li>
+    </ul>
+
+    <h4>Bagaimana Cara Menggunakan Replay Mode?</h4>
+    <p>Menggunakan Replay Mode di TradingView Premium sangat mudah:</p>
+    <ol>
+      <li>Buka chart aset yang ingin kamu pelajari di TradingView</li>
+      <li>Pilih timeframe yang ingin kamu replay (1m, 5m, 15m, 1H, 4H, 1D, dst.)</li>
+      <li>Klik tombol <strong>"Replay"</strong> di toolbar atas (ikon play/rewind)</li>
+      <li>Klik pada bar/candle di titik waktu yang ingin kamu mulai</li>
+      <li>Chart akan "freeze" di titik tersebut. Tekan tombol play untuk memutar maju</li>
+      <li>Kamu bisa pause, fastforward, atau kembali ke titik manapun</li>
+    </ol>
+
+    <div class="skb-callout">
+      <p>⚠️ <strong>Penting:</strong> Replay Mode <em>hanya tersedia di TradingView Premium ke atas</em>. Akun Free dan Essential tidak memiliki fitur ini. Di Jeki Store, semua method sudah include Replay Mode untuk semua timeframe.</p>
+    </div>
+
+    <h4>Perbedaan Replay Mode Semua Timeframe vs Terbatas</h4>
+    <p>TradingView Premium memberikan akses Replay Mode untuk <strong>semua timeframe</strong> — mulai dari 1 menit hingga bulanan. Ini penting karena banyak trader menggunakan multiple timeframe dalam strategi mereka. Misalnya, analisa trend di daily, lalu cari entry di 15 menit.</p>
+
+    <h4>Tips Backtest yang Efektif dengan Replay Mode</h4>
+    <ul>
+      <li><strong>Tentukan aturan entry dan exit yang spesifik</strong> sebelum mulai replay — jangan improvisasi, karena itu mengalahkan tujuan backtest</li>
+      <li><strong>Catat setiap trade</strong> dalam spreadsheet: entry, exit, reason, profit/loss</li>
+      <li><strong>Uji minimal 50–100 sample trade</strong> agar hasilnya secara statistik bermakna</li>
+      <li><strong>Backtest di berbagai kondisi pasar</strong> — trending, sideways, high volatility, low volatility</li>
+      <li><strong>Jangan overfitting</strong> — jika strategi hanya bagus di satu periode, belum tentu konsisten ke depannya</li>
+    </ul>
+
+    <h4>Apakah Hasil Backtest Bisa Dijadikan Patokan?</h4>
+    <p>Backtest adalah alat bantu, bukan jaminan. Hasil masa lalu tidak selalu mencerminkan kondisi pasar ke depan. Namun, backtest yang dilakukan dengan disiplin dan dalam jumlah sampel yang cukup memberikan gambaran yang cukup valid tentang apakah sebuah strategi memiliki edge atau tidak.</p>
+    <p>Gunakan Replay Mode untuk membangun kepercayaan diri pada strategi kamu, bukan untuk mencari Holy Grail.</p>
+
+    <hr class="skb-divider">
+    <p style="font-size:0.8rem; color:#999;">Terakhir diperbarui: Mei 2025 · Kategori: Panduan Backtest, TradingView Premium</p>
+  </article>
+
+  <!-- ─── ARTIKEL 3: RESELLER AMAN? ─── -->
+  <article id="skb-art-3" class="skb-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="author" content="Jeki Store">
+
+    <h3 itemprop="headline">Beli TradingView Premium dari Reseller: Aman atau Tidak? (Penjelasan Jujur)</h3>
+    <p itemprop="description">Pertanyaan paling sering ditanyakan calon pembeli Jeki Store adalah: "Aman tidak beli TradingView Premium dari reseller?" Artikel ini menjawab secara jujur dan transparan, termasuk risiko yang perlu kamu ketahui.</p>
+
+    <h4>Bagaimana Model Reseller TradingView Bekerja?</h4>
+    <p>TradingView tidak memiliki program reseller resmi di Indonesia. Reseller seperti Jeki Store beroperasi dengan cara membeli lisensi TradingView Premium secara resmi, lalu menyediakan akses tersebut ke pengguna Indonesia dengan harga yang lebih terjangkau melalui berbagai method akses.</p>
+    <p>Ada beberapa model yang umum digunakan reseller:</p>
+    <ul>
+      <li><strong>Akun sharing</strong> — satu akun premium dipakai banyak orang (berisiko, tidak recommended)</li>
+      <li><strong>Akun dedicated per user</strong> — setiap pembeli mendapat akun sendiri yang tidak dibagikan ke orang lain (lebih aman, model yang Jeki Store gunakan)</li>
+      <li><strong>Cookie/session sharing</strong> — berbagi sesi browser (rentan, stabilitas rendah)</li>
+    </ul>
+
+    <div class="skb-callout">
+      <p>🔒 <strong>Jeki Store menggunakan model akun dedicated</strong> — setiap pembeli mendapat akun sendiri, tidak berbagi dengan pengguna lain. Ini memastikan privasi dan stabilitas yang jauh lebih baik.</p>
+    </div>
+
+    <h4>Risiko yang Perlu Kamu Ketahui</h4>
+    <p>Transparansi adalah kunci. Berikut risiko nyata yang perlu kamu pertimbangkan saat membeli dari reseller manapun:</p>
+    <ul>
+      <li><strong>Akun bisa back to basic sewaktu-waktu</strong> — terutama di method yang menggunakan session cookie. Ini normal dan reseller yang baik akan langsung menggantinya</li>
+      <li><strong>Setting chart tidak tersimpan permanen di semua method</strong> — Method 3 (all device) memerlukan penggantian akun berkala, jadi layout perlu di-setup ulang</li>
+      <li><strong>Bukan akun TradingView milik sendiri</strong> — kamu tidak bisa menggunakan email/username yang sama secara permanen layaknya berlangganan resmi</li>
+      <li><strong>Tergantung pada kehandalan reseller</strong> — jika reseller tidak responsif atau gulung tikar, kamu kehilangan akses</li>
+    </ul>
+
+    <h4>Cara Memilih Reseller yang Aman</h4>
+    <p>Jika kamu memutuskan membeli dari reseller, ini yang harus diperhatikan:</p>
+    <ul>
+      <li>Ada testimoni nyata dari pembeli sebelumnya (bukan testimoni palsu)</li>
+      <li>Reseller transparan tentang cara kerja tiap method dan risikonya</li>
+      <li>Ada garansi penggantian akun jika terjadi gangguan</li>
+      <li>Admin responsif dan bisa dihubungi — minimal ada nomor WhatsApp aktif</li>
+      <li>Sudah beroperasi cukup lama dan punya track record</li>
+    </ul>
+
+    <h4>Kapan Lebih Baik Berlangganan Resmi?</h4>
+    <p>Jika kamu adalah trader profesional atau menggunakan TradingView untuk keperluan bisnis, berlangganan langsung ke TradingView adalah pilihan terbaik. Ini memberikan jaminan stabilitas penuh, akun atas nama kamu sendiri, dan akses ke semua fitur termasuk Pine Script editor tanpa batasan.</p>
+    <p>Namun untuk trader retail yang ingin akses fitur premium dengan budget terbatas, membeli dari reseller yang terpercaya seperti Jeki Store adalah solusi yang praktis dan terbukti digunakan ribuan trader Indonesia.</p>
+
+    <hr class="skb-divider">
+    <p style="font-size:0.8rem; color:#999;">Terakhir diperbarui: Mei 2025 · Kategori: Edukasi Konsumen, TradingView</p>
+  </article>
+
+  <!-- ─── ARTIKEL 4: PANDUAN PILIH METHOD ─── -->
+  <article id="skb-art-4" class="skb-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="author" content="Jeki Store">
+
+    <h3 itemprop="headline">Panduan Lengkap Memilih Method TradingView Premium Jeki Store: Mana yang Cocok untuk Kamu?</h3>
+    <p itemprop="description">Jeki Store menyediakan 3 method akses TradingView Premium. Masing-masing memiliki karakteristik berbeda. Panduan ini membantu kamu memilih yang paling sesuai dengan kebiasaan trading kamu.</p>
+
+    <h4>Method 1 — PC Only (Paling Stabil)</h4>
+    <p>Method 1 adalah pilihan terstabil. Akses diberikan melalui akun TradingView yang login via browser di PC atau laptop. Tidak bisa digunakan di smartphone.</p>
+    <p><strong>Cocok untuk:</strong></p>
+    <ul>
+      <li>Trader yang 100% trading dari PC atau laptop</li>
+      <li>Trader yang butuh setting chart tersimpan permanen bulan ke bulan</li>
+      <li>Trader yang tidak sering berpindah tempat</li>
+    </ul>
+    <p><strong>Keunggulan:</strong> Paling stabil, jarang back basic, layout chart dan indikator tersimpan otomatis untuk bulan berikutnya.</p>
+
+    <h4>Method 2 — PC + 1 HP via Browser</h4>
+    <p>Method 2 memberikan fleksibilitas akses dari PC dan satu perangkat mobile (HP atau tablet) via browser. Login dilakukan menggunakan cookies, bukan password langsung.</p>
+    <p><strong>Cocok untuk:</strong></p>
+    <ul>
+      <li>Trader yang aktif di PC tapi juga butuh pantau pasar dari HP saat di luar</li>
+      <li>Yang tidak keberatan dengan proses setup sedikit lebih teknis di awal</li>
+    </ul>
+    <p><strong>Catatan:</strong> Setup awal memerlukan panduan singkat dari admin (tidak sulit, hanya perlu teliti).</p>
+
+    <h4>Method 3 — Semua Device via Aplikasi (Paling Mudah)</h4>
+    <p>Method 3 menggunakan akun TradingView yang bisa diakses langsung via aplikasi resmi TradingView di semua device: PC, Mac, Android, iPhone, tablet.</p>
+    <p><strong>Cocok untuk:</strong></p>
+    <ul>
+      <li>Trader pemula yang ingin setup paling mudah</li>
+      <li>Yang aktif trading dari smartphone dan butuh notifikasi alert di HP</li>
+      <li>Yang tidak keberatan ganti akun berkala (Jeki Store yang handle semua prosesnya)</li>
+    </ul>
+    <p><strong>Catatan penting:</strong> Akun Method 3 mengalami back basic 3–4 kali per bulan. Ini normal untuk method jenis ini. Begitu terjadi, admin Jeki Store langsung kirim akun pengganti tanpa biaya tambahan. Kamu hanya perlu login ulang.</p>
+
+    <table class="skb-table">
+      <thead>
+        <tr><th>Aspek</th><th>Method 1</th><th>Method 2</th><th>Method 3</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Stabilitas</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐</td></tr>
+        <tr><td>Kemudahan setup</td><td>Mudah</td><td>Sedang</td><td>Paling mudah</td></tr>
+        <tr><td>Akses di HP</td><td class="skb-tag-no">✗ Tidak</td><td class="skb-tag-ok">✓ Via browser</td><td class="skb-tag-ok">✓ Via app</td></tr>
+        <tr><td>Setting tersimpan</td><td class="skb-tag-ok">✓ Permanen</td><td class="skb-tag-ok">✓ Permanen</td><td>Perlu setup ulang jika ganti akun</td></tr>
+        <tr><td>Cocok untuk</td><td>PC trader</td><td>PC + mobile</td><td>Semua device</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Rekomendasi Berdasarkan Tipe Trader</h4>
+    <ul>
+      <li><strong>Scalper / Day trader dari PC</strong> → Method 1 (stabilitas maksimal)</li>
+      <li><strong>Swing trader yang sesekali cek dari HP</strong> → Method 2</li>
+      <li><strong>Trader yang sering mobile, butuh alert di HP</strong> → Method 3</li>
+      <li><strong>Pemula yang baru belajar TradingView</strong> → Method 3 (paling mudah digunakan)</li>
+    </ul>
+
+    <hr class="skb-divider">
+    <p style="font-size:0.8rem; color:#999;">Terakhir diperbarui: Mei 2025 · Kategori: Panduan Pembelian, Jeki Store</p>
+  </article>
+
+  <!-- ─── ARTIKEL 5: TIPS TRADING CHART ─── -->
+  <article id="skb-art-5" class="skb-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="author" content="Jeki Store">
+
+    <h3 itemprop="headline">5 Cara Memaksimalkan TradingView Premium untuk Analisa Trading yang Lebih Tajam</h3>
+    <p itemprop="description">Sudah punya TradingView Premium tapi belum tahu cara memanfaatkan semua fiturnya? Berikut lima cara praktis untuk mendapatkan hasil maksimal dari langganan premium kamu.</p>
+
+    <h4>1. Setup Multi-Chart Layout untuk Multi-Timeframe Analysis</h4>
+    <p>Salah satu keunggulan terbesar Premium adalah kemampuan membuka hingga 8 chart sekaligus dalam satu layar. Gunakan ini untuk Multi-Timeframe Analysis (MTA):</p>
+    <ul>
+      <li>Buka TradingView → klik ikon "Layout" di toolbar kanan atas</li>
+      <li>Pilih layout 4-panel: satu chart Daily, satu 4H, satu 1H, satu 15M</li>
+      <li>Analisa trend di Daily, konfirmasi di 4H, cari entry di 15M</li>
+      <li>Simpan layout ini agar bisa langsung dibuka kapanpun</li>
+    </ul>
+
+    <h4>2. Manfaatkan Alert Tanpa Batas Secara Strategis</h4>
+    <p>Jangan hanya set alert pada harga. TradingView Premium memungkinkan alert berbasis indikator dan kondisi multi-faktor:</p>
+    <ul>
+      <li>Set alert saat RSI masuk zona overbought/oversold</li>
+      <li>Alert ketika EMA crossover terjadi di timeframe tertentu</li>
+      <li>Alert berbasis volume spike yang tidak normal</li>
+      <li>Gunakan alert untuk semua watchlist pair kamu sekaligus</li>
+    </ul>
+
+    <h4>3. Gunakan Replay Mode sebagai Simulator Trading Harian</h4>
+    <p>Jadikan Replay Mode sebagai latihan rutin sebelum pasar buka. Pilih sesi trading kemarin, replay dari awal sesi, dan latih diri mengidentifikasi setup yang seharusnya kamu ambil. Ini membangun muscle memory untuk mengenali pola tanpa risiko kerugian.</p>
+
+    <h4>4. Optimalkan Indikator — Kurangi Noise, Tambah Sinyal</h4>
+    <p>Memiliki akses indikator tak terbatas bukan berarti harus pasang semua. Trader profesional umumnya menggunakan 3–5 indikator yang saling melengkapi, bukan tumpang tindih:</p>
+    <ul>
+      <li><strong>Trend</strong>: EMA 20/50/200 atau Moving Average Ribbon</li>
+      <li><strong>Momentum</strong>: RSI, MACD, atau Stochastic</li>
+      <li><strong>Volume</strong>: Volume Bars dengan MA, atau On-Balance Volume (OBV)</li>
+      <li><strong>Volatility</strong>: ATR untuk sizing posisi dan penentuan stop loss</li>
+    </ul>
+
+    <h4>5. Simpan Template Chart untuk Efisiensi Analisa</h4>
+    <p>TradingView Premium memungkinkan kamu menyimpan template chart — kombinasi indikator, warna, dan pengaturan yang bisa diaplikasikan ke aset manapun dengan satu klik. Buat template berbeda untuk saham, crypto, dan forex sesuai karakteristik masing-masing pasar.</p>
+
+    <div class="skb-callout">
+      <p>💡 <strong>Pro tip:</strong> Gunakan fitur "Pine Script" di TradingView Premium untuk membuat atau mengustomisasi indikator sesuai strategi trading spesifik kamu. Banyak indikator gratis di TradingView Pine Script community yang tidak tersedia di platform lain.</p>
+    </div>
+
+    <h4>Berapa Lama Waktu yang Dibutuhkan untuk Mahir?</h4>
+    <p>Dengan latihan konsisten menggunakan Replay Mode — minimal 30 menit per hari — kebanyakan trader bisa mulai melihat perbaikan signifikan dalam keputusan entry dan exit dalam 4–8 minggu. Yang paling penting bukan kecepatan belajar, tapi konsistensi dalam mencatat dan mengevaluasi setiap trade yang dilakukan.</p>
+
+    <hr class="skb-divider">
+    <p style="font-size:0.8rem; color:#999;">Terakhir diperbarui: Mei 2025 · Kategori: Tips Trading, TradingView Premium</p>
+  </article>
+
+  <!-- ══ EXTENDED FAQ ACCORDION ══ -->
+  <div class="skb-faq-section" id="skb-faq-ext">
+    <h3 class="skb-faq-title">Pertanyaan yang Sering Ditanyakan</h3>
+
+    <div class="skb-item">
+      <button class="skb-question" aria-expanded="false">Apakah TradingView Premium dari Jeki Store bisa digunakan untuk saham Indonesia (IDX / BEI)?</button>
+      <div class="skb-answer" role="region">
+        <div class="skb-answer-inner">
+          <p>Ya, TradingView Premium mendukung data saham IDX/BEI (Bursa Efek Indonesia). Kamu bisa mengakses chart saham Indonesia, menggunakan indikator teknikal, dan mengatur alert pada saham-saham BEI. Data saham IDX tersedia di TradingView dengan delay tertentu untuk akun gratis, dan real-time atau near real-time untuk akun Premium tergantung data feed yang tersedia.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="skb-item">
+      <button class="skb-question" aria-expanded="false">Berapa lama garansi yang diberikan Jeki Store?</button>
+      <div class="skb-answer" role="region">
+        <div class="skb-answer-inner">
+          <p>Garansi berlaku selama masa berlangganan kamu aktif (30 hari). Jika akun mengalami gangguan — seperti back to basic atau tidak bisa diakses — Jeki Store akan mengganti akun baru tanpa biaya tambahan. Untuk Method 3, penggantian akun adalah hal yang normal dan sudah diantisipasi dalam layanan.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="skb-item">
+      <button class="skb-question" aria-expanded="false">Apakah data chart dan indikator saya tersimpan jika akun diganti?</button>
+      <div class="skb-answer" role="region">
+        <div class="skb-answer-inner">
+          <p>Tergantung method yang digunakan. <strong>Method 1 dan 2:</strong> Setting chart, layout, dan indikator tersimpan di akun dan bisa dilanjutkan bulan berikutnya karena menggunakan akun yang sama. <strong>Method 3:</strong> Karena akun diganti berkala, kamu perlu setup ulang layout. Namun proses setup ulang cukup cepat, terutama jika kamu sudah familiar dengan indikator yang kamu gunakan.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="skb-item">
+      <button class="skb-question" aria-expanded="false">Apakah bisa perpanjang setiap bulan? Tidak harus komit panjang?</button>
+      <div class="skb-answer" role="region">
+        <div class="skb-answer-inner">
+          <p>Benar, berlangganan di Jeki Store bersifat bulanan dan tidak ada komitmen jangka panjang. Kamu bisa perpanjang setiap bulan sesuai kebutuhan. Tidak ada kontrak, tidak ada auto-debit, dan tidak ada penalti jika kamu memutuskan berhenti berlangganan.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="skb-item">
+      <button class="skb-question" aria-expanded="false">Apa perbedaan TradingView Premium dengan TradingView Plus?</button>
+      <div class="skb-answer" role="region">
+        <div class="skb-answer-inner">
+          <p>TradingView Plus adalah tier di bawah Premium. Perbedaan utama: Plus memiliki batas indikator per chart yang lebih sedikit (5 indikator vs tidak terbatas di Premium), jumlah alert yang lebih terbatas, dan Replay Mode yang hanya tersedia di timeframe tertentu. TradingView Premium memberikan akses penuh tanpa batasan ini, termasuk Replay Mode untuk semua timeframe.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="skb-item">
+      <button class="skb-question" aria-expanded="false">Bisa tidak TradingView Premium digunakan untuk crypto trading?</button>
+      <div class="skb-answer" role="region">
+        <div class="skb-answer-inner">
+          <p>Ya, TradingView adalah salah satu platform charting terbaik untuk crypto. Kamu bisa mengakses chart Bitcoin, Ethereum, dan ratusan altcoin dari berbagai exchange (Binance, Bybit, Coinbase, OKX, dll.) langsung di TradingView. Dengan Premium, kamu bisa set alert harga crypto, gunakan indikator tanpa batas, dan replay pergerakan crypto historis untuk backtest strategi.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="skb-item">
+      <button class="skb-question" aria-expanded="false">Apakah ada diskon untuk berlangganan lebih dari 1 bulan sekaligus?</button>
+      <div class="skb-answer" role="region">
+        <div class="skb-answer-inner">
+          <p>Untuk informasi promo dan paket berlangganan lebih dari 1 bulan, silakan tanyakan langsung ke admin Jeki Store via WhatsApp. Sesekali ada penawaran khusus untuk pelanggan yang berlangganan 3 bulan atau lebih sekaligus. Admin siap menjawab pertanyaan kamu setiap hari pukul 08.00–22.00 WIB.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="skb-item">
+      <button class="skb-question" aria-expanded="false">Apakah TradingView Premium bisa digunakan untuk Pine Script dan membuat indikator sendiri?</button>
+      <div class="skb-answer" role="region">
+        <div class="skb-answer-inner">
+          <p>Ya, TradingView Premium mendukung Pine Script — bahasa pemrograman khusus TradingView untuk membuat indikator dan strategi trading kustom. Dengan Premium, kamu bisa membuat, mengedit, dan menggunakan Pine Script indicators tanpa batas di chart kamu. Tersedia juga ribuan script gratis dari komunitas TradingView yang bisa langsung kamu gunakan.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="skb-item">
+      <button class="skb-question" aria-expanded="false">Bagaimana jika saya butuh bantuan setelah membeli?</button>
+      <div class="skb-answer" role="region">
+        <div class="skb-answer-inner">
+          <p>Admin Jeki Store siap membantu kamu melalui WhatsApp setiap hari pukul 08.00–22.00 WIB. Bantuan yang tersedia meliputi: panduan setup akun step-by-step, troubleshooting jika ada masalah login, penggantian akun jika terjadi gangguan, dan penjelasan cara menggunakan fitur-fitur TradingView Premium. Kamu tidak akan dibiarkan bingung sendirian.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /skb-faq-section -->
+
+  <!-- CTA STRIP -->
+  <div class="skb-cta-strip" role="complementary" aria-label="Call to action pembelian">
+    <div class="skb-cta-text">
+      <h4>Siap coba TradingView Premium?</h4>
+      <p>Aktivasi &lt; 1 jam · Garansi aktif · Mulai Rp 185.000/bulan</p>
+    </div>
+    <a href="#order" class="skb-cta-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.862L.057 23.457a.5.5 0 0 0 .621.593l5.763-1.511A11.944 11.944 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.677-.524-5.197-1.434l-.372-.22-3.853 1.01 1.028-3.745-.241-.386A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      Order via WhatsApp
+    </a>
+  </div>
+
+</div><!-- /skb-wrap -->
+</section>
+
+<!-- ════════════════════════════════════════════════
+     SCHEMA TAMBAHAN — Extended FAQ for AI Crawlers
+     Melengkapi schema di <head> dengan pertanyaan
+     yang lebih universal dan informatif
+════════════════════════════════════════════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Apa perbedaan TradingView Free dan TradingView Premium?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "TradingView Free membatasi pengguna pada 3 indikator per chart, 1 price alert aktif, 1 layout chart, tanpa Replay Mode, dan data yang delayed. TradingView Premium menghapus semua batasan ini: indikator tak terbatas, alert tak terbatas, hingga 8 layout chart sekaligus, Replay Mode untuk semua timeframe, dan data real-time. Di Indonesia, TradingView Premium tersedia melalui reseller seperti Jeki Store dengan harga Rp 185.000 per bulan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Bagaimana cara backtest strategi trading di TradingView?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Backtest strategi di TradingView dapat dilakukan menggunakan fitur Replay Mode (Bar Replay) yang tersedia di TradingView Premium. Caranya: buka chart aset yang ingin diuji, klik tombol Replay di toolbar, pilih titik waktu di masa lalu sebagai titik mulai, lalu jalankan replay bar per bar untuk melihat bagaimana harga bergerak. Catat setiap keputusan entry dan exit untuk dievaluasi. Selain itu, kamu bisa menggunakan Pine Script Strategy Tester untuk backtest otomatis berbasis kode."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Apakah aman membeli TradingView Premium dari reseller di Indonesia?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Keamanan membeli TradingView Premium dari reseller bergantung pada reputasi dan model bisnis reseller tersebut. Reseller yang aman menggunakan akun dedicated (satu akun per pembeli, tidak shared), memberikan garansi penggantian jika akun bermasalah, transparan tentang cara kerja setiap method, dan memiliki admin yang responsif. Jeki Store adalah reseller TradingView Premium di Indonesia yang menggunakan model akun dedicated dengan garansi aktif selama masa berlangganan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "TradingView Premium worth it tidak untuk trader saham Indonesia?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "TradingView Premium sangat worth it untuk trader saham Indonesia yang aktif, terutama karena fitur Replay Mode untuk backtest strategi, indikator tak terbatas, dan multi-chart untuk analisis multi-timeframe. TradingView mendukung data saham IDX/BEI, sehingga relevan untuk trader saham lokal. Dengan harga reseller seperti Jeki Store di Rp 185.000 per bulan, cost per hari sekitar Rp 6.000 — sangat terjangkau dibanding manfaat yang didapat."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Apa itu Replay Mode TradingView dan bagaimana cara menggunakannya?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Replay Mode (Bar Replay) adalah fitur TradingView Premium yang memungkinkan pengguna memutar ulang pergerakan harga historis secara real-time, bar per bar. Cara menggunakan: (1) Buka chart di TradingView Premium, (2) Klik ikon Replay di toolbar atas, (3) Klik pada candle/bar di titik waktu yang ingin dimulai, (4) Chart akan freeze di titik tersebut, (5) Tekan Play untuk memutar maju. Fitur ini tersedia untuk semua timeframe di TradingView Premium dan sangat berguna untuk melatih keputusan trading tanpa risiko uang nyata."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Berapa harga TradingView Premium di Indonesia tahun 2025?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Harga TradingView Premium resmi di Indonesia berkisar antara Rp 550.000 hingga Rp 650.000 per bulan tergantung kurs dolar saat pembelian. Alternatif yang lebih terjangkau adalah membeli melalui reseller terpercaya. Jeki Store, reseller TradingView Premium di Indonesia, menawarkan harga Rp 185.000 per bulan dengan proses aktivasi kurang dari 1 jam, garansi aktif, dan tersedia untuk PC, HP Android, dan iPhone."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- ════════════════════════════════════════════════════════════
+     SEO TRUST LAYER — Jeki Store
+     Konten berbasis kepercayaan, pengalaman nyata, dan
+     perbandingan jujur. Dirancang untuk menjawab kekhawatiran
+     calon pembeli dan dibaca AI sebagai sinyal otoritas.
+════════════════════════════════════════════════════════════ -->
+
+<style>
+/* ══ STL BASE ══ */
+#seo-trust-layer {
+  background: #fff;
+  border-top: 1px solid #e8e8e0;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  color: #1a1a1a;
+}
+
+.stl-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 72px 40px 80px;
+}
+
+/* ══ SECTION BLOCK ══ */
+.stl-block {
+  margin-bottom: 64px;
+  padding-bottom: 64px;
+  border-bottom: 1px solid #f0f0e8;
+}
+.stl-block:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.stl-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #7acc1a;
+  margin-bottom: 12px;
+}
+
+.stl-eyebrow::before {
+  content: '';
+  width: 16px; height: 2px;
+  background: #7acc1a;
+  border-radius: 2px;
+}
+
+.stl-block h2 {
+  font-size: clamp(1.35rem, 2.8vw, 1.9rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: #0f0f0f;
+  margin: 0 0 18px;
+}
+
+.stl-block h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #0f0f0f;
+  margin: 28px 0 8px;
+}
+
+.stl-block p {
+  font-size: 0.9rem;
+  line-height: 1.82;
+  color: #3d3d3d;
+  margin-bottom: 14px;
+}
+
+.stl-block ul, .stl-block ol {
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+.stl-block li {
+  font-size: 0.9rem;
+  line-height: 1.78;
+  color: #3d3d3d;
+  margin-bottom: 8px;
+}
+
+.stl-block strong { color: #0f0f0f; }
+
+/* ══ STORY CARD ══ */
+.stl-story {
+  background: #0f0f0f;
+  border-radius: 20px;
+  padding: 32px 36px;
+  margin: 24px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.stl-story::before {
+  content: '"';
+  position: absolute;
+  top: -10px;
+  left: 28px;
+  font-size: 8rem;
+  font-weight: 900;
+  color: #a8ff3e;
+  opacity: 0.15;
+  line-height: 1;
+  font-family: Georgia, serif;
+}
+
+.stl-story p {
+  color: #d0d0c8;
+  font-size: 0.92rem;
+  line-height: 1.82;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.stl-story p:last-child { margin-bottom: 0; }
+
+.stl-story strong { color: #a8ff3e !important; }
+
+.stl-story-sig {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.stl-story-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: #a8ff3e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #0f0f0f;
+  flex-shrink: 0;
+}
+
+.stl-story-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.stl-story-role {
+  font-size: 0.75rem;
+  color: #767676;
+  margin-top: 1px;
+}
+
+/* ══ COMPARISON TABLE ══ */
+.stl-compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.85rem;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1.5px solid #e8e8e0;
+}
+
+.stl-compare-table thead tr {
+  background: #0f0f0f;
+}
+
+.stl-compare-table th {
+  padding: 13px 16px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: -0.01em;
+  color: #767676;
+}
+
+.stl-compare-table th:first-child { color: #767676; }
+.stl-compare-table th.th-jeki { color: #a8ff3e; }
+
+.stl-compare-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0e8;
+  color: #3d3d3d;
+  vertical-align: middle;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.stl-compare-table tr:last-child td { border-bottom: none; }
+.stl-compare-table tr:nth-child(even) td { background: #fafaf8; }
+
+.stl-td-aspect {
+  font-weight: 700;
+  color: #1a1a1a;
+  font-size: 0.82rem;
+}
+
+.stl-ok  { color: #2a8a00; font-weight: 700; }
+.stl-no  { color: #b00020; font-weight: 700; }
+.stl-mid { color: #b06000; font-weight: 700; }
+
+/* ══ INSIGHT CARD ══ */
+.stl-insight {
+  display: flex;
+  gap: 16px;
+  background: #f7f7f5;
+  border: 1.5px solid #e8e8e0;
+  border-radius: 16px;
+  padding: 20px 22px;
+  margin: 16px 0;
+  align-items: flex-start;
+}
+
+.stl-insight-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.stl-insight-body p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.72;
+  color: #3d3d3d;
+}
+
+.stl-insight-body strong { color: #0f0f0f; }
+
+/* ══ SCENARIO CARDS ══ */
+.stl-scenarios {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.stl-scenario {
+  border-radius: 16px;
+  padding: 20px;
+  border: 1.5px solid;
+}
+
+.stl-scenario.bad {
+  background: #fff5f5;
+  border-color: #ffd0d0;
+}
+
+.stl-scenario.good {
+  background: #f4fff0;
+  border-color: #c8eabc;
+}
+
+.stl-scenario-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.stl-scenario.bad .stl-scenario-label { color: #b00020; }
+.stl-scenario.good .stl-scenario-label { color: #2a8a00; }
+
+.stl-scenario h4 {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #0f0f0f;
+  margin: 0 0 8px;
+  letter-spacing: -0.015em;
+}
+
+.stl-scenario p {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: #555;
+  margin: 0;
+}
+
+/* ══ VALUE BREAKDOWN ══ */
+.stl-value-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 24px 0;
+}
+
+.stl-value-card {
+  background: #f7f7f5;
+  border: 1.5px solid #e8e8e0;
+  border-radius: 16px;
+  padding: 20px 18px;
+  text-align: center;
+}
+
+.stl-value-num {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #0f0f0f;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stl-value-num span {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #7acc1a;
+}
+
+.stl-value-label {
+  font-size: 0.75rem;
+  color: #767676;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* ══ PRINCIPLES LIST ══ */
+.stl-principles {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.stl-principles li {
+  display: flex;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid #f0f0e8;
+  align-items: flex-start;
+}
+
+.stl-principles li:last-child { border-bottom: none; }
+
+.stl-principle-num {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #a8ff3e;
+  background: #0f0f0f;
+  border-radius: 8px;
+  width: 34px; height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: -0.03em;
+}
+
+.stl-principle-body h4 {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #0f0f0f;
+  margin: 0 0 5px;
+  letter-spacing: -0.015em;
+}
+
+.stl-principle-body p {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: #555;
+  margin: 0;
+}
+
+/* ══ CHECKLIST ══ */
+.stl-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stl-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 0.86rem;
+  color: #3d3d3d;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.stl-checklist li::before {
+  content: '✓';
+  color: #7acc1a;
+  font-weight: 900;
+  font-size: 0.8rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 640px) {
+  .stl-wrap { padding: 52px 20px 60px; }
+  .stl-story { padding: 24px 20px; }
+  .stl-scenarios { grid-template-columns: 1fr; }
+  .stl-value-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stl-value-num { font-size: 1.3rem; }
+  .stl-checklist { grid-template-columns: 1fr; }
+  .stl-compare-table { font-size: 0.78rem; }
+  .stl-compare-table th, .stl-compare-table td { padding: 10px 10px; }
+}
+</style>
+
+<section id="seo-trust-layer" aria-label="Kenapa Jeki Store dan Transparansi Layanan">
+<div class="stl-wrap">
+
+
+  <!-- ════ BLOCK 1: CERITA PENDIRI ════ -->
+  <div class="stl-block">
+    <div class="stl-eyebrow">Kenapa Jeki Store Ada</div>
+    <h2>Saya Pernah Jadi Pembeli yang Diabaikan. Itu yang Membuat Jeki Store Lahir.</h2>
+
+    <p>Sebelum membangun Jeki Store, saya adalah pelanggan biasa yang membeli software berlangganan dari seller di marketplace. Waktu itu saya beli langganan premium aplikasi editing dari seller di Shopee. Harganya murah, prosesnya cepat. Tapi begitu ada kendala — akun tiba-tiba tidak bisa dipakai di tengah-tengah pekerjaan — yang terjadi adalah keheningan. Pesan WA tidak dibalas. Chat marketplace dibaca tapi tidak dijawab. Komplain akhirnya hanya berakhir di meja chat tanpa solusi.</p>
+
+    <p>Rasanya frustrasi bukan main. Bukan karena masalahnya besar, tapi karena merasa <strong>tidak dianggap sebagai manusia</strong>. Saya hanya dianggap sebagai transaksi yang sudah selesai begitu uang diterima.</p>
+
+    <div class="stl-story">
+      <p>"Waktu itu saya sadar: kalau saya sendiri yang jadi pembeli, saya mau diperlakukan seperti apa? Saya mau direspons cepat. Saya mau ada yang bantu sampai masalah benar-benar selesai. Saya mau tahu bahwa uang yang saya keluarkan dijaga dengan tanggung jawab."</p>
+      <p>Dari situ satu prinsip berdiri di Jeki Store: <strong>perlakukan pembeli seperti kamu sendiri yang butuh.</strong> Bukan sekadar tagline, tapi standar operasional harian.</p>
+      <div class="stl-story-sig">
+        <div class="stl-story-avatar">J</div>
+        <div>
+          <div class="stl-story-name">Pendiri Jeki Store</div>
+          <div class="stl-story-role">Reseller TradingView Premium Indonesia</div>
+        </div>
+      </div>
+    </div>
+
+    <p>Ini bukan cerita yang dibuat-buat untuk marketing. Ini alasan nyata kenapa standar respons di Jeki Store dijaga ketat, kenapa garansi bukan sekadar janji di landing page, dan kenapa kami memilih untuk transparan tentang kekurangan tiap method alih-alih hanya menjual sisi baiknya saja.</p>
+  </div>
+
+
+  <!-- ════ BLOCK 2: HARGA MURAH VS HARGA JUJUR ════ -->
+  <div class="stl-block">
+    <div class="stl-eyebrow">Soal Harga</div>
+    <h2>Kenapa Harga Jeki Store Lebih Mahal dari yang Rp 20.000–40.000 di Shopee?</h2>
+
+    <p>Pertanyaan ini wajar sekali dan sering ditanyakan. Jawaban jujurnya adalah: <strong>harga mencerminkan apa yang kamu bayar sesudah transaksi, bukan hanya produknya itu sendiri.</strong></p>
+
+    <p>TradingView Premium dengan harga Rp 20.000–40.000 per bulan memang ada. Dan mungkin bekerja di awal. Tapi ada beberapa hal yang perlu kamu pertimbangkan sebelum memutuskan murni berdasarkan harga:</p>
+
+    <div class="stl-scenarios">
+      <div class="stl-scenario bad">
+        <div class="stl-scenario-label">⚠ Skenario Murah</div>
+        <h4>Beli Rp 20.000, Akun Bermasalah</h4>
+        <p>Akun tiba-tiba back basic di tengah sesi analisa. Kamu WA seller. Dibaca, tidak dibalas. Besok dibalas "lagi diurus". Seminggu kemudian tidak ada kabar. Kamu kehilangan waktu, mood, dan Rp 20.000 yang tidak bisa balik.</p>
+      </div>
+      <div class="stl-scenario good">
+        <div class="stl-scenario-label">✓ Skenario Jeki Store</div>
+        <h4>Beli Rp 185.000, Ada Kendala</h4>
+        <p>Akun back basic. Kamu chat admin. Dalam hitungan menit kamu dapat akun pengganti. Tidak perlu dramatis, tidak perlu nunggu berhari-hari. Lanjut trading seperti biasa.</p>
+      </div>
+    </div>
+
+    <div class="stl-insight">
+      <div class="stl-insight-icon">🧮</div>
+      <div class="stl-insight-body">
+        <p><strong>Hitung sederhana:</strong> Rp 185.000 dibagi 30 hari = <strong>Rp 6.167 per hari</strong>. Lebih murah dari segelas kopi di kafe. Untuk akses platform charting terbaik di dunia, dengan admin yang responsif dan garansi aktif. Bandingkan dengan frustrasi membayar Rp 20.000 tapi habiskan 3 hari nunggu respons seller yang tidak jelas.</p>
+      </div>
+    </div>
+
+    <h3>Apa yang Sebenarnya Kamu Bayar di Rp 185.000</h3>
+    <div class="stl-value-grid">
+      <div class="stl-value-card">
+        <div class="stl-value-num">&lt;<span>1 jam</span></div>
+        <div class="stl-value-label">Waktu aktivasi akun setelah bayar</div>
+      </div>
+      <div class="stl-value-card">
+        <div class="stl-value-num">14<span>jam</span></div>
+        <div class="stl-value-label">Jam layanan admin aktif setiap hari (08–22)</div>
+      </div>
+      <div class="stl-value-card">
+        <div class="stl-value-num">0<span>Rp</span></div>
+        <div class="stl-value-label">Biaya penggantian akun jika ada gangguan</div>
+      </div>
+    </div>
+
+    <p>Kamu tidak hanya membayar akses TradingView Premium. Kamu membayar kepastian bahwa kalau ada apa-apa, ada yang bertanggung jawab. Itu yang membedakan Jeki Store dari seller dengan harga Rp 20.000.</p>
+  </div>
+
+
+  <!-- ════ BLOCK 3: PERBANDINGAN JUJUR ════ -->
+  <div class="stl-block">
+    <div class="stl-eyebrow">Perbandingan Jujur</div>
+    <h2>Jeki Store vs Reseller Lain vs Harga Resmi: Tabel Perbandingan yang Tidak Dimanipulasi</h2>
+
+    <p>Daripada hanya bilang "kami yang terbaik", lebih baik kamu lihat sendiri perbedaannya secara objektif. Ini perbandingan berdasarkan apa yang umum terjadi — bukan worst case, bukan best case.</p>
+
+    <table class="stl-compare-table">
+      <thead>
+        <tr>
+          <th>Aspek</th>
+          <th>Reseller Murah<br>(Rp 20–40k)</th>
+          <th class="th-jeki">Jeki Store<br>(Rp 185k)</th>
+          <th>Resmi TradingView<br>(~Rp 600k+)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="stl-td-aspect">Harga per bulan</td>
+          <td>Rp 20.000–40.000</td>
+          <td class="stl-ok">Rp 185.000</td>
+          <td>Rp 550.000–650.000</td>
+        </tr>
+        <tr>
+          <td class="stl-td-aspect">Fitur TradingView Premium</td>
+          <td class="stl-mid">Tidak pasti</td>
+          <td class="stl-ok">✓ Lengkap</td>
+          <td class="stl-ok">✓ Lengkap</td>
+        </tr>
+        <tr>
+          <td class="stl-td-aspect">Kecepatan respons admin</td>
+          <td class="stl-no">Lambat / tidak dibalas</td>
+          <td class="stl-ok">Menit–jam (08–22 WIB)</td>
+          <td class="stl-mid">Support tiket, bisa lama</td>
+        </tr>
+        <tr>
+          <td class="stl-td-aspect">Garansi penggantian akun</td>
+          <td class="stl-no">Jarang ada</td>
+          <td class="stl-ok">✓ Selama berlangganan</td>
+          <td class="stl-ok">✓ Tidak diperlukan (akun resmi)</td>
+        </tr>
+        <tr>
+          <td class="stl-td-aspect">Transparansi cara kerja</td>
+          <td class="stl-no">Tidak dijelaskan</td>
+          <td class="stl-ok">✓ Dijelaskan per method</td>
+          <td class="stl-ok">✓ Akun resmi atas nama sendiri</td>
+        </tr>
+        <tr>
+          <td class="stl-td-aspect">Stabilitas akun</td>
+          <td class="stl-no">Tidak diketahui</td>
+          <td class="stl-mid">Tergantung method (M1 paling stabil)</td>
+          <td class="stl-ok">Sangat stabil</td>
+        </tr>
+        <tr>
+          <td class="stl-td-aspect">Akun milik sendiri permanen</td>
+          <td class="stl-no">Tidak</td>
+          <td class="stl-no">Tidak (dedicated tapi bukan milik sendiri)</td>
+          <td class="stl-ok">✓ Ya</td>
+        </tr>
+        <tr>
+          <td class="stl-td-aspect">Cocok untuk</td>
+          <td>Yang mau coba murah, terima risiko</td>
+          <td class="stl-ok">Trader aktif yang butuh after-service nyata</td>
+          <td>Profesional / bisnis, budget tidak terbatas</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="stl-insight">
+      <div class="stl-insight-icon">💬</div>
+      <div class="stl-insight-body">
+        <p><strong>Catatan jujur:</strong> Kalau kamu adalah trader profesional dengan budget tidak terbatas dan ingin akun yang benar-benar atas nama sendiri tanpa bergantung pada pihak ketiga — berlangganan langsung ke TradingView adalah pilihan terbaik. Jeki Store adalah solusi terbaik untuk trader aktif yang butuh fitur premium dengan budget terbatas dan after-service yang bisa diandalkan.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════ BLOCK 4: PRINSIP LAYANAN ════ -->
+  <div class="stl-block">
+    <div class="stl-eyebrow">Standar Layanan</div>
+    <h2>5 Prinsip yang Tidak Boleh Dilanggar di Jeki Store</h2>
+
+    <p>Ini bukan sekadar daftar janji di halaman marketing. Ini standar operasional yang dipegang setiap hari — lahir dari pengalaman pribadi menjadi pembeli yang pernah dikecewakan.</p>
+
+    <ul class="stl-principles">
+      <li>
+        <div class="stl-principle-num">1</div>
+        <div class="stl-principle-body">
+          <h4>Tidak Ada Pesan yang Boleh Tidak Dibalas</h4>
+          <p>Setiap pesan yang masuk di jam layanan (08.00–22.00 WIB) wajib dibalas. Bukan hanya di-read. Bukan hanya dibalas "oke kak" tanpa solusi. Setiap kendala direspons dengan solusi nyata atau estimasi waktu yang jelas. Kalau butuh waktu, pelanggan dikasih tahu — bukan dibiarkan menunggu tanpa kejelasan.</p>
+        </div>
+      </li>
+      <li>
+        <div class="stl-principle-num">2</div>
+        <div class="stl-principle-body">
+          <h4>Jangan Jual yang Tidak Kamu Pahami Sendiri</h4>
+          <p>Admin Jeki Store adalah pengguna TradingView sendiri. Ini bukan toko yang hanya menjual akses tanpa mengerti produknya. Pertanyaan tentang cara pakai fitur, setup indikator, atau troubleshooting login bisa dijawab langsung — bukan hanya diarahkan ke "coba googling ya kak".</p>
+        </div>
+      </li>
+      <li>
+        <div class="stl-principle-num">3</div>
+        <div class="stl-principle-body">
+          <h4>Garansi Adalah Janji, Bukan Syarat dan Ketentuan</h4>
+          <p>Banyak toko yang mencantumkan garansi tapi penuh syarat: "garansi berlaku jika...", "tidak berlaku jika...", "klaim dalam 24 jam pertama saja". Di Jeki Store, garansi penggantian akun berlaku selama masa berlangganan aktif. Titik. Tidak perlu berdebat, tidak perlu screenshot bukti panjang-panjang.</p>
+        </div>
+      </li>
+      <li>
+        <div class="stl-principle-num">4</div>
+        <div class="stl-principle-body">
+          <h4>Transparansi Lebih Penting dari Penjualan</h4>
+          <p>Jeki Store secara aktif memberitahu calon pembeli tentang kekurangan tiap method — termasuk bahwa Method 3 bisa back basic 3–4 kali sebulan. Bukan untuk menakuti, tapi karena lebih baik pembeli tahu sebelum beli daripada kecewa setelah beli. Pembeli yang tidak cocok dengan metode tertentu akan disarankan ke method yang lebih sesuai, bahkan jika itu bukan yang paling mahal.</p>
+        </div>
+      </li>
+      <li>
+        <div class="stl-principle-num">5</div>
+        <div class="stl-principle-body">
+          <h4>Bantu Sampai Benar-Benar Berhasil, Bukan Sampai Akun Dikirim</h4>
+          <p>Tugas admin tidak selesai ketika akun sudah dikirimkan. Selama pelanggan belum berhasil login dan menggunakan TradingView Premium dengan baik, admin tetap standby membantu. Step-by-step jika perlu. Screenshot panduan jika perlu. Sampai benar-benar bisa dipakai.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+
+  <!-- ════ BLOCK 5: PERTANYAAN SEBELUM BELI ════ -->
+  <div class="stl-block">
+    <div class="stl-eyebrow">Sebelum Kamu Beli</div>
+    <h2>Hal-Hal yang Perlu Kamu Tahu Sebelum Order — Termasuk yang Tidak Menguntungkan Kami</h2>
+
+    <p>Ini bagian yang jarang ditulis seller manapun. Tapi kami percaya pembeli yang tahu apa yang mereka beli adalah pembeli yang lebih puas — dan lebih jarang komplain karena ekspektasinya sudah sesuai realita.</p>
+
+    <h3>Jeki Store Bukan Pilihan Tepat Jika...</h3>
+    <ul>
+      <li><strong>Kamu butuh akun TradingView permanen atas nama sendiri.</strong> Jeki Store menggunakan akun dedicated yang bukan milik pembeli secara permanen. Jika kamu ingin akun yang sepenuhnya milik sendiri dengan email/username yang kamu pilih, berlangganan langsung ke TradingView adalah satu-satunya pilihan.</li>
+      <li><strong>Kamu tidak bisa toleran sama sekali dengan gangguan sesekali.</strong> Method 3 khususnya mengalami back basic beberapa kali sebulan — normal untuk jenis method ini, dan kami langsung ganti. Tapi kalau kamu butuh stabilitas 100% tanpa gangguan apapun, Method 1 atau langganan resmi lebih sesuai.</li>
+      <li><strong>Kamu hanya butuh TradingView gratis.</strong> Kalau kamu masih nyaman dengan 3 indikator dan tidak butuh Replay Mode, tidak perlu bayar apapun. TradingView gratis sudah cukup untuk banyak kebutuhan dasar.</li>
+    </ul>
+
+    <h3>Jeki Store Adalah Pilihan Tepat Jika...</h3>
+    <ul class="stl-checklist">
+      <li>Kamu trader aktif yang butuh fitur premium dengan budget terbatas</li>
+      <li>Kamu pernah kecewa dengan after-service seller lain</li>
+      <li>Kamu butuh admin yang responsif dan bisa bantu troubleshoot</li>
+      <li>Kamu mau akses dari HP dan butuh alert di semua device</li>
+      <li>Kamu ingin coba TradingView Premium sebelum komit ke langganan resmi</li>
+      <li>Kamu ingin Replay Mode untuk backtest strategi trading kamu</li>
+      <li>Kamu butuh multi-chart untuk analisa multi-timeframe</li>
+      <li>Kamu tidak mau ribet dengan setup rumit dan mau dibantu langkah per langkah</li>
+    </ul>
+
+    <div class="stl-insight">
+      <div class="stl-insight-icon">📌</div>
+      <div class="stl-insight-body">
+        <p><strong>Saran jujur sebelum beli:</strong> Kalau kamu ragu antara Jeki Store dan seller lain yang harganya jauh lebih murah — coba tanyakan ke seller tersebut satu pertanyaan: <em>"Kalau akun saya bermasalah jam 9 malam, kamu respons berapa lama?"</em>. Jawaban atas pertanyaan itu akan memberitahu kamu lebih banyak dari harga yang tertera.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════ BLOCK 6: SKENARIO NYATA AFTER-SERVICE ════ -->
+  <div class="stl-block">
+    <div class="stl-eyebrow">After-Service Nyata</div>
+    <h2>Seperti Ini Rasanya Ketika Ada Kendala di Jeki Store</h2>
+
+    <p>Daripada hanya bilang "admin kami responsif", lebih baik kamu lihat contoh nyata bagaimana kendala ditangani. Ini bukan skenario ideal — ini standar minimum yang dijaga setiap hari.</p>
+
+    <h3>Skenario 1: Akun Tiba-Tiba Back Basic</h3>
+    <div class="stl-story">
+      <p>Kamu sedang analisa chart saham di tengah sesi trading sore. Tiba-tiba muncul notifikasi bahwa akun kembali ke versi Basic — indikator kamu hilang, alert tidak aktif.</p>
+      <p>Yang terjadi di Jeki Store: Kamu screenshot dan kirim ke WA admin. Admin balas dalam hitungan menit. Akun pengganti dikirimkan. <strong>Kamu login ulang, setup indikator, dan lanjut trading</strong> — total waktu terganggu kurang dari 15 menit.</p>
+      <p>Yang sering terjadi di tempat lain: Kamu tunggu balasan. Satu jam, tidak ada. Tiga jam, hanya "ditunggu kak". Besok dibalas "maaf kemarin offline". Akun baru dikirim dua hari kemudian. Kamu sudah melewatkan momen trading yang kamu incar.</p>
+    </div>
+
+    <h3>Skenario 2: Tidak Bisa Login Setelah Setup</h3>
+    <div class="stl-story">
+      <p>Kamu baru pertama kali beli dan mengikuti panduan setup, tapi ada satu langkah yang tidak kamu mengerti. Login tidak berhasil.</p>
+      <p>Yang terjadi di Jeki Store: Admin minta screenshot error yang kamu lihat. Dalam beberapa pesan, admin identifikasi masalahnya — ternyata browser cache perlu dihapus dulu. Admin kirim panduan spesifik step-by-step. <strong>Kamu berhasil login dalam 10 menit.</strong></p>
+      <p>Tidak ada "coba googling dulu kak". Tidak ada "tunggu sampai besok". Masalah diselesaikan di sesi yang sama.</p>
+    </div>
+
+    <h3>Skenario 3: Mau Pindah Method Setelah Beli</h3>
+    <div class="stl-story">
+      <p>Kamu beli Method 1 (PC only), tapi setelah berjalan seminggu kamu sadar butuh akses dari HP juga untuk pantau pasar saat di luar kantor.</p>
+      <p>Yang terjadi di Jeki Store: Kamu tanyakan opsi ke admin. Admin jelaskan perbedaan Method 2 dan 3, mana yang lebih cocok untuk kebutuhanmu, tanpa push untuk beli yang lebih mahal. <strong>Solusi disesuaikan dengan kebutuhan nyata kamu, bukan dengan apa yang menguntungkan Jeki Store.</strong></p>
+    </div>
+  </div>
+
+
+  <!-- ════ BLOCK 7: UNTUK PEMBELI PERTAMA KALI ════ -->
+  <div class="stl-block">
+    <div class="stl-eyebrow">Untuk Pembeli Pertama Kali</div>
+    <h2>Panduan Lengkap untuk Kamu yang Belum Pernah Beli TradingView Premium dari Manapun</h2>
+
+    <p>Kalau ini pertama kalinya kamu mempertimbangkan TradingView Premium — baik dari Jeki Store maupun tempat lain — ini yang perlu kamu ketahui dari awal.</p>
+
+    <h3>Apakah Kamu Benar-Benar Butuh TradingView Premium?</h3>
+    <p>Jujur: tidak semua trader butuh Premium. Berikut cara mudah mengeceknya dalam 2 menit:</p>
+    <ol>
+      <li>Buka TradingView gratis dan tambahkan indikator yang biasa kamu pakai. Kalau kamu butuh lebih dari 3 indikator per chart — kamu butuh Premium.</li>
+      <li>Cek berapa alert aktif yang kamu butuhkan. Kalau lebih dari 1 — kamu butuh Premium.</li>
+      <li>Apakah kamu pernah merasa ingin "replay" pergerakan harga untuk belajar? — kamu butuh Premium.</li>
+      <li>Apakah kamu butuh chart lebih dari 1 timeframe sekaligus di layar yang sama? — kamu butuh Premium.</li>
+    </ol>
+    <p>Kalau semua jawaban kamu "tidak" — tetap pakai yang gratis dulu, tidak ada yang memaksamu upgrade.</p>
+
+    <h3>Langkah Pertama Setelah Beli di Jeki Store</h3>
+    <ol>
+      <li><strong>Isi form order</strong> di halaman ini — masukkan nama kamu dan pilih method yang sesuai</li>
+      <li><strong>Chat admin via WhatsApp</strong> yang otomatis terhubung setelah klik tombol order</li>
+      <li><strong>Tanya dulu jika masih ragu</strong> — tidak ada kewajiban langsung bayar, kamu bisa tanya-tanya dulu seputar method mana yang cocok</li>
+      <li><strong>Transfer setelah yakin</strong> — admin kirim info pembayaran, kamu scan QRIS</li>
+      <li><strong>Akun aktif dalam &lt; 1 jam</strong> — admin kirim detail akun lengkap dengan panduan setup</li>
+      <li><strong>Admin standby bantu</strong> sampai kamu benar-benar berhasil login dan bisa menggunakan fitur Premium</li>
+    </ol>
+
+    <div class="stl-insight">
+      <div class="stl-insight-icon">🎯</div>
+      <div class="stl-insight-body">
+        <p><strong>Tips untuk pembeli pertama:</strong> Kalau kamu masih ragu method mana yang tepat, ceritakan ke admin bagaimana kamu biasa trading — dari perangkat apa, seberapa sering, dan fitur apa yang paling kamu butuhkan. Admin akan rekomendasikan method yang benar-benar sesuai, bukan yang harga paling tinggi.</p>
+      </div>
+    </div>
+
+    <h3>Berapa Lama TradingView Premium Perlu Waktu untuk Terasa Manfaatnya?</h3>
+    <p>Kebanyakan pengguna langsung merasakan perbedaan di hari pertama — terutama dari tidak adanya iklan, bisa pasang lebih dari 3 indikator, dan alert yang tidak terbatas. Untuk Replay Mode dan backtest, manfaat terasa setelah 1–2 minggu rutin berlatih karena ada kurva belajar singkat untuk membiasakan diri dengan fitur ini.</p>
+    <p>Kalau setelah seminggu kamu merasa TradingView Premium tidak memberikan nilai tambah untuk gaya trading kamu — itu informasi berharga. Tidak semua trader butuh alat yang sama. Yang penting kamu tahu setelah mencoba sendiri, bukan hanya berdasarkan asumsi.</p>
+  </div>
+
+
+</div><!-- /stl-wrap -->
+</section>
+
+<!-- ════════════════════════════════════
+     FLOATING KNOWLEDGE BUTTON
+     Muncul saat pengguna sampai di FAQ.
+     Shortcut ke Knowledge Base & Trust Layer.
+════════════════════════════════════ -->
+<style>
+/* ── Container tombol mengapung ── */
+#fkb-trigger {
+  position: fixed;
+  bottom: 28px;
+  left: 24px;
+  z-index: 9000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.38s cubic-bezier(0.4,0,0.2,1),
+              transform 0.38s cubic-bezier(0.34,1.56,0.64,1);
+  transform: translateY(16px);
+}
+
+#fkb-trigger.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Mobile: naikkan agar tidak tertimpa float-nav bottom */
+@media (max-width: 960px) {
+  #fkb-trigger {
+    bottom: 90px;
+    left: 16px;
+  }
+}
+
+/* ── Tombol utama ── */
+#fkb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: #0f0f0f;
+  color: #a8ff3e;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  padding: 13px 20px 13px 16px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 28px rgba(0,0,0,0.28), 0 1px 4px rgba(0,0,0,0.18);
+  white-space: nowrap;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+#fkb-btn:hover {
+  background: #1a1a1a;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.34);
+}
+
+#fkb-btn:active { transform: translateY(0); }
+
+/* ── Ikon buku ── */
+#fkb-btn .fkb-icon {
+  width: 28px; height: 28px;
+  background: #a8ff3e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  color: #0f0f0f;
+}
+
+/* ── Pulse dot ── */
+#fkb-btn .fkb-dot {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 8px; height: 8px;
+  background: #a8ff3e;
+  border-radius: 50%;
+  border: 2px solid #0f0f0f;
+  animation: fkb-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes fkb-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+}
+
+/* ── Dropdown menu ── */
+#fkb-menu {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 0;
+  transform: translateY(8px);
+  background: #fff;
+  border: 1.5px solid #e8e8e0;
+  border-radius: 18px;
+  padding: 10px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.18);
+  min-width: 248px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.28s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+#fkb-menu.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.fkb-menu-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #aaa;
+  padding: 6px 10px 8px;
+}
+
+.fkb-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-decoration: none;
+  width: 100%;
+  border: none;
+  background: none;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  text-align: left;
+}
+
+.fkb-menu-item:hover { background: #f5f5f2; }
+
+.fkb-menu-icon {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  background: #0f0f0f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  color: #a8ff3e;
+}
+
+.fkb-menu-text-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0f0f0f;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.fkb-menu-text-sub {
+  font-size: 0.7rem;
+  color: #999;
+  margin-top: 1px;
+  line-height: 1.3;
+}
+
+.fkb-menu-divider {
+  border: none;
+  border-top: 1px solid #f0f0e8;
+  margin: 6px 0;
+}
+
+/* ── Dismiss ── */
+#fkb-dismiss {
+  position: absolute;
+  top: -10px; right: -10px;
+  width: 24px; height: 24px;
+  background: #fff;
+  border: 1.5px solid #e8e8e0;
+  border-radius: 50%;
+  font-size: 0.6rem;
+  color: #999;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  transition: background 0.15s, color 0.15s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+#fkb-dismiss:hover { background: #0f0f0f; color: #a8ff3e; border-color: #0f0f0f; }
+
+/* ── Backdrop untuk tutup menu ── */
+#fkb-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 8999;
+}
+#fkb-backdrop.show { display: block; }
+
+@media (max-width: 480px) {
+  #fkb-btn { font-size: 0.78rem; padding: 11px 16px 11px 13px; }
+  #fkb-btn .fkb-icon { width: 24px; height: 24px; font-size: 0.75rem; }
+  #fkb-menu { min-width: 220px; }
+}
+</style>
+
+<!-- Backdrop -->
+<div id="fkb-backdrop"></div>
+
+<!-- Tombol + Menu -->
+<div id="fkb-trigger" role="complementary" aria-label="Shortcut ke Panduan Lengkap">
+
+  <!-- Dropdown menu (muncul di atas tombol) -->
+  <div id="fkb-menu" role="menu">
+    <div class="fkb-menu-label">Baca Panduan Lengkap</div>
+
+    <button class="fkb-menu-item" role="menuitem" onclick="fkbGo('skb-art-1')">
+      <div class="fkb-menu-icon"><i class="bi bi-bar-chart-line-fill"></i></div>
+      <div>
+        <div class="fkb-menu-text-title">Free vs Premium</div>
+        <div class="fkb-menu-text-sub">Perbandingan fitur lengkap</div>
+      </div>
+    </button>
+
+    <button class="fkb-menu-item" role="menuitem" onclick="fkbGo('skb-art-2')">
+      <div class="fkb-menu-icon"><i class="bi bi-alarm-fill"></i></div>
+      <div>
+        <div class="fkb-menu-text-title">Replay Mode & Backtest</div>
+        <div class="fkb-menu-text-sub">Cara latihan trading tanpa risiko</div>
+      </div>
+    </button>
+
+    <button class="fkb-menu-item" role="menuitem" onclick="fkbGo('skb-art-3')">
+      <div class="fkb-menu-icon"><i class="bi bi-shield-check"></i></div>
+      <div>
+        <div class="fkb-menu-text-title">Beli dari Reseller, Aman?</div>
+        <div class="fkb-menu-text-sub">Penjelasan jujur tanpa dimanipulasi</div>
+      </div>
+    </button>
+
+    <button class="fkb-menu-item" role="menuitem" onclick="fkbGo('skb-art-4')">
+      <div class="fkb-menu-icon"><i class="bi bi-grid-3x3-gap-fill"></i></div>
+      <div>
+        <div class="fkb-menu-text-title">Panduan Pilih Method</div>
+        <div class="fkb-menu-text-sub">M1, M2, M3 — mana yang cocok?</div>
+      </div>
+    </button>
+
+    <hr class="fkb-menu-divider">
+
+    <button class="fkb-menu-item" role="menuitem" onclick="fkbGo('seo-trust-layer')">
+      <div class="fkb-menu-icon"><i class="bi bi-chat-quote-fill"></i></div>
+      <div>
+        <div class="fkb-menu-text-title">Kenapa Jeki Store Ada</div>
+        <div class="fkb-menu-text-sub">Cerita & prinsip di balik layanan ini</div>
+      </div>
+    </button>
+
+    <button class="fkb-menu-item" role="menuitem" onclick="fkbGo('skb-faq-ext')">
+      <div class="fkb-menu-icon"><i class="bi bi-patch-check-fill"></i></div>
+      <div>
+        <div class="fkb-menu-text-title">FAQ Lebih Lengkap</div>
+        <div class="fkb-menu-text-sub">9 pertanyaan yang sering ditanyakan</div>
+      </div>
+    </button>
+
+    <!-- Tombol dismiss -->
+    <button id="fkb-dismiss" aria-label="Tutup" onclick="fkbDismiss(event)"><i class="bi bi-x-lg"></i></button>
+  </div>
+
+  <!-- Tombol utama -->
+  <button id="fkb-btn" aria-haspopup="true" aria-expanded="false" onclick="fkbToggle()">
+    <span class="fkb-icon"><i class="bi bi-book-fill" style="font-size:0.85rem;"></i></span>
+    Panduan Lengkap
+    <span class="fkb-dot" aria-hidden="true"></span>
+  </button>
+
+</div>
+
+<script>
+/* ══ FLOATING KNOWLEDGE BUTTON ══ */
+(function () {
+  var trigger   = document.getElementById('fkb-trigger');
+  var btn       = document.getElementById('fkb-btn');
+  var menu      = document.getElementById('fkb-menu');
+  var backdrop  = document.getElementById('fkb-backdrop');
+  var faqSection = document.getElementById('faq');
+
+  if (!trigger || !faqSection) return;
+
+  var dismissed  = false;
+  var menuOpen   = false;
+
+  /* ── Tampilkan saat FAQ terlihat ── */
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (dismissed) return;
+      if (entry.isIntersecting) {
+        trigger.classList.add('visible');
+      } else {
+        if (!menuOpen) trigger.classList.remove('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  observer.observe(faqSection);
+
+  /* ── Toggle menu ── */
+  window.fkbToggle = function () {
+    menuOpen = !menuOpen;
+    menu.classList.toggle('open', menuOpen);
+    backdrop.classList.toggle('show', menuOpen);
+    btn.setAttribute('aria-expanded', menuOpen);
+  };
+
+  /* ── Tutup menu via backdrop ── */
+  backdrop.addEventListener('click', function () {
+    menuOpen = false;
+    menu.classList.remove('open');
+    backdrop.classList.remove('show');
+    btn.setAttribute('aria-expanded', 'false');
+  });
+
+  /* ── Dismiss seluruh tombol ── */
+  window.fkbDismiss = function (e) {
+    e.stopPropagation();
+    dismissed = true;
+    menuOpen  = false;
+    menu.classList.remove('open');
+    backdrop.classList.remove('show');
+    trigger.classList.remove('visible');
+    observer.disconnect();
+  };
+
+  /* ── Navigasi ke section + aktifkan tab jika perlu ── */
+  window.fkbGo = function (targetId) {
+    /* Tutup menu dulu */
+    menuOpen = false;
+    menu.classList.remove('open');
+    backdrop.classList.remove('show');
+    btn.setAttribute('aria-expanded', 'false');
+
+    /* Jika target adalah artikel di Knowledge Base, aktifkan tab-nya */
+    var articleIds = ['skb-art-1','skb-art-2','skb-art-3','skb-art-4','skb-art-5'];
+    if (articleIds.indexOf(targetId) !== -1) {
+      /* Aktifkan tab yang sesuai */
+      document.querySelectorAll('.skb-tab').forEach(function (tab) {
+        tab.classList.toggle('active', tab.dataset.target === targetId);
+      });
+      document.querySelectorAll('.skb-article').forEach(function (art) {
+        art.classList.toggle('active', art.id === targetId);
+      });
+      /* Scroll ke knowledge base section */
+      var dest = document.getElementById('seo-knowledge-base');
+      if (dest) { dest.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      return;
+    }
+
+    /* FAQ extended */
+    if (targetId === 'skb-faq-ext') {
+      var dest = document.getElementById('seo-knowledge-base');
+      if (dest) {
+        dest.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        /* Setelah scroll, scroll sedikit lagi ke FAQ accordion */
+        setTimeout(function () {
+          var faqEl = document.querySelector('.skb-faq-section');
+          if (faqEl) faqEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 600);
+      }
+      return;
+    }
+
+    /* Trust layer atau section lain */
+    var dest = document.getElementById(targetId);
+    if (dest) dest.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+})();
+</script>
+
+<!-- Schema tambahan: TrustLayer signals untuk AI -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Kenapa harga TradingView Premium di Jeki Store lebih mahal dari reseller lain di Shopee?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Harga Jeki Store (Rp 185.000/bulan) lebih tinggi dari reseller murah (Rp 20.000–40.000) karena perbedaan kualitas after-service. Reseller murah umumnya memiliki respons lambat atau bahkan tidak merespons saat ada kendala. Jeki Store menjamin respons dalam menit–jam di jam layanan (08.00–22.00 WIB), garansi penggantian akun selama masa berlangganan tanpa syarat tersembunyi, dan bantuan setup step-by-step sampai pelanggan benar-benar berhasil menggunakan akun. Harga mencerminkan kepastian ada yang bertanggung jawab setelah transaksi, bukan hanya produknya saja."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Bagaimana cara komplain atau minta ganti akun jika TradingView bermasalah di Jeki Store?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cara komplain di Jeki Store sangat mudah: langsung hubungi admin via WhatsApp yang sudah diberikan saat akun pertama kali aktif. Screenshot kondisi akun yang bermasalah dan kirimkan ke admin. Di jam layanan (08.00–22.00 WIB), respons diberikan dalam hitungan menit dan akun pengganti dikirim tanpa biaya tambahan. Tidak ada proses klaim yang rumit, tidak ada syarat tersembunyi, dan tidak ada batas berapa kali kamu bisa minta penggantian selama masa berlangganan aktif."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Apakah TradingView Premium dari reseller Indonesia bisa untuk trading saham IDX dan crypto sekaligus?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ya, TradingView Premium mendukung saham IDX (Bursa Efek Indonesia) dan crypto sekaligus dalam platform yang sama. Kamu bisa membuka chart saham BBCA, TLKM, atau saham BEI lainnya di satu layout, dan chart Bitcoin atau Ethereum di layout lain, secara bersamaan. Dengan fitur multi-chart Premium, kamu bisa pantau hingga 8 pair di layar yang sama. Akun dari Jeki Store memiliki akses fitur yang identik dengan akun Premium resmi TradingView."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Apa yang terjadi jika akun TradingView back to basic di tengah trading?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Jika akun TradingView back to basic (kembali ke versi gratis secara tiba-tiba), pelanggan Jeki Store tinggal menghubungi admin via WhatsApp. Admin akan mengirimkan akun pengganti dalam waktu singkat di jam layanan (08.00–22.00 WIB) tanpa biaya tambahan. Ini adalah prosedur standar terutama untuk Method 3 yang memang mengalami back basic 3-4 kali per bulan secara normal. Pelanggan tidak perlu khawatir karena penggantian sudah termasuk dalam layanan berlangganan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Apakah Jeki Store cocok untuk trader pemula yang baru belajar TradingView?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ya, Jeki Store sangat cocok untuk trader pemula. Method 3 (semua device via aplikasi) adalah yang paling mudah disetup dan cocok untuk pemula. Admin Jeki Store sendiri adalah pengguna TradingView aktif dan bisa membantu menjawab pertanyaan seputar cara pakai fitur, setup indikator, dan troubleshoot masalah teknis — bukan hanya mengirimkan akun lalu menghilang. Untuk pemula yang belum yakin butuh Premium atau tidak, bisa tanyakan dulu ke admin sebelum memutuskan beli."
+      }
+    }
+  ]
+}
+</script>
+
 </body>
 </html>
