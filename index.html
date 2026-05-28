@@ -4171,8 +4171,7 @@ window.dispatchEvent(new Event('scroll'));
    fkb-trigger (tombol Panduan Lengkap) tetap muncul — hanya pill nav yang hilang.  */
 (function () {
   var zones = [
-    document.getElementById('seo-knowledge-base'),
-    document.getElementById('seo-trust-layer')
+    document.getElementById('seo-knowledge-base')
   ].filter(Boolean);
 
   if (!zones.length) return;
@@ -4887,15 +4886,17 @@ document.getElementById('m1').checked = true;
     });
   });
 
-  /* Article tab switching */
-  document.querySelectorAll('.skb-tab').forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      var target = tab.dataset.target;
-      document.querySelectorAll('.skb-tab').forEach(function(t) { t.classList.remove('active'); });
-      document.querySelectorAll('.skb-article').forEach(function(a) { a.classList.remove('active'); });
-      tab.classList.add('active');
-      var articleEl = document.getElementById(target);
-      if (articleEl) articleEl.classList.add('active');
+  /* Article tab switching — dijalankan setelah DOM siap */
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.skb-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var target = tab.dataset.target;
+        document.querySelectorAll('.skb-tab').forEach(function(t) { t.classList.remove('active'); });
+        document.querySelectorAll('.skb-article').forEach(function(a) { a.classList.remove('active'); });
+        tab.classList.add('active');
+        var articleEl = document.getElementById(target);
+        if (articleEl) articleEl.classList.add('active');
+      });
     });
   });
 })();
@@ -5225,6 +5226,205 @@ document.getElementById('m1').checked = true;
   .skb-cta-strip { flex-direction: column; padding: 24px 20px; }
   .skb-cta-btn { width: 100%; justify-content: center; }
 }
+
+/* ══ STL COMPONENTS — dipakai artikel 6–12 ══ */
+.stl-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #7acc1a;
+}
+.stl-eyebrow::before {
+  content: '';
+  width: 16px; height: 2px;
+  background: #7acc1a;
+  border-radius: 2px;
+}
+
+/* Story card */
+.stl-story {
+  background: #0f0f0f;
+  border-radius: 20px;
+  padding: 28px 32px;
+  margin: 20px 0;
+  position: relative;
+  overflow: hidden;
+}
+.stl-story::before {
+  content: '"';
+  position: absolute;
+  top: -10px; left: 24px;
+  font-size: 7rem;
+  font-weight: 900;
+  color: #a8ff3e;
+  opacity: 0.12;
+  line-height: 1;
+  font-family: Georgia, serif;
+}
+.stl-story p {
+  color: #d0d0c8;
+  font-size: 0.875rem;
+  line-height: 1.82;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+.stl-story p:last-child { margin-bottom: 0; }
+.stl-story strong { color: #a8ff3e !important; }
+.stl-story-sig {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  position: relative; z-index: 1;
+}
+.stl-story-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: #a8ff3e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #0f0f0f;
+  flex-shrink: 0;
+}
+.stl-story-name { font-size: 0.82rem; font-weight: 700; color: #fff; }
+.stl-story-role { font-size: 0.72rem; color: #767676; margin-top: 1px; }
+
+/* Scenario cards */
+.stl-scenarios {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 18px 0;
+}
+.stl-scenario {
+  border-radius: 14px;
+  padding: 18px;
+  border: 1.5px solid;
+}
+.stl-scenario.bad  { background: #fff5f5; border-color: #ffd0d0; }
+.stl-scenario.good { background: #f4fff0; border-color: #c8eabc; }
+.stl-scenario-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.stl-scenario.bad  .stl-scenario-label { color: #b00020; }
+.stl-scenario.good .stl-scenario-label { color: #2a8a00; }
+.stl-scenario h4 { font-size: 0.88rem; font-weight: 800; color: #0f0f0f; margin: 0 0 6px; }
+.stl-scenario p  { font-size: 0.82rem; line-height: 1.68; color: #555; margin: 0; }
+
+/* Value grid */
+.stl-value-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 18px 0;
+}
+.stl-value-card {
+  background: #f7f7f5;
+  border: 1.5px solid #e8e8e0;
+  border-radius: 14px;
+  padding: 18px 14px;
+  text-align: center;
+}
+.stl-value-num {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #0f0f0f;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stl-value-num span { font-size: 0.8rem; font-weight: 700; color: #7acc1a; }
+.stl-value-label { font-size: 0.72rem; color: #767676; line-height: 1.5; font-weight: 500; }
+
+/* Insight card */
+.stl-insight {
+  display: flex;
+  gap: 14px;
+  background: #f7f7f5;
+  border: 1.5px solid #e8e8e0;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin: 14px 0;
+  align-items: flex-start;
+}
+.stl-insight-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+.stl-insight-body p { margin: 0; font-size: 0.875rem; line-height: 1.72; color: #3d3d3d; }
+.stl-insight-body strong { color: #0f0f0f; }
+
+/* Principles list */
+.stl-principles { list-style: none; padding: 0; margin: 18px 0; }
+.stl-principles li {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid #f0f0e8;
+  align-items: flex-start;
+}
+.stl-principles li:last-child { border-bottom: none; }
+.stl-principle-num {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #a8ff3e;
+  background: #0f0f0f;
+  border-radius: 8px;
+  width: 32px; height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: -0.03em;
+}
+.stl-principle-body h4 { font-size: 0.88rem; font-weight: 800; color: #0f0f0f; margin: 0 0 4px; }
+.stl-principle-body p  { font-size: 0.84rem; line-height: 1.7; color: #555; margin: 0; }
+
+/* Checklist grid */
+.stl-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.stl-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #3d3d3d;
+  line-height: 1.55;
+  margin: 0;
+}
+.stl-checklist li::before {
+  content: '✓';
+  color: #7acc1a;
+  font-weight: 900;
+  font-size: 0.78rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* STL responsive */
+@media (max-width: 640px) {
+  .stl-scenarios  { grid-template-columns: 1fr; }
+  .stl-value-grid { grid-template-columns: repeat(3,1fr); gap: 8px; }
+  .stl-value-num  { font-size: 1.2rem; }
+  .stl-checklist  { grid-template-columns: 1fr; }
+}
 </style>
 
 <section id="seo-knowledge-base" aria-label="Pusat Pengetahuan TradingView Premium">
@@ -5244,6 +5444,13 @@ document.getElementById('m1').checked = true;
     <button class="skb-tab" role="tab" data-target="skb-art-3">Beli dari Reseller, Aman?</button>
     <button class="skb-tab" role="tab" data-target="skb-art-4">Panduan Pilih Method</button>
     <button class="skb-tab" role="tab" data-target="skb-art-5">Tips Trading Chart</button>
+    <button class="skb-tab" role="tab" data-target="skb-art-6">Kenapa Jeki Store Ada</button>
+    <button class="skb-tab" role="tab" data-target="skb-art-7">Soal Harga</button>
+    <button class="skb-tab" role="tab" data-target="skb-art-8">Perbandingan Jujur</button>
+    <button class="skb-tab" role="tab" data-target="skb-art-9">Standar Layanan</button>
+    <button class="skb-tab" role="tab" data-target="skb-art-10">Sebelum Kamu Beli</button>
+    <button class="skb-tab" role="tab" data-target="skb-art-11">After-Service Nyata</button>
+    <button class="skb-tab" role="tab" data-target="skb-art-12">Panduan Pembeli Baru</button>
   </div>
 
   <!-- ─── ARTIKEL 1: FREE VS PREMIUM ─── -->
@@ -5522,6 +5729,239 @@ document.getElementById('m1').checked = true;
     <p style="font-size:0.8rem; color:#999;">Terakhir diperbarui: Mei 2025 · Kategori: Tips Trading, TradingView Premium</p>
   </article>
 
+  <!-- ─── ARTIKEL 6: KENAPA JEKI STORE ADA ─── -->
+  <article id="skb-art-6" class="skb-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="author" content="Jeki Store">
+    <h3 itemprop="headline">Saya Pernah Jadi Pembeli yang Diabaikan. Itu yang Membuat Jeki Store Lahir.</h3>
+    <div class="stl-eyebrow" style="margin-bottom:14px;">Kenapa Jeki Store Ada</div>
+    <p>Sebelum membangun Jeki Store, saya adalah pelanggan biasa yang membeli software berlangganan dari seller di marketplace. Waktu itu saya beli langganan premium aplikasi editing dari seller di Shopee. Harganya murah, prosesnya cepat. Tapi begitu ada kendala — akun tiba-tiba tidak bisa dipakai di tengah-tengah pekerjaan — yang terjadi adalah keheningan. Pesan WA tidak dibalas. Chat marketplace dibaca tapi tidak dijawab. Komplain akhirnya hanya berakhir di meja chat tanpa solusi.</p>
+    <p>Rasanya frustrasi bukan main. Bukan karena masalahnya besar, tapi karena merasa <strong>tidak dianggap sebagai manusia</strong>. Saya hanya dianggap sebagai transaksi yang sudah selesai begitu uang diterima.</p>
+    <div class="stl-story">
+      <p>"Waktu itu saya sadar: kalau saya sendiri yang jadi pembeli, saya mau diperlakukan seperti apa? Saya mau direspons cepat. Saya mau ada yang bantu sampai masalah benar-benar selesai. Saya mau tahu bahwa uang yang saya keluarkan dijaga dengan tanggung jawab."</p>
+      <p>Dari situ satu prinsip berdiri di Jeki Store: <strong>perlakukan pembeli seperti kamu sendiri yang butuh.</strong> Bukan sekadar tagline, tapi standar operasional harian.</p>
+      <div class="stl-story-sig">
+        <div class="stl-story-avatar">J</div>
+        <div>
+          <div class="stl-story-name">Pendiri Jeki Store</div>
+          <div class="stl-story-role">Reseller TradingView Premium Indonesia</div>
+        </div>
+      </div>
+    </div>
+    <p>Ini bukan cerita yang dibuat-buat untuk marketing. Ini alasan nyata kenapa standar respons di Jeki Store dijaga ketat, kenapa garansi bukan sekadar janji di landing page, dan kenapa kami memilih untuk transparan tentang kekurangan tiap method alih-alih hanya menjual sisi baiknya saja.</p>
+    <hr class="skb-divider">
+    <p style="font-size:0.8rem; color:#999;">Terakhir diperbarui: Mei 2025 · Kategori: Tentang Jeki Store</p>
+  </article>
+
+  <!-- ─── ARTIKEL 7: SOAL HARGA ─── -->
+  <article id="skb-art-7" class="skb-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="author" content="Jeki Store">
+    <h3 itemprop="headline">Kenapa Harga Jeki Store Lebih Mahal dari yang Rp 20.000–40.000 di Shopee?</h3>
+    <div class="stl-eyebrow" style="margin-bottom:14px;">Soal Harga</div>
+    <p>Pertanyaan ini wajar sekali dan sering ditanyakan. Jawaban jujurnya adalah: <strong>harga mencerminkan apa yang kamu bayar sesudah transaksi, bukan hanya produknya itu sendiri.</strong></p>
+    <p>TradingView Premium dengan harga Rp 20.000–40.000 per bulan memang ada. Dan mungkin bekerja di awal. Tapi ada beberapa hal yang perlu kamu pertimbangkan sebelum memutuskan murni berdasarkan harga:</p>
+    <div class="stl-scenarios">
+      <div class="stl-scenario bad">
+        <div class="stl-scenario-label"><i class="bi bi-exclamation-triangle-fill"></i> Skenario Murah</div>
+        <h4>Beli Rp 20.000, Akun Bermasalah</h4>
+        <p>Akun tiba-tiba back basic di tengah sesi analisa. Kamu WA seller. Dibaca, tidak dibalas. Besok dibalas "lagi diurus". Seminggu kemudian tidak ada kabar. Kamu kehilangan waktu, mood, dan Rp 20.000 yang tidak bisa balik.</p>
+      </div>
+      <div class="stl-scenario good">
+        <div class="stl-scenario-label"><i class="bi bi-check-circle-fill"></i> Skenario Jeki Store</div>
+        <h4>Beli Rp 185.000, Ada Kendala</h4>
+        <p>Akun back basic. Kamu chat admin. Dalam hitungan menit kamu dapat akun pengganti. Tidak perlu dramatis, tidak perlu nunggu berhari-hari. Lanjut trading seperti biasa.</p>
+      </div>
+    </div>
+    <div class="skb-callout">
+      <p><i class="bi bi-calculator"></i> <strong>Hitung sederhana:</strong> Rp 185.000 ÷ 30 hari = <strong>Rp 6.167 per hari</strong>. Lebih murah dari segelas kopi di kafe — untuk akses platform charting terbaik di dunia, dengan admin responsif dan garansi aktif.</p>
+    </div>
+    <h4>Apa yang Sebenarnya Kamu Bayar di Rp 185.000</h4>
+    <div class="stl-value-grid">
+      <div class="stl-value-card">
+        <div class="stl-value-num">&lt;<span>1 jam</span></div>
+        <div class="stl-value-label">Aktivasi akun setelah bayar</div>
+      </div>
+      <div class="stl-value-card">
+        <div class="stl-value-num">14<span>jam</span></div>
+        <div class="stl-value-label">Layanan admin aktif tiap hari (08–22)</div>
+      </div>
+      <div class="stl-value-card">
+        <div class="stl-value-num">0<span>Rp</span></div>
+        <div class="stl-value-label">Biaya ganti akun jika ada gangguan</div>
+      </div>
+    </div>
+    <p>Kamu tidak hanya membayar akses TradingView Premium. Kamu membayar kepastian bahwa kalau ada apa-apa, ada yang bertanggung jawab.</p>
+    <hr class="skb-divider">
+    <p style="font-size:0.8rem; color:#999;">Terakhir diperbarui: Mei 2025 · Kategori: Harga & Value</p>
+  </article>
+
+  <!-- ─── ARTIKEL 8: PERBANDINGAN JUJUR ─── -->
+  <article id="skb-art-8" class="skb-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="author" content="Jeki Store">
+    <h3 itemprop="headline">Jeki Store vs Reseller Lain vs Harga Resmi: Tabel Perbandingan yang Tidak Dimanipulasi</h3>
+    <div class="stl-eyebrow" style="margin-bottom:14px;">Perbandingan Jujur</div>
+    <p>Daripada hanya bilang "kami yang terbaik", lebih baik kamu lihat sendiri perbedaannya secara objektif. Ini perbandingan berdasarkan apa yang umum terjadi — bukan worst case, bukan best case.</p>
+    <table class="skb-table">
+      <thead>
+        <tr>
+          <th>Aspek</th>
+          <th>Reseller Murah (20–40k)</th>
+          <th>Jeki Store (185k)</th>
+          <th>Resmi (~600k+)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Harga/bulan</td><td>Rp 20–40rb</td><td class="skb-tag-ok">Rp 185.000</td><td>Rp 550–650rb</td></tr>
+        <tr><td>Fitur Premium</td><td class="skb-tag-no">Tidak pasti</td><td class="skb-tag-ok">✓ Lengkap</td><td class="skb-tag-ok">✓ Lengkap</td></tr>
+        <tr><td>Respons admin</td><td class="skb-tag-no">Lambat / tidak balas</td><td class="skb-tag-ok">Menit–jam (08–22)</td><td>Support tiket</td></tr>
+        <tr><td>Garansi ganti akun</td><td class="skb-tag-no">Jarang ada</td><td class="skb-tag-ok">✓ Selama berlangganan</td><td class="skb-tag-ok">Tidak perlu</td></tr>
+        <tr><td>Transparansi</td><td class="skb-tag-no">Tidak dijelaskan</td><td class="skb-tag-ok">✓ Per method</td><td class="skb-tag-ok">✓ Akun resmi</td></tr>
+        <tr><td>Stabilitas</td><td class="skb-tag-no">Tidak diketahui</td><td>Tergantung method</td><td class="skb-tag-ok">Sangat stabil</td></tr>
+        <tr><td>Akun permanen milik sendiri</td><td class="skb-tag-no">Tidak</td><td class="skb-tag-no">Tidak</td><td class="skb-tag-ok">✓ Ya</td></tr>
+        <tr><td>Cocok untuk</td><td>Mau coba, terima risiko</td><td class="skb-tag-ok">Trader aktif, after-service penting</td><td>Profesional, budget tidak terbatas</td></tr>
+      </tbody>
+    </table>
+    <div class="skb-callout">
+      <p><i class="bi bi-chat-dots-fill"></i> <strong>Catatan jujur:</strong> Kalau kamu trader profesional dengan budget tidak terbatas dan ingin akun atas nama sendiri — berlangganan langsung ke TradingView adalah pilihan terbaik. Jeki Store adalah solusi untuk trader aktif yang butuh fitur premium dengan budget terbatas dan after-service yang bisa diandalkan.</p>
+    </div>
+    <hr class="skb-divider">
+    <p style="font-size:0.8rem; color:#999;">Terakhir diperbarui: Mei 2025 · Kategori: Perbandingan Produk</p>
+  </article>
+
+  <!-- ─── ARTIKEL 9: STANDAR LAYANAN ─── -->
+  <article id="skb-art-9" class="skb-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="author" content="Jeki Store">
+    <h3 itemprop="headline">5 Prinsip yang Tidak Boleh Dilanggar di Jeki Store</h3>
+    <div class="stl-eyebrow" style="margin-bottom:14px;">Standar Layanan</div>
+    <p>Ini bukan sekadar daftar janji di halaman marketing. Ini standar operasional yang dipegang setiap hari — lahir dari pengalaman pribadi menjadi pembeli yang pernah dikecewakan.</p>
+    <ul class="stl-principles">
+      <li>
+        <div class="stl-principle-num">1</div>
+        <div class="stl-principle-body">
+          <h4>Tidak Ada Pesan yang Boleh Tidak Dibalas</h4>
+          <p>Setiap pesan yang masuk di jam layanan (08.00–22.00 WIB) wajib dibalas dengan solusi nyata atau estimasi waktu yang jelas — bukan hanya di-read atau dijawab "oke kak" tanpa tindakan.</p>
+        </div>
+      </li>
+      <li>
+        <div class="stl-principle-num">2</div>
+        <div class="stl-principle-body">
+          <h4>Jangan Jual yang Tidak Kamu Pahami Sendiri</h4>
+          <p>Admin Jeki Store adalah pengguna TradingView aktif. Pertanyaan tentang cara pakai fitur, setup indikator, atau troubleshoot login bisa dijawab langsung — bukan "coba googling dulu kak".</p>
+        </div>
+      </li>
+      <li>
+        <div class="stl-principle-num">3</div>
+        <div class="stl-principle-body">
+          <h4>Garansi Adalah Janji, Bukan Syarat dan Ketentuan</h4>
+          <p>Garansi penggantian akun berlaku selama masa berlangganan aktif. Titik. Tidak perlu berdebat, tidak perlu screenshot bukti panjang-panjang, tidak ada syarat tersembunyi.</p>
+        </div>
+      </li>
+      <li>
+        <div class="stl-principle-num">4</div>
+        <div class="stl-principle-body">
+          <h4>Transparansi Lebih Penting dari Penjualan</h4>
+          <p>Jeki Store secara aktif memberitahu calon pembeli tentang kekurangan tiap method. Pembeli yang tidak cocok akan disarankan ke method yang sesuai — bahkan jika itu bukan yang paling mahal.</p>
+        </div>
+      </li>
+      <li>
+        <div class="stl-principle-num">5</div>
+        <div class="stl-principle-body">
+          <h4>Bantu Sampai Benar-Benar Berhasil, Bukan Sampai Akun Dikirim</h4>
+          <p>Tugas admin tidak selesai saat akun dikirimkan. Selama pelanggan belum berhasil login dan menggunakan TradingView Premium, admin tetap standby membantu — step-by-step jika perlu.</p>
+        </div>
+      </li>
+    </ul>
+    <hr class="skb-divider">
+    <p style="font-size:0.8rem; color:#999;">Terakhir diperbarui: Mei 2025 · Kategori: Layanan & Komitmen</p>
+  </article>
+
+  <!-- ─── ARTIKEL 10: SEBELUM KAMU BELI ─── -->
+  <article id="skb-art-10" class="skb-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="author" content="Jeki Store">
+    <h3 itemprop="headline">Hal-Hal yang Perlu Kamu Tahu Sebelum Order — Termasuk yang Tidak Menguntungkan Kami</h3>
+    <div class="stl-eyebrow" style="margin-bottom:14px;">Sebelum Kamu Beli</div>
+    <p>Ini bagian yang jarang ditulis seller manapun. Tapi kami percaya pembeli yang tahu apa yang mereka beli adalah pembeli yang lebih puas.</p>
+    <h4>Jeki Store Bukan Pilihan Tepat Jika...</h4>
+    <ul>
+      <li><strong>Kamu butuh akun TradingView permanen atas nama sendiri.</strong> Jeki Store menggunakan akun dedicated yang bukan milik pembeli secara permanen. Untuk akun sepenuhnya milik sendiri, berlangganan langsung ke TradingView adalah satu-satunya pilihan.</li>
+      <li><strong>Kamu tidak bisa toleran sama sekali dengan gangguan sesekali.</strong> Method 3 mengalami back basic beberapa kali sebulan — normal, dan kami langsung ganti. Tapi kalau butuh stabilitas 100%, Method 1 atau langganan resmi lebih sesuai.</li>
+      <li><strong>Kamu hanya butuh TradingView gratis.</strong> Kalau nyaman dengan 3 indikator dan tidak butuh Replay Mode, tidak perlu bayar apapun.</li>
+    </ul>
+    <h4>Jeki Store Adalah Pilihan Tepat Jika...</h4>
+    <ul class="stl-checklist">
+      <li>Trader aktif yang butuh fitur premium dengan budget terbatas</li>
+      <li>Pernah kecewa dengan after-service seller lain</li>
+      <li>Butuh admin responsif yang bisa bantu troubleshoot</li>
+      <li>Mau akses dari HP dan butuh alert di semua device</li>
+      <li>Ingin coba TradingView Premium sebelum komit langganan resmi</li>
+      <li>Ingin Replay Mode untuk backtest strategi</li>
+      <li>Butuh multi-chart untuk analisa multi-timeframe</li>
+      <li>Tidak mau ribet setup rumit dan mau dibantu step-by-step</li>
+    </ul>
+    <div class="skb-callout">
+      <p><i class="bi bi-lightbulb-fill"></i> <strong>Saran jujur:</strong> Sebelum beli di tempat manapun, tanyakan satu pertanyaan ini ke seller: <em>"Kalau akun saya bermasalah jam 9 malam, kamu respons berapa lama?"</em>. Jawabannya akan memberitahu lebih banyak dari harga yang tertera.</p>
+    </div>
+    <hr class="skb-divider">
+    <p style="font-size:0.8rem; color:#999;">Terakhir diperbarui: Mei 2025 · Kategori: Panduan Pembelian</p>
+  </article>
+
+  <!-- ─── ARTIKEL 11: AFTER-SERVICE NYATA ─── -->
+  <article id="skb-art-11" class="skb-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="author" content="Jeki Store">
+    <h3 itemprop="headline">Seperti Ini Rasanya Ketika Ada Kendala di Jeki Store</h3>
+    <div class="stl-eyebrow" style="margin-bottom:14px;">After-Service Nyata</div>
+    <p>Daripada hanya bilang "admin kami responsif", lebih baik kamu lihat contoh nyata bagaimana kendala ditangani. Ini bukan skenario ideal — ini standar minimum yang dijaga setiap hari.</p>
+    <h4>Skenario 1: Akun Tiba-Tiba Back Basic</h4>
+    <div class="stl-story">
+      <p>Kamu sedang analisa chart saham di tengah sesi trading sore. Tiba-tiba akun kembali ke versi Basic — indikator hilang, alert tidak aktif.</p>
+      <p>Di Jeki Store: Kamu screenshot dan kirim ke WA admin. Admin balas dalam hitungan menit. Akun pengganti dikirimkan. <strong>Total waktu terganggu kurang dari 15 menit.</strong></p>
+      <p>Di tempat lain: Kamu tunggu balasan. Satu jam, tidak ada. Tiga jam, hanya "ditunggu kak". Besok baru dibalas. Kamu sudah melewatkan momen entry yang kamu incar.</p>
+    </div>
+    <h4>Skenario 2: Tidak Bisa Login Setelah Setup</h4>
+    <div class="stl-story">
+      <p>Kamu baru pertama kali beli, mengikuti panduan setup, tapi ada satu langkah yang tidak kamu mengerti. Login tidak berhasil.</p>
+      <p>Di Jeki Store: Admin minta screenshot error. Dalam beberapa pesan, admin identifikasi masalahnya — ternyata browser cache perlu dihapus. Admin kirim panduan spesifik step-by-step. <strong>Kamu berhasil login dalam 10 menit.</strong> Tidak ada "coba googling dulu kak".</p>
+    </div>
+    <h4>Skenario 3: Mau Pindah Method Setelah Beli</h4>
+    <div class="stl-story">
+      <p>Kamu beli Method 1 (PC only), tapi setelah seminggu sadar butuh akses dari HP juga.</p>
+      <p>Di Jeki Store: Admin jelaskan perbedaan Method 2 dan 3, mana yang lebih cocok untuk kebutuhanmu, tanpa push untuk beli yang lebih mahal. <strong>Solusi disesuaikan dengan kebutuhan nyata kamu.</strong></p>
+    </div>
+    <hr class="skb-divider">
+    <p style="font-size:0.8rem; color:#999;">Terakhir diperbarui: Mei 2025 · Kategori: Layanan Pelanggan</p>
+  </article>
+
+  <!-- ─── ARTIKEL 12: PANDUAN PEMBELI BARU ─── -->
+  <article id="skb-art-12" class="skb-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="author" content="Jeki Store">
+    <h3 itemprop="headline">Panduan Lengkap untuk Kamu yang Belum Pernah Beli TradingView Premium dari Manapun</h3>
+    <div class="stl-eyebrow" style="margin-bottom:14px;">Untuk Pembeli Pertama Kali</div>
+    <p>Kalau ini pertama kalinya kamu mempertimbangkan TradingView Premium — baik dari Jeki Store maupun tempat lain — ini yang perlu kamu ketahui dari awal.</p>
+    <h4>Apakah Kamu Benar-Benar Butuh TradingView Premium?</h4>
+    <p>Jujur: tidak semua trader butuh Premium. Cek dalam 2 menit:</p>
+    <ol>
+      <li>Kamu butuh lebih dari 3 indikator per chart? → butuh Premium</li>
+      <li>Kamu butuh lebih dari 1 alert aktif sekaligus? → butuh Premium</li>
+      <li>Kamu pernah ingin "replay" pergerakan harga untuk belajar? → butuh Premium</li>
+      <li>Kamu butuh multi-chart lebih dari 1 timeframe sekaligus? → butuh Premium</li>
+    </ol>
+    <p>Kalau semua jawaban "tidak" — tetap pakai yang gratis dulu. Tidak ada yang memaksamu upgrade.</p>
+    <h4>Langkah Pertama Setelah Beli di Jeki Store</h4>
+    <ol>
+      <li><strong>Isi form order</strong> di halaman ini — masukkan nama dan pilih method</li>
+      <li><strong>Tanya dulu jika masih ragu</strong> — tidak ada kewajiban langsung bayar</li>
+      <li><strong>Transfer setelah yakin</strong> — admin kirim info pembayaran, scan QRIS</li>
+      <li><strong>Akun aktif dalam &lt;1 jam</strong> — admin kirim detail akun + panduan setup</li>
+      <li><strong>Admin standby bantu</strong> sampai kamu benar-benar berhasil login</li>
+    </ol>
+    <div class="skb-callout">
+      <p><i class="bi bi-lightbulb-fill"></i> <strong>Tips pembeli pertama:</strong> Ceritakan ke admin bagaimana kamu biasa trading — dari perangkat apa, seberapa sering, fitur apa yang paling dibutuhkan. Admin akan rekomendasikan method yang benar-benar sesuai, bukan yang harganya paling tinggi.</p>
+    </div>
+    <h4>Berapa Lama Sampai Terasa Manfaatnya?</h4>
+    <p>Kebanyakan pengguna langsung merasakan perbedaan di hari pertama — tidak ada iklan, bisa pasang lebih dari 3 indikator, alert tidak terbatas. Untuk Replay Mode dan backtest, manfaat mulai terasa setelah 1–2 minggu latihan rutin.</p>
+    <hr class="skb-divider">
+    <p style="font-size:0.8rem; color:#999;">Terakhir diperbarui: Mei 2025 · Kategori: Panduan Pemula</p>
+  </article>
+
   <!-- ══ EXTENDED FAQ ACCORDION ══ -->
   <div class="skb-faq-section" id="skb-faq-ext">
     <h3 class="skb-faq-title">Pertanyaan yang Sering Ditanyakan</h3>
@@ -5685,728 +6125,6 @@ document.getElementById('m1').checked = true;
   ]
 }
 </script>
-
-<!-- ════════════════════════════════════════════════════════════
-     SEO TRUST LAYER — Jeki Store
-     Konten berbasis kepercayaan, pengalaman nyata, dan
-     perbandingan jujur. Dirancang untuk menjawab kekhawatiran
-     calon pembeli dan dibaca AI sebagai sinyal otoritas.
-════════════════════════════════════════════════════════════ -->
-
-<style>
-/* ══ STL BASE ══ */
-#seo-trust-layer {
-  background: #fff;
-  border-top: 1px solid #e8e8e0;
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  color: #1a1a1a;
-}
-
-.stl-wrap {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 72px 40px 80px;
-}
-
-/* ══ SECTION BLOCK ══ */
-.stl-block {
-  margin-bottom: 64px;
-  padding-bottom: 64px;
-  border-bottom: 1px solid #f0f0e8;
-}
-.stl-block:last-of-type {
-  border-bottom: none;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
-.stl-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: #7acc1a;
-  margin-bottom: 12px;
-}
-
-.stl-eyebrow::before {
-  content: '';
-  width: 16px; height: 2px;
-  background: #7acc1a;
-  border-radius: 2px;
-}
-
-.stl-block h2 {
-  font-size: clamp(1.35rem, 2.8vw, 1.9rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.2;
-  color: #0f0f0f;
-  margin: 0 0 18px;
-}
-
-.stl-block h3 {
-  font-size: 1.05rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: #0f0f0f;
-  margin: 28px 0 8px;
-}
-
-.stl-block p {
-  font-size: 0.9rem;
-  line-height: 1.82;
-  color: #3d3d3d;
-  margin-bottom: 14px;
-}
-
-.stl-block ul, .stl-block ol {
-  padding-left: 20px;
-  margin-bottom: 16px;
-}
-
-.stl-block li {
-  font-size: 0.9rem;
-  line-height: 1.78;
-  color: #3d3d3d;
-  margin-bottom: 8px;
-}
-
-.stl-block strong { color: #0f0f0f; }
-
-/* ══ STORY CARD ══ */
-.stl-story {
-  background: #0f0f0f;
-  border-radius: 20px;
-  padding: 32px 36px;
-  margin: 24px 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.stl-story::before {
-  content: '"';
-  position: absolute;
-  top: -10px;
-  left: 28px;
-  font-size: 8rem;
-  font-weight: 900;
-  color: #a8ff3e;
-  opacity: 0.15;
-  line-height: 1;
-  font-family: Georgia, serif;
-}
-
-.stl-story p {
-  color: #d0d0c8;
-  font-size: 0.92rem;
-  line-height: 1.82;
-  margin-bottom: 12px;
-  position: relative;
-  z-index: 1;
-}
-
-.stl-story p:last-child { margin-bottom: 0; }
-
-.stl-story strong { color: #a8ff3e !important; }
-
-.stl-story-sig {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-}
-
-.stl-story-avatar {
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  background: #a8ff3e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 0.85rem;
-  color: #0f0f0f;
-  flex-shrink: 0;
-}
-
-.stl-story-name {
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #fff;
-}
-
-.stl-story-role {
-  font-size: 0.75rem;
-  color: #767676;
-  margin-top: 1px;
-}
-
-/* ══ COMPARISON TABLE ══ */
-.stl-compare-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  font-size: 0.85rem;
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1.5px solid #e8e8e0;
-}
-
-.stl-compare-table thead tr {
-  background: #0f0f0f;
-}
-
-.stl-compare-table th {
-  padding: 13px 16px;
-  text-align: left;
-  font-weight: 700;
-  font-size: 0.8rem;
-  letter-spacing: -0.01em;
-  color: #767676;
-}
-
-.stl-compare-table th:first-child { color: #767676; }
-.stl-compare-table th.th-jeki { color: #a8ff3e; }
-
-.stl-compare-table td {
-  padding: 12px 16px;
-  border-bottom: 1px solid #f0f0e8;
-  color: #3d3d3d;
-  vertical-align: middle;
-  font-size: 0.85rem;
-  line-height: 1.5;
-}
-
-.stl-compare-table tr:last-child td { border-bottom: none; }
-.stl-compare-table tr:nth-child(even) td { background: #fafaf8; }
-
-.stl-td-aspect {
-  font-weight: 700;
-  color: #1a1a1a;
-  font-size: 0.82rem;
-}
-
-.stl-ok  { color: #2a8a00; font-weight: 700; }
-.stl-no  { color: #b00020; font-weight: 700; }
-.stl-mid { color: #b06000; font-weight: 700; }
-
-/* ══ INSIGHT CARD ══ */
-.stl-insight {
-  display: flex;
-  gap: 16px;
-  background: #f7f7f5;
-  border: 1.5px solid #e8e8e0;
-  border-radius: 16px;
-  padding: 20px 22px;
-  margin: 16px 0;
-  align-items: flex-start;
-}
-
-.stl-insight-icon {
-  font-size: 1.4rem;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.stl-insight-body p {
-  margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.72;
-  color: #3d3d3d;
-}
-
-.stl-insight-body strong { color: #0f0f0f; }
-
-/* ══ SCENARIO CARDS ══ */
-.stl-scenarios {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin: 20px 0;
-}
-
-.stl-scenario {
-  border-radius: 16px;
-  padding: 20px;
-  border: 1.5px solid;
-}
-
-.stl-scenario.bad {
-  background: #fff5f5;
-  border-color: #ffd0d0;
-}
-
-.stl-scenario.good {
-  background: #f4fff0;
-  border-color: #c8eabc;
-}
-
-.stl-scenario-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-.stl-scenario.bad .stl-scenario-label { color: #b00020; }
-.stl-scenario.good .stl-scenario-label { color: #2a8a00; }
-
-.stl-scenario h4 {
-  font-size: 0.9rem;
-  font-weight: 800;
-  color: #0f0f0f;
-  margin: 0 0 8px;
-  letter-spacing: -0.015em;
-}
-
-.stl-scenario p {
-  font-size: 0.82rem;
-  line-height: 1.7;
-  color: #555;
-  margin: 0;
-}
-
-/* ══ VALUE BREAKDOWN ══ */
-.stl-value-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin: 24px 0;
-}
-
-.stl-value-card {
-  background: #f7f7f5;
-  border: 1.5px solid #e8e8e0;
-  border-radius: 16px;
-  padding: 20px 18px;
-  text-align: center;
-}
-
-.stl-value-num {
-  font-size: 1.6rem;
-  font-weight: 900;
-  color: #0f0f0f;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  margin-bottom: 4px;
-}
-
-.stl-value-num span {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #7acc1a;
-}
-
-.stl-value-label {
-  font-size: 0.75rem;
-  color: #767676;
-  line-height: 1.5;
-  font-weight: 500;
-}
-
-/* ══ PRINCIPLES LIST ══ */
-.stl-principles {
-  list-style: none;
-  padding: 0;
-  margin: 20px 0;
-}
-
-.stl-principles li {
-  display: flex;
-  gap: 14px;
-  padding: 18px 0;
-  border-bottom: 1px solid #f0f0e8;
-  align-items: flex-start;
-}
-
-.stl-principles li:last-child { border-bottom: none; }
-
-.stl-principle-num {
-  font-size: 1.1rem;
-  font-weight: 900;
-  color: #a8ff3e;
-  background: #0f0f0f;
-  border-radius: 8px;
-  width: 34px; height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  letter-spacing: -0.03em;
-}
-
-.stl-principle-body h4 {
-  font-size: 0.9rem;
-  font-weight: 800;
-  color: #0f0f0f;
-  margin: 0 0 5px;
-  letter-spacing: -0.015em;
-}
-
-.stl-principle-body p {
-  font-size: 0.85rem;
-  line-height: 1.7;
-  color: #555;
-  margin: 0;
-}
-
-/* ══ CHECKLIST ══ */
-.stl-checklist {
-  list-style: none;
-  padding: 0;
-  margin: 16px 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.stl-checklist li {
-  display: flex;
-  align-items: flex-start;
-  gap: 9px;
-  font-size: 0.86rem;
-  color: #3d3d3d;
-  line-height: 1.55;
-  margin: 0;
-}
-
-.stl-checklist li::before {
-  content: '✓';
-  color: #7acc1a;
-  font-weight: 900;
-  font-size: 0.8rem;
-  margin-top: 2px;
-  flex-shrink: 0;
-}
-
-/* ══ RESPONSIVE ══ */
-@media (max-width: 640px) {
-  .stl-wrap { padding: 52px 20px 60px; }
-  .stl-story { padding: 24px 20px; }
-  .stl-scenarios { grid-template-columns: 1fr; }
-  .stl-value-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .stl-value-num { font-size: 1.3rem; }
-  .stl-checklist { grid-template-columns: 1fr; }
-  .stl-compare-table { font-size: 0.78rem; }
-  .stl-compare-table th, .stl-compare-table td { padding: 10px 10px; }
-}
-</style>
-
-<section id="seo-trust-layer" aria-label="Kenapa Jeki Store dan Transparansi Layanan">
-<div class="stl-wrap">
-
-
-  <!-- ════ BLOCK 1: CERITA PENDIRI ════ -->
-  <div class="stl-block">
-    <div class="stl-eyebrow">Kenapa Jeki Store Ada</div>
-    <h2>Saya Pernah Jadi Pembeli yang Diabaikan. Itu yang Membuat Jeki Store Lahir.</h2>
-
-    <p>Sebelum membangun Jeki Store, saya adalah pelanggan biasa yang membeli software berlangganan dari seller di marketplace. Waktu itu saya beli langganan premium aplikasi editing dari seller di Shopee. Harganya murah, prosesnya cepat. Tapi begitu ada kendala — akun tiba-tiba tidak bisa dipakai di tengah-tengah pekerjaan — yang terjadi adalah keheningan. Pesan WA tidak dibalas. Chat marketplace dibaca tapi tidak dijawab. Komplain akhirnya hanya berakhir di meja chat tanpa solusi.</p>
-
-    <p>Rasanya frustrasi bukan main. Bukan karena masalahnya besar, tapi karena merasa <strong>tidak dianggap sebagai manusia</strong>. Saya hanya dianggap sebagai transaksi yang sudah selesai begitu uang diterima.</p>
-
-    <div class="stl-story">
-      <p>"Waktu itu saya sadar: kalau saya sendiri yang jadi pembeli, saya mau diperlakukan seperti apa? Saya mau direspons cepat. Saya mau ada yang bantu sampai masalah benar-benar selesai. Saya mau tahu bahwa uang yang saya keluarkan dijaga dengan tanggung jawab."</p>
-      <p>Dari situ satu prinsip berdiri di Jeki Store: <strong>perlakukan pembeli seperti kamu sendiri yang butuh.</strong> Bukan sekadar tagline, tapi standar operasional harian.</p>
-      <div class="stl-story-sig">
-        <div class="stl-story-avatar">J</div>
-        <div>
-          <div class="stl-story-name">Pendiri Jeki Store</div>
-          <div class="stl-story-role">Reseller TradingView Premium Indonesia</div>
-        </div>
-      </div>
-    </div>
-
-    <p>Ini bukan cerita yang dibuat-buat untuk marketing. Ini alasan nyata kenapa standar respons di Jeki Store dijaga ketat, kenapa garansi bukan sekadar janji di landing page, dan kenapa kami memilih untuk transparan tentang kekurangan tiap method alih-alih hanya menjual sisi baiknya saja.</p>
-  </div>
-
-
-  <!-- ════ BLOCK 2: HARGA MURAH VS HARGA JUJUR ════ -->
-  <div class="stl-block">
-    <div class="stl-eyebrow">Soal Harga</div>
-    <h2>Kenapa Harga Jeki Store Lebih Mahal dari yang Rp 20.000–40.000 di Shopee?</h2>
-
-    <p>Pertanyaan ini wajar sekali dan sering ditanyakan. Jawaban jujurnya adalah: <strong>harga mencerminkan apa yang kamu bayar sesudah transaksi, bukan hanya produknya itu sendiri.</strong></p>
-
-    <p>TradingView Premium dengan harga Rp 20.000–40.000 per bulan memang ada. Dan mungkin bekerja di awal. Tapi ada beberapa hal yang perlu kamu pertimbangkan sebelum memutuskan murni berdasarkan harga:</p>
-
-    <div class="stl-scenarios">
-      <div class="stl-scenario bad">
-        <div class="stl-scenario-label">⚠ Skenario Murah</div>
-        <h4>Beli Rp 20.000, Akun Bermasalah</h4>
-        <p>Akun tiba-tiba back basic di tengah sesi analisa. Kamu WA seller. Dibaca, tidak dibalas. Besok dibalas "lagi diurus". Seminggu kemudian tidak ada kabar. Kamu kehilangan waktu, mood, dan Rp 20.000 yang tidak bisa balik.</p>
-      </div>
-      <div class="stl-scenario good">
-        <div class="stl-scenario-label">✓ Skenario Jeki Store</div>
-        <h4>Beli Rp 185.000, Ada Kendala</h4>
-        <p>Akun back basic. Kamu chat admin. Dalam hitungan menit kamu dapat akun pengganti. Tidak perlu dramatis, tidak perlu nunggu berhari-hari. Lanjut trading seperti biasa.</p>
-      </div>
-    </div>
-
-    <div class="stl-insight">
-      <div class="stl-insight-icon">🧮</div>
-      <div class="stl-insight-body">
-        <p><strong>Hitung sederhana:</strong> Rp 185.000 dibagi 30 hari = <strong>Rp 6.167 per hari</strong>. Lebih murah dari segelas kopi di kafe. Untuk akses platform charting terbaik di dunia, dengan admin yang responsif dan garansi aktif. Bandingkan dengan frustrasi membayar Rp 20.000 tapi habiskan 3 hari nunggu respons seller yang tidak jelas.</p>
-      </div>
-    </div>
-
-    <h3>Apa yang Sebenarnya Kamu Bayar di Rp 185.000</h3>
-    <div class="stl-value-grid">
-      <div class="stl-value-card">
-        <div class="stl-value-num">&lt;<span>1 jam</span></div>
-        <div class="stl-value-label">Waktu aktivasi akun setelah bayar</div>
-      </div>
-      <div class="stl-value-card">
-        <div class="stl-value-num">14<span>jam</span></div>
-        <div class="stl-value-label">Jam layanan admin aktif setiap hari (08–22)</div>
-      </div>
-      <div class="stl-value-card">
-        <div class="stl-value-num">0<span>Rp</span></div>
-        <div class="stl-value-label">Biaya penggantian akun jika ada gangguan</div>
-      </div>
-    </div>
-
-    <p>Kamu tidak hanya membayar akses TradingView Premium. Kamu membayar kepastian bahwa kalau ada apa-apa, ada yang bertanggung jawab. Itu yang membedakan Jeki Store dari seller dengan harga Rp 20.000.</p>
-  </div>
-
-
-  <!-- ════ BLOCK 3: PERBANDINGAN JUJUR ════ -->
-  <div class="stl-block">
-    <div class="stl-eyebrow">Perbandingan Jujur</div>
-    <h2>Jeki Store vs Reseller Lain vs Harga Resmi: Tabel Perbandingan yang Tidak Dimanipulasi</h2>
-
-    <p>Daripada hanya bilang "kami yang terbaik", lebih baik kamu lihat sendiri perbedaannya secara objektif. Ini perbandingan berdasarkan apa yang umum terjadi — bukan worst case, bukan best case.</p>
-
-    <table class="stl-compare-table">
-      <thead>
-        <tr>
-          <th>Aspek</th>
-          <th>Reseller Murah<br>(Rp 20–40k)</th>
-          <th class="th-jeki">Jeki Store<br>(Rp 185k)</th>
-          <th>Resmi TradingView<br>(~Rp 600k+)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="stl-td-aspect">Harga per bulan</td>
-          <td>Rp 20.000–40.000</td>
-          <td class="stl-ok">Rp 185.000</td>
-          <td>Rp 550.000–650.000</td>
-        </tr>
-        <tr>
-          <td class="stl-td-aspect">Fitur TradingView Premium</td>
-          <td class="stl-mid">Tidak pasti</td>
-          <td class="stl-ok">✓ Lengkap</td>
-          <td class="stl-ok">✓ Lengkap</td>
-        </tr>
-        <tr>
-          <td class="stl-td-aspect">Kecepatan respons admin</td>
-          <td class="stl-no">Lambat / tidak dibalas</td>
-          <td class="stl-ok">Menit–jam (08–22 WIB)</td>
-          <td class="stl-mid">Support tiket, bisa lama</td>
-        </tr>
-        <tr>
-          <td class="stl-td-aspect">Garansi penggantian akun</td>
-          <td class="stl-no">Jarang ada</td>
-          <td class="stl-ok">✓ Selama berlangganan</td>
-          <td class="stl-ok">✓ Tidak diperlukan (akun resmi)</td>
-        </tr>
-        <tr>
-          <td class="stl-td-aspect">Transparansi cara kerja</td>
-          <td class="stl-no">Tidak dijelaskan</td>
-          <td class="stl-ok">✓ Dijelaskan per method</td>
-          <td class="stl-ok">✓ Akun resmi atas nama sendiri</td>
-        </tr>
-        <tr>
-          <td class="stl-td-aspect">Stabilitas akun</td>
-          <td class="stl-no">Tidak diketahui</td>
-          <td class="stl-mid">Tergantung method (M1 paling stabil)</td>
-          <td class="stl-ok">Sangat stabil</td>
-        </tr>
-        <tr>
-          <td class="stl-td-aspect">Akun milik sendiri permanen</td>
-          <td class="stl-no">Tidak</td>
-          <td class="stl-no">Tidak (dedicated tapi bukan milik sendiri)</td>
-          <td class="stl-ok">✓ Ya</td>
-        </tr>
-        <tr>
-          <td class="stl-td-aspect">Cocok untuk</td>
-          <td>Yang mau coba murah, terima risiko</td>
-          <td class="stl-ok">Trader aktif yang butuh after-service nyata</td>
-          <td>Profesional / bisnis, budget tidak terbatas</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="stl-insight">
-      <div class="stl-insight-icon">💬</div>
-      <div class="stl-insight-body">
-        <p><strong>Catatan jujur:</strong> Kalau kamu adalah trader profesional dengan budget tidak terbatas dan ingin akun yang benar-benar atas nama sendiri tanpa bergantung pada pihak ketiga — berlangganan langsung ke TradingView adalah pilihan terbaik. Jeki Store adalah solusi terbaik untuk trader aktif yang butuh fitur premium dengan budget terbatas dan after-service yang bisa diandalkan.</p>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ════ BLOCK 4: PRINSIP LAYANAN ════ -->
-  <div class="stl-block">
-    <div class="stl-eyebrow">Standar Layanan</div>
-    <h2>5 Prinsip yang Tidak Boleh Dilanggar di Jeki Store</h2>
-
-    <p>Ini bukan sekadar daftar janji di halaman marketing. Ini standar operasional yang dipegang setiap hari — lahir dari pengalaman pribadi menjadi pembeli yang pernah dikecewakan.</p>
-
-    <ul class="stl-principles">
-      <li>
-        <div class="stl-principle-num">1</div>
-        <div class="stl-principle-body">
-          <h4>Tidak Ada Pesan yang Boleh Tidak Dibalas</h4>
-          <p>Setiap pesan yang masuk di jam layanan (08.00–22.00 WIB) wajib dibalas. Bukan hanya di-read. Bukan hanya dibalas "oke kak" tanpa solusi. Setiap kendala direspons dengan solusi nyata atau estimasi waktu yang jelas. Kalau butuh waktu, pelanggan dikasih tahu — bukan dibiarkan menunggu tanpa kejelasan.</p>
-        </div>
-      </li>
-      <li>
-        <div class="stl-principle-num">2</div>
-        <div class="stl-principle-body">
-          <h4>Jangan Jual yang Tidak Kamu Pahami Sendiri</h4>
-          <p>Admin Jeki Store adalah pengguna TradingView sendiri. Ini bukan toko yang hanya menjual akses tanpa mengerti produknya. Pertanyaan tentang cara pakai fitur, setup indikator, atau troubleshooting login bisa dijawab langsung — bukan hanya diarahkan ke "coba googling ya kak".</p>
-        </div>
-      </li>
-      <li>
-        <div class="stl-principle-num">3</div>
-        <div class="stl-principle-body">
-          <h4>Garansi Adalah Janji, Bukan Syarat dan Ketentuan</h4>
-          <p>Banyak toko yang mencantumkan garansi tapi penuh syarat: "garansi berlaku jika...", "tidak berlaku jika...", "klaim dalam 24 jam pertama saja". Di Jeki Store, garansi penggantian akun berlaku selama masa berlangganan aktif. Titik. Tidak perlu berdebat, tidak perlu screenshot bukti panjang-panjang.</p>
-        </div>
-      </li>
-      <li>
-        <div class="stl-principle-num">4</div>
-        <div class="stl-principle-body">
-          <h4>Transparansi Lebih Penting dari Penjualan</h4>
-          <p>Jeki Store secara aktif memberitahu calon pembeli tentang kekurangan tiap method — termasuk bahwa Method 3 bisa back basic 3–4 kali sebulan. Bukan untuk menakuti, tapi karena lebih baik pembeli tahu sebelum beli daripada kecewa setelah beli. Pembeli yang tidak cocok dengan metode tertentu akan disarankan ke method yang lebih sesuai, bahkan jika itu bukan yang paling mahal.</p>
-        </div>
-      </li>
-      <li>
-        <div class="stl-principle-num">5</div>
-        <div class="stl-principle-body">
-          <h4>Bantu Sampai Benar-Benar Berhasil, Bukan Sampai Akun Dikirim</h4>
-          <p>Tugas admin tidak selesai ketika akun sudah dikirimkan. Selama pelanggan belum berhasil login dan menggunakan TradingView Premium dengan baik, admin tetap standby membantu. Step-by-step jika perlu. Screenshot panduan jika perlu. Sampai benar-benar bisa dipakai.</p>
-        </div>
-      </li>
-    </ul>
-  </div>
-
-
-  <!-- ════ BLOCK 5: PERTANYAAN SEBELUM BELI ════ -->
-  <div class="stl-block">
-    <div class="stl-eyebrow">Sebelum Kamu Beli</div>
-    <h2>Hal-Hal yang Perlu Kamu Tahu Sebelum Order — Termasuk yang Tidak Menguntungkan Kami</h2>
-
-    <p>Ini bagian yang jarang ditulis seller manapun. Tapi kami percaya pembeli yang tahu apa yang mereka beli adalah pembeli yang lebih puas — dan lebih jarang komplain karena ekspektasinya sudah sesuai realita.</p>
-
-    <h3>Jeki Store Bukan Pilihan Tepat Jika...</h3>
-    <ul>
-      <li><strong>Kamu butuh akun TradingView permanen atas nama sendiri.</strong> Jeki Store menggunakan akun dedicated yang bukan milik pembeli secara permanen. Jika kamu ingin akun yang sepenuhnya milik sendiri dengan email/username yang kamu pilih, berlangganan langsung ke TradingView adalah satu-satunya pilihan.</li>
-      <li><strong>Kamu tidak bisa toleran sama sekali dengan gangguan sesekali.</strong> Method 3 khususnya mengalami back basic beberapa kali sebulan — normal untuk jenis method ini, dan kami langsung ganti. Tapi kalau kamu butuh stabilitas 100% tanpa gangguan apapun, Method 1 atau langganan resmi lebih sesuai.</li>
-      <li><strong>Kamu hanya butuh TradingView gratis.</strong> Kalau kamu masih nyaman dengan 3 indikator dan tidak butuh Replay Mode, tidak perlu bayar apapun. TradingView gratis sudah cukup untuk banyak kebutuhan dasar.</li>
-    </ul>
-
-    <h3>Jeki Store Adalah Pilihan Tepat Jika...</h3>
-    <ul class="stl-checklist">
-      <li>Kamu trader aktif yang butuh fitur premium dengan budget terbatas</li>
-      <li>Kamu pernah kecewa dengan after-service seller lain</li>
-      <li>Kamu butuh admin yang responsif dan bisa bantu troubleshoot</li>
-      <li>Kamu mau akses dari HP dan butuh alert di semua device</li>
-      <li>Kamu ingin coba TradingView Premium sebelum komit ke langganan resmi</li>
-      <li>Kamu ingin Replay Mode untuk backtest strategi trading kamu</li>
-      <li>Kamu butuh multi-chart untuk analisa multi-timeframe</li>
-      <li>Kamu tidak mau ribet dengan setup rumit dan mau dibantu langkah per langkah</li>
-    </ul>
-
-    <div class="stl-insight">
-      <div class="stl-insight-icon">📌</div>
-      <div class="stl-insight-body">
-        <p><strong>Saran jujur sebelum beli:</strong> Kalau kamu ragu antara Jeki Store dan seller lain yang harganya jauh lebih murah — coba tanyakan ke seller tersebut satu pertanyaan: <em>"Kalau akun saya bermasalah jam 9 malam, kamu respons berapa lama?"</em>. Jawaban atas pertanyaan itu akan memberitahu kamu lebih banyak dari harga yang tertera.</p>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ════ BLOCK 6: SKENARIO NYATA AFTER-SERVICE ════ -->
-  <div class="stl-block">
-    <div class="stl-eyebrow">After-Service Nyata</div>
-    <h2>Seperti Ini Rasanya Ketika Ada Kendala di Jeki Store</h2>
-
-    <p>Daripada hanya bilang "admin kami responsif", lebih baik kamu lihat contoh nyata bagaimana kendala ditangani. Ini bukan skenario ideal — ini standar minimum yang dijaga setiap hari.</p>
-
-    <h3>Skenario 1: Akun Tiba-Tiba Back Basic</h3>
-    <div class="stl-story">
-      <p>Kamu sedang analisa chart saham di tengah sesi trading sore. Tiba-tiba muncul notifikasi bahwa akun kembali ke versi Basic — indikator kamu hilang, alert tidak aktif.</p>
-      <p>Yang terjadi di Jeki Store: Kamu screenshot dan kirim ke WA admin. Admin balas dalam hitungan menit. Akun pengganti dikirimkan. <strong>Kamu login ulang, setup indikator, dan lanjut trading</strong> — total waktu terganggu kurang dari 15 menit.</p>
-      <p>Yang sering terjadi di tempat lain: Kamu tunggu balasan. Satu jam, tidak ada. Tiga jam, hanya "ditunggu kak". Besok dibalas "maaf kemarin offline". Akun baru dikirim dua hari kemudian. Kamu sudah melewatkan momen trading yang kamu incar.</p>
-    </div>
-
-    <h3>Skenario 2: Tidak Bisa Login Setelah Setup</h3>
-    <div class="stl-story">
-      <p>Kamu baru pertama kali beli dan mengikuti panduan setup, tapi ada satu langkah yang tidak kamu mengerti. Login tidak berhasil.</p>
-      <p>Yang terjadi di Jeki Store: Admin minta screenshot error yang kamu lihat. Dalam beberapa pesan, admin identifikasi masalahnya — ternyata browser cache perlu dihapus dulu. Admin kirim panduan spesifik step-by-step. <strong>Kamu berhasil login dalam 10 menit.</strong></p>
-      <p>Tidak ada "coba googling dulu kak". Tidak ada "tunggu sampai besok". Masalah diselesaikan di sesi yang sama.</p>
-    </div>
-
-    <h3>Skenario 3: Mau Pindah Method Setelah Beli</h3>
-    <div class="stl-story">
-      <p>Kamu beli Method 1 (PC only), tapi setelah berjalan seminggu kamu sadar butuh akses dari HP juga untuk pantau pasar saat di luar kantor.</p>
-      <p>Yang terjadi di Jeki Store: Kamu tanyakan opsi ke admin. Admin jelaskan perbedaan Method 2 dan 3, mana yang lebih cocok untuk kebutuhanmu, tanpa push untuk beli yang lebih mahal. <strong>Solusi disesuaikan dengan kebutuhan nyata kamu, bukan dengan apa yang menguntungkan Jeki Store.</strong></p>
-    </div>
-  </div>
-
-
-  <!-- ════ BLOCK 7: UNTUK PEMBELI PERTAMA KALI ════ -->
-  <div class="stl-block">
-    <div class="stl-eyebrow">Untuk Pembeli Pertama Kali</div>
-    <h2>Panduan Lengkap untuk Kamu yang Belum Pernah Beli TradingView Premium dari Manapun</h2>
-
-    <p>Kalau ini pertama kalinya kamu mempertimbangkan TradingView Premium — baik dari Jeki Store maupun tempat lain — ini yang perlu kamu ketahui dari awal.</p>
-
-    <h3>Apakah Kamu Benar-Benar Butuh TradingView Premium?</h3>
-    <p>Jujur: tidak semua trader butuh Premium. Berikut cara mudah mengeceknya dalam 2 menit:</p>
-    <ol>
-      <li>Buka TradingView gratis dan tambahkan indikator yang biasa kamu pakai. Kalau kamu butuh lebih dari 3 indikator per chart — kamu butuh Premium.</li>
-      <li>Cek berapa alert aktif yang kamu butuhkan. Kalau lebih dari 1 — kamu butuh Premium.</li>
-      <li>Apakah kamu pernah merasa ingin "replay" pergerakan harga untuk belajar? — kamu butuh Premium.</li>
-      <li>Apakah kamu butuh chart lebih dari 1 timeframe sekaligus di layar yang sama? — kamu butuh Premium.</li>
-    </ol>
-    <p>Kalau semua jawaban kamu "tidak" — tetap pakai yang gratis dulu, tidak ada yang memaksamu upgrade.</p>
-
-    <h3>Langkah Pertama Setelah Beli di Jeki Store</h3>
-    <ol>
-      <li><strong>Isi form order</strong> di halaman ini — masukkan nama kamu dan pilih method yang sesuai</li>
-      <li><strong>Chat admin via WhatsApp</strong> yang otomatis terhubung setelah klik tombol order</li>
-      <li><strong>Tanya dulu jika masih ragu</strong> — tidak ada kewajiban langsung bayar, kamu bisa tanya-tanya dulu seputar method mana yang cocok</li>
-      <li><strong>Transfer setelah yakin</strong> — admin kirim info pembayaran, kamu scan QRIS</li>
-      <li><strong>Akun aktif dalam &lt; 1 jam</strong> — admin kirim detail akun lengkap dengan panduan setup</li>
-      <li><strong>Admin standby bantu</strong> sampai kamu benar-benar berhasil login dan bisa menggunakan fitur Premium</li>
-    </ol>
-
-    <div class="stl-insight">
-      <div class="stl-insight-icon">🎯</div>
-      <div class="stl-insight-body">
-        <p><strong>Tips untuk pembeli pertama:</strong> Kalau kamu masih ragu method mana yang tepat, ceritakan ke admin bagaimana kamu biasa trading — dari perangkat apa, seberapa sering, dan fitur apa yang paling kamu butuhkan. Admin akan rekomendasikan method yang benar-benar sesuai, bukan yang harga paling tinggi.</p>
-      </div>
-    </div>
-
-    <h3>Berapa Lama TradingView Premium Perlu Waktu untuk Terasa Manfaatnya?</h3>
-    <p>Kebanyakan pengguna langsung merasakan perbedaan di hari pertama — terutama dari tidak adanya iklan, bisa pasang lebih dari 3 indikator, dan alert yang tidak terbatas. Untuk Replay Mode dan backtest, manfaat terasa setelah 1–2 minggu rutin berlatih karena ada kurva belajar singkat untuk membiasakan diri dengan fitur ini.</p>
-    <p>Kalau setelah seminggu kamu merasa TradingView Premium tidak memberikan nilai tambah untuk gaya trading kamu — itu informasi berharga. Tidak semua trader butuh alat yang sama. Yang penting kamu tahu setelah mencoba sendiri, bukan hanya berdasarkan asumsi.</p>
-  </div>
-
-
-</div><!-- /stl-wrap -->
-</section>
 
 <!-- ════════════════════════════════════
      FLOATING KNOWLEDGE BUTTON
@@ -6665,7 +6383,7 @@ document.getElementById('m1').checked = true;
 
     <hr class="fkb-menu-divider">
 
-    <button class="fkb-menu-item" role="menuitem" onclick="fkbGo('seo-trust-layer')">
+    <button class="fkb-menu-item" role="menuitem" onclick="fkbGo('skb-art-6')">
       <div class="fkb-menu-icon"><i class="bi bi-chat-quote-fill"></i></div>
       <div>
         <div class="fkb-menu-text-title">Kenapa Jeki Store Ada</div>
@@ -6758,7 +6476,9 @@ document.getElementById('m1').checked = true;
     btn.setAttribute('aria-expanded', 'false');
 
     /* Jika target adalah artikel di Knowledge Base, aktifkan tab-nya */
-    var articleIds = ['skb-art-1','skb-art-2','skb-art-3','skb-art-4','skb-art-5'];
+    var articleIds = ['skb-art-1','skb-art-2','skb-art-3','skb-art-4','skb-art-5',
+                      'skb-art-6','skb-art-7','skb-art-8','skb-art-9','skb-art-10',
+                      'skb-art-11','skb-art-12'];
     if (articleIds.indexOf(targetId) !== -1) {
       /* Aktifkan tab yang sesuai */
       document.querySelectorAll('.skb-tab').forEach(function (tab) {
@@ -6787,8 +6507,8 @@ document.getElementById('m1').checked = true;
       return;
     }
 
-    /* Trust layer atau section lain */
-    var dest = document.getElementById(targetId);
+    /* Trust layer atau section lain → redirect ke art-6 */
+    var dest = document.getElementById(targetId) || document.getElementById('skb-art-6');
     if (dest) dest.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
