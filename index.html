@@ -3939,6 +3939,529 @@ footer {
   </div>
 </section>
 
+<!-- ══ VIDEO TESTIMONI ══ -->
+<style>
+/* ═══════════════════════════════════════
+   VIDEO TESTIMONI
+═══════════════════════════════════════ */
+.vtesti-section {
+  background: var(--black);
+  padding: var(--space-9) 0;
+  overflow: hidden;
+}
+
+.vtesti-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.vtesti-header .label-tag {
+  background: rgba(168,255,62,0.12);
+  color: var(--green);
+  border: 1px solid rgba(168,255,62,0.25);
+}
+
+.vtesti-header h2 {
+  color: #fff;
+  margin-top: 12px;
+}
+
+.vtesti-header p {
+  color: rgba(255,255,255,0.45);
+  max-width: 480px;
+  margin: 10px auto 0;
+}
+
+/* ── Grid ── */
+.vtesti-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ── Card ── */
+.vtesti-card {
+  background: #161616;
+  border: 1.5px solid #2a2a2a;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+  position: relative;
+}
+
+.vtesti-card:hover {
+  border-color: rgba(168,255,62,0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+}
+
+/* ── Video thumbnail wrapper ── */
+.vtesti-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9/16;
+  background: #0f0f0f;
+  overflow: hidden;
+}
+
+/* untuk video landscape / square, pakai aspect-ratio 16/9 */
+.vtesti-card.landscape .vtesti-thumb {
+  aspect-ratio: 16/9;
+}
+
+.vtesti-thumb iframe,
+.vtesti-thumb video {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  pointer-events: none; /* klik ke overlay dulu */
+}
+
+/* ── Play overlay (sebelum diplay) ── */
+.vtesti-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.38);
+  transition: background 0.22s;
+  z-index: 2;
+}
+
+.vtesti-card:hover .vtesti-overlay {
+  background: rgba(0,0,0,0.22);
+}
+
+.vtesti-card.playing .vtesti-overlay {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vtesti-play-btn {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--black);
+  box-shadow: 0 6px 24px rgba(168,255,62,0.45);
+  transition: transform 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
+}
+
+.vtesti-card:hover .vtesti-play-btn {
+  transform: scale(1.1);
+  box-shadow: 0 10px 32px rgba(168,255,62,0.6);
+}
+
+.vtesti-platform-badge {
+  margin-top: 10px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* ── Thumbnail image (jika belum embed) ── */
+.vtesti-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* ── Caption bawah card ── */
+.vtesti-caption {
+  padding: 16px 18px 18px;
+}
+
+.vtesti-stars {
+  color: var(--green);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.vtesti-quote {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.65;
+  margin-bottom: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.vtesti-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.vtesti-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--green);
+  color: var(--black);
+  font-weight: 800;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.vtesti-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.vtesti-role {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.38);
+  margin-top: 1px;
+}
+
+/* ── Add yours CTA card ── */
+.vtesti-add-card {
+  background: transparent;
+  border: 1.5px dashed #2a2a2a;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.22s, background 0.22s;
+  text-decoration: none;
+  min-height: 280px;
+}
+
+.vtesti-add-card:hover {
+  border-color: rgba(168,255,62,0.35);
+  background: rgba(168,255,62,0.04);
+}
+
+.vtesti-add-icon {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: rgba(168,255,62,0.1);
+  border: 1.5px solid rgba(168,255,62,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--green);
+}
+
+.vtesti-add-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.vtesti-add-sub {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.6;
+}
+
+/* ── Lightbox / modal player ── */
+#vtesti-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+#vtesti-lightbox.open { display: flex; }
+
+.vtesti-lb-inner {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 9/16;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #000;
+}
+
+.vtesti-lb-inner.landscape {
+  max-width: 800px;
+  aspect-ratio: 16/9;
+}
+
+#vtesti-lb-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.vtesti-lb-close {
+  position: absolute;
+  top: -44px;
+  right: 0;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.vtesti-lb-close:hover { background: rgba(255,255,255,0.2); }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .vtesti-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .vtesti-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .vtesti-caption { padding: 12px 14px 14px; }
+  .vtesti-quote { font-size: 0.8rem; -webkit-line-clamp: 2; }
+  .vtesti-lb-inner { max-width: 90vw; }
+}
+</style>
+
+<section class="vtesti-section" id="video-testi">
+  <div class="container">
+
+    <div class="vtesti-header reveal">
+      <div class="label-tag">Video Testimoni</div>
+      <h2>Langsung dari<br>Mulut Pelanggan</h2>
+      <p>Bukan kata-kata kami. Dengar sendiri pengalaman mereka menggunakan TradingView Premium dari Jeki Store.</p>
+    </div>
+
+    <div class="vtesti-grid reveal">
+
+      <!-- ── CARD 1 ── -->
+      <!-- Ganti src thumbnail dan data-src dengan link video kamu -->
+      <!-- Format TikTok: data-src="https://www.tiktok.com/embed/v2/VIDEO_ID" -->
+      <!-- Format YouTube Shorts: data-src="https://www.youtube.com/embed/VIDEO_ID" -->
+      <!-- Format file lokal: ganti <iframe> dengan <video src="video1.mp4"> -->
+      <div class="vtesti-card"
+           data-src="https://vt.tiktok.com/ZSxVoJPTn/"
+           data-platform="tiktok"
+           onclick="vtestiPlay(this)">
+        <div class="vtesti-thumb">
+          <!-- Ganti src dengan thumbnail screenshot video -->
+          <img class="vtesti-thumb-img" src="testigaleri/1.webp" alt="Video testimoni pelanggan Jeki Store" loading="lazy" onerror="this.style.display='none'">
+          <div class="vtesti-overlay">
+            <div class="vtesti-play-btn"><i class="bi bi-play-fill"></i></div>
+            <div class="vtesti-platform-badge"><i class="bi bi-tiktok"></i> TikTok</div>
+          </div>
+        </div>
+        <div class="vtesti-caption">
+          <div class="vtesti-stars">★★★★★</div>
+          <p class="vtesti-quote">"Beda jauh sama yang saya beli di Shopee. Di sini kalau ada kendala pasti langsung dibantu."</p>
+          <div class="vtesti-author">
+            <div class="vtesti-avatar">MW</div>
+            <div>
+              <div class="vtesti-name">Mauro</div>
+              <div class="vtesti-role">Gold Trader · Method 3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CARD 2 ── -->
+      <div class="vtesti-card"
+           data-src="https://vt.tiktok.com/ZSxVE7DFQ/"
+           data-platform="tiktok"
+           onclick="vtestiPlay(this)">
+        <div class="vtesti-thumb">
+          <img class="vtesti-thumb-img" src="testigaleri/2.webp" alt="Video testimoni pelanggan Jeki Store" loading="lazy" onerror="this.style.display='none'">
+          <div class="vtesti-overlay">
+            <div class="vtesti-play-btn"><i class="bi bi-play-fill"></i></div>
+            <div class="vtesti-platform-badge"><i class="bi bi-tiktok"></i> TikTok</div>
+          </div>
+        </div>
+        <div class="vtesti-caption">
+          <div class="vtesti-stars">★★★★★</div>
+          <p class="vtesti-quote">"Udah langganan 6 bulan lebih. Recomend cocok buat pemula yang butuh Replay Mode."</p>
+          <div class="vtesti-author">
+            <div class="vtesti-avatar" style="background:var(--green);color:var(--black);">PJ</div>
+            <div>
+              <div class="vtesti-name">Puji</div>
+              <div class="vtesti-role">All Pair Trader · Indonesia</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CARD 3 ── -->
+      <div class="vtesti-card">
+        <div class="vtesti-thumb">
+          <video
+            src="testigaleri/pelangganjekistore3.webm"
+            controls
+            playsinline
+            preload="metadata"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+          </video>
+        </div>
+        <div class="vtesti-caption">
+          <div class="vtesti-stars">★★★★★</div>
+          <p class="vtesti-quote">"Admin jelasin cara login sampai paham. Harga sesuai kualitas pelayanan."</p>
+          <div class="vtesti-author">
+            <div class="vtesti-avatar">OD</div>
+            <div>
+              <div class="vtesti-name">ODE</div>
+              <div class="vtesti-role">XAUUSD Trader · Bandung</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CARD 4 ── -->
+      <div class="vtesti-card"
+           data-src="https://vt.tiktok.com/ZSxVokRDm/"
+           data-platform="tiktok"
+           onclick="vtestiPlay(this)">
+        <div class="vtesti-thumb">
+          <img class="vtesti-thumb-img" src="testigaleri/4.webp" alt="Video testimoni pelanggan Jeki Store" loading="lazy" onerror="this.style.display='none'">
+          <div class="vtesti-overlay">
+            <div class="vtesti-play-btn"><i class="bi bi-play-fill"></i></div>
+            <div class="vtesti-platform-badge"><i class="bi bi-tiktok"></i> TikTok</div>
+          </div>
+        </div>
+        <div class="vtesti-caption">
+          <div class="vtesti-stars">★★★★★</div>
+          <p class="vtesti-quote">"Bisa backtest lancar dan mendata sampai punya strategi yang profitable."</p>
+          <div class="vtesti-author">
+            <div class="vtesti-avatar" style="background:var(--green);color:var(--black);">BA</div>
+            <div>
+              <div class="vtesti-name">Brian</div>
+              <div class="vtesti-role">Crypto Trader · Indonesia</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CARD 5 ── -->
+      <div class="vtesti-card"
+           data-src="https://vt.tiktok.com/ZSxVoXm4j/"
+           data-platform="tiktok"
+           onclick="vtestiPlay(this)">
+        <div class="vtesti-thumb">
+          <img class="vtesti-thumb-img" src="testigaleri/5.webp" alt="Video testimoni pelanggan Jeki Store" loading="lazy" onerror="this.style.display='none'">
+          <div class="vtesti-overlay">
+            <div class="vtesti-play-btn"><i class="bi bi-play-fill"></i></div>
+            <div class="vtesti-platform-badge"><i class="bi bi-tiktok"></i> TikTok</div>
+          </div>
+        </div>
+        <div class="vtesti-caption">
+          <div class="vtesti-stars">★★★★★</div>
+          <p class="vtesti-quote">"Sudah 5 bulan langganan dan tidak ada niatan pindah ke tempat lain."</p>
+          <div class="vtesti-author">
+            <div class="vtesti-avatar" style="background:var(--green);color:var(--black);">TW</div>
+            <div>
+              <div class="vtesti-name">Tomi W.</div>
+              <div class="vtesti-role">Algorithmic Trader · Surabaya</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CARD TAMBAH VIDEO ── -->
+      <a class="vtesti-add-card reveal"
+         href="https://wa.me/6283119686482?text=Halo%20kak%2C%20saya%20mau%20kirim%20video%20testimoni%20untuk%20Jeki%20Store%20%F0%9F%98%8A"
+         target="_blank">
+        <div class="vtesti-add-icon"><i class="bi bi-camera-video-fill"></i></div>
+        <div class="vtesti-add-title">Punya video review?</div>
+        <div class="vtesti-add-sub">Kirim video kamu dan jadilah bagian dari halaman ini. Admin siap bantu proses.</div>
+        <div style="margin-top:4px; font-size:0.78rem; font-weight:700; color:var(--green); display:flex; align-items:center; gap:6px;">
+          <i class="bi bi-whatsapp"></i> Kirim via WhatsApp
+        </div>
+      </a>
+
+    </div><!-- /vtesti-grid -->
+  </div><!-- /container -->
+</section>
+
+<!-- Lightbox player -->
+<div id="vtesti-lightbox" role="dialog" aria-modal="true" aria-label="Video testimoni" onclick="vtestiClose(event)">
+  <div class="vtesti-lb-inner" id="vtesti-lb-inner">
+    <button class="vtesti-lb-close" onclick="vtestiClose()" aria-label="Tutup video"><i class="bi bi-x-lg"></i></button>
+    <iframe id="vtesti-lb-iframe" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+  </div>
+</div>
+
+<script>
+/* ══ VIDEO TESTIMONI PLAYER ══ */
+(function () {
+  var lightbox = document.getElementById('vtesti-lightbox');
+  var lbInner  = document.getElementById('vtesti-lb-inner');
+  var lbIframe = document.getElementById('vtesti-lb-iframe');
+  var current  = null;
+
+  window.vtestiPlay = function (card) {
+    var src = card.dataset.src;
+    if (!src || src.indexOf('GANTI_LINK') !== -1) {
+      /* Belum diisi link — arahkan ke WA admin */
+      window.open('https://wa.me/6283119686482?text=Halo%20kak%2C%20mau%20tanya%20soal%20TradingView%20Premium', '_blank');
+      return;
+    }
+
+    /* Deteksi portrait/landscape dari URL */
+    var isLandscape = src.indexOf('youtube') !== -1 && src.indexOf('shorts') === -1;
+    lbInner.classList.toggle('landscape', isLandscape);
+
+    /* Tambahkan autoplay ke src */
+    var autoSrc = src + (src.indexOf('?') !== -1 ? '&' : '?') + 'autoplay=1';
+    lbIframe.src = autoSrc;
+
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    current = card;
+  };
+
+  window.vtestiClose = function (e) {
+    if (e && e.target !== lightbox && e.target !== document.querySelector('.vtesti-lb-close')) return;
+    lightbox.classList.remove('open');
+    lbIframe.src = '';
+    document.body.style.overflow = '';
+    current = null;
+  };
+
+  /* Tutup dengan Escape */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') vtestiClose();
+  });
+})();
+</script>
+
 <!-- ══ FAQ ══ -->
 <section class="faq-section" id="faq">
   <div class="container">
