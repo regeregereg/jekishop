@@ -5232,14 +5232,14 @@ if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
   wrap.addEventListener('pointerup', release);
   wrap.addEventListener('pointercancel', release);
 
-  /* Re-attach lightbox clicks after clone */
-  wrap.querySelectorAll('.gallery-item').forEach((item, i) => {
+  /* Re-attach lightbox clicks after clone — pakai src langsung */
+  wrap.querySelectorAll('.gallery-item').forEach((item) => {
     item.style.cursor = 'zoom-in';
     item.addEventListener('click', () => {
-      const idx = (i % 10) + 1;
-      /* Trigger lightbox open */
-      const event = new CustomEvent('galleryOpen', { detail: idx });
-      document.dispatchEvent(event);
+      const imgEl = item.querySelector('.gallery-img');
+      if (imgEl && imgEl.src) {
+        document.dispatchEvent(new CustomEvent('galleryOpen', { detail: imgEl.src }));
+      }
     });
   });
 
@@ -5429,9 +5429,9 @@ document.getElementById('m1').checked = true;
 
 /* ══════════════════════════════════════
    LIGHTBOX — gallery tap to open
+   Fix: baca src gambar langsung, bukan index hardcoded
 ══════════════════════════════════════ */
 (function initLightbox() {
-  const TOTAL = 10;
   const backdrop = document.getElementById('lbBackdrop');
   const img      = document.getElementById('lbImg');
   const counter  = document.getElementById('lbCounter');
@@ -5439,24 +5439,29 @@ document.getElementById('m1').checked = true;
   const btnPrev  = document.getElementById('lbPrev');
   const btnNext  = document.getElementById('lbNext');
 
-  let current = 1;
-  let isOpen  = false;
-
-  /* Collect all gallery items that have a real src img */
-  function getItems() {
-    return Array.from(document.querySelectorAll('.gallery-item .gallery-img'));
+  /* Kumpulkan semua src unik dari gallery asli (bukan klon) */
+  function getUniqueSrcs() {
+    const srcs = [];
+    document.querySelectorAll('#galleryMarquee .gallery-item .gallery-img').forEach(el => {
+      if (el.src && !srcs.includes(el.src)) srcs.push(el.src);
+    });
+    return srcs;
   }
 
-  /* Open */
-  function open(idx) {
-    current = idx;
+  let srcs    = [];
+  let current = 0;
+  let isOpen  = false;
+
+  function open(src) {
+    srcs    = getUniqueSrcs();
+    current = srcs.indexOf(src);
+    if (current === -1) current = 0;
     isOpen  = true;
     backdrop.classList.add('open');
     document.body.style.overflow = 'hidden';
     loadImg(current);
   }
 
-  /* Close */
   function close() {
     isOpen = false;
     backdrop.classList.remove('open');
@@ -5464,48 +5469,42 @@ document.getElementById('m1').checked = true;
     img.src = '';
   }
 
-  /* Load image with switch animation */
   function loadImg(idx) {
-    counter.textContent = idx + ' / ' + TOTAL;
+    counter.textContent = (idx + 1) + ' / ' + srcs.length;
     img.classList.add('switching');
     setTimeout(() => {
-      img.src = 'testigaleri/' + idx + '.webp';
+      img.src = srcs[idx];
       img.onload = () => img.classList.remove('switching');
       img.onerror = () => img.classList.remove('switching');
     }, 160);
   }
 
-  function prev() { current = current > 1 ? current - 1 : TOTAL; loadImg(current); }
-  function next() { current = current < TOTAL ? current + 1 : 1;  loadImg(current); }
+  function prev() { current = current > 0 ? current - 1 : srcs.length - 1; loadImg(current); }
+  function next() { current = current < srcs.length - 1 ? current + 1 : 0;  loadImg(current); }
 
-  /* Attach click on each gallery item (non-cloned) */
-  function attachClicks() {
-    document.querySelectorAll('.gallery-item').forEach((item, i) => {
-      item.style.cursor = 'zoom-in';
-      item.addEventListener('click', () => open((i % 10) + 1));
+  /* Attach click — baca src dari gambar yang diklik */
+  document.querySelectorAll('#galleryMarquee .gallery-item').forEach((item) => {
+    item.style.cursor = 'zoom-in';
+    item.addEventListener('click', () => {
+      const imgEl = item.querySelector('.gallery-img');
+      if (imgEl && imgEl.src) open(imgEl.src);
     });
-  }
-  attachClicks();
+  });
 
-  /* Listen for marquee clone clicks */
+  /* Terima event dari klon marquee */
   document.addEventListener('galleryOpen', (e) => open(e.detail));
 
-  /* Controls */
   btnClose.addEventListener('click', close);
   btnPrev.addEventListener('click', (e) => { e.stopPropagation(); prev(); });
   btnNext.addEventListener('click', (e) => { e.stopPropagation(); next(); });
 
-  /* Close on backdrop click (outside image) */
-  backdrop.addEventListener('click', (e) => {
-    if (e.target === backdrop) close();
-  });
+  backdrop.addEventListener('click', (e) => { if (e.target === backdrop) close(); });
 
-  /* Keyboard */
   document.addEventListener('keydown', (e) => {
     if (!isOpen) return;
-    if (e.key === 'Escape' || e.key === 'Escape') close();
-    if (e.key === 'ArrowLeft')  prev();
-    if (e.key === 'ArrowRight') next();
+    if (e.key === 'Escape')      close();
+    if (e.key === 'ArrowLeft')   prev();
+    if (e.key === 'ArrowRight')  next();
   });
 
   /* Touch swipe */
