@@ -4010,13 +4010,22 @@ footer {
   aspect-ratio: 16/9;
 }
 
-.vtesti-thumb iframe,
-.vtesti-thumb video {
+.vtesti-thumb iframe {
   width: 100%;
   height: 100%;
   border: none;
   display: block;
   pointer-events: none; /* klik ke overlay dulu */
+}
+
+.vtesti-thumb video {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  pointer-events: auto; /* video lokal harus bisa dikontrol langsung */
+  position: relative;
+  z-index: 3;
 }
 
 /* ── Play overlay (sebelum diplay) ── */
@@ -4072,7 +4081,34 @@ footer {
   gap: 5px;
 }
 
-/* ── Thumbnail image (jika belum embed) ── */
+/* ── TikTok embed langsung (tanpa overlay) ── */
+.vtesti-tiktok-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.vtesti-tiktok-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  pointer-events: auto;
+}
+
+.vtesti-card-tiktok {
+  cursor: default;
+}
+
+.vtesti-card-tiktok:hover {
+  transform: none;
+}
+
+/* Video lokal: overlay harus tidak ada agar controls bisa diklik */
+.vtesti-card:not(.vtesti-card-tiktok) .vtesti-thumb .vtesti-overlay {
+  display: none;
+}
+
+
 .vtesti-thumb-img {
   width: 100%;
   height: 100%;
@@ -4265,17 +4301,15 @@ footer {
 
     <div class="vtesti-grid reveal">
 
-      <!-- ── CARD 1 — TikTok ── -->
-      <div class="vtesti-card"
-           data-src="https://www.tiktok.com/@jekistore.com/video/7639581972628655381"
-           data-platform="tiktok"
-           onclick="vtestiPlay(this)">
-        <div class="vtesti-thumb">
-          <img class="vtesti-thumb-img" src="testigaleri/1.webp" alt="Video testimoni pelanggan Jeki Store" loading="lazy" onerror="this.style.display='none'">
-          <div class="vtesti-overlay">
-            <div class="vtesti-play-btn"><i class="bi bi-play-fill"></i></div>
-            <div class="vtesti-platform-badge"><i class="bi bi-tiktok"></i> TikTok</div>
-          </div>
+      <!-- ── CARD 1 — TikTok Embed ── -->
+      <div class="vtesti-card vtesti-card-tiktok">
+        <div class="vtesti-thumb vtesti-tiktok-wrap">
+          <iframe
+            src="https://www.tiktok.com/embed/v2/7639581972628655381"
+            allowfullscreen
+            allow="encrypted-media"
+            style="pointer-events:auto;">
+          </iframe>
         </div>
         <div class="vtesti-caption">
           <div class="vtesti-stars">★★★★★</div>
@@ -4290,17 +4324,15 @@ footer {
         </div>
       </div>
 
-      <!-- ── CARD 2 — TikTok ── -->
-      <div class="vtesti-card"
-           data-src="https://www.tiktok.com/@jekistore.com/video/7575063084503518485"
-           data-platform="tiktok"
-           onclick="vtestiPlay(this)">
-        <div class="vtesti-thumb">
-          <img class="vtesti-thumb-img" src="testigaleri/2.webp" alt="Video testimoni pelanggan Jeki Store" loading="lazy" onerror="this.style.display='none'">
-          <div class="vtesti-overlay">
-            <div class="vtesti-play-btn"><i class="bi bi-play-fill"></i></div>
-            <div class="vtesti-platform-badge"><i class="bi bi-tiktok"></i> TikTok</div>
-          </div>
+      <!-- ── CARD 2 — TikTok Embed ── -->
+      <div class="vtesti-card vtesti-card-tiktok">
+        <div class="vtesti-thumb vtesti-tiktok-wrap">
+          <iframe
+            src="https://www.tiktok.com/embed/v2/7575063084503518485"
+            allowfullscreen
+            allow="encrypted-media"
+            style="pointer-events:auto;">
+          </iframe>
         </div>
         <div class="vtesti-caption">
           <div class="vtesti-stars">★★★★★</div>
@@ -4339,17 +4371,15 @@ footer {
         </div>
       </div>
 
-      <!-- ── CARD 4 — TikTok ── -->
-      <div class="vtesti-card"
-           data-src="https://www.tiktok.com/@jekistore.com/video/7558073838945275137"
-           data-platform="tiktok"
-           onclick="vtestiPlay(this)">
-        <div class="vtesti-thumb">
-          <img class="vtesti-thumb-img" src="testigaleri/4.webp" alt="Video testimoni pelanggan Jeki Store" loading="lazy" onerror="this.style.display='none'">
-          <div class="vtesti-overlay">
-            <div class="vtesti-play-btn"><i class="bi bi-play-fill"></i></div>
-            <div class="vtesti-platform-badge"><i class="bi bi-tiktok"></i> TikTok</div>
-          </div>
+      <!-- ── CARD 4 — TikTok Embed ── -->
+      <div class="vtesti-card vtesti-card-tiktok">
+        <div class="vtesti-thumb vtesti-tiktok-wrap">
+          <iframe
+            src="https://www.tiktok.com/embed/v2/7558073838945275137"
+            allowfullscreen
+            allow="encrypted-media"
+            style="pointer-events:auto;">
+          </iframe>
         </div>
         <div class="vtesti-caption">
           <div class="vtesti-stars">★★★★★</div>
@@ -4364,17 +4394,15 @@ footer {
         </div>
       </div>
 
-      <!-- ── CARD 5 — TikTok ── -->
-      <div class="vtesti-card"
-           data-src="https://www.tiktok.com/@jekistore.com/video/7621508141187910933"
-           data-platform="tiktok"
-           onclick="vtestiPlay(this)">
-        <div class="vtesti-thumb">
-          <img class="vtesti-thumb-img" src="testigaleri/5.webp" alt="Video testimoni pelanggan Jeki Store" loading="lazy" onerror="this.style.display='none'">
-          <div class="vtesti-overlay">
-            <div class="vtesti-play-btn"><i class="bi bi-play-fill"></i></div>
-            <div class="vtesti-platform-badge"><i class="bi bi-tiktok"></i> TikTok</div>
-          </div>
+      <!-- ── CARD 5 — TikTok Embed ── -->
+      <div class="vtesti-card vtesti-card-tiktok">
+        <div class="vtesti-thumb vtesti-tiktok-wrap">
+          <iframe
+            src="https://www.tiktok.com/embed/v2/7621508141187910933"
+            allowfullscreen
+            allow="encrypted-media"
+            style="pointer-events:auto;">
+          </iframe>
         </div>
         <div class="vtesti-caption">
           <div class="vtesti-stars">★★★★★</div>
