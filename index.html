@@ -19,7 +19,7 @@
 <!-- Content Security Policy: whitelist sumber resource yang diizinkan -->
 <meta http-equiv="Content-Security-Policy" content="
   default-src 'self';
-  script-src 'self' 'unsafe-inline';
+  script-src 'self' 'unsafe-inline' https://www.youtube.com https://s.ytimg.com;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net;
   font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;
   img-src 'self' data: blob:;
@@ -3285,7 +3285,8 @@ footer {
     <div class="hero-video anim a4b">
       <div class="hero-video-wrapper">
         <iframe
-          src="https://www.youtube.com/embed/U-Q7F1sVy2Q"
+          id="hero-yt-player"
+          src="https://www.youtube.com/embed/U-Q7F1sVy2Q?enablejsapi=1"
           title="Demo TradingView Premium — Jeki Store"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -7362,6 +7363,45 @@ document.getElementById('m1').checked = true;
     }
   ]
 }
+</script>
+
+
+<!-- ════════════════════════════════════════
+     AUTO-PAUSE HERO VIDEO
+     Pause otomatis saat video keluar dari viewport
+════════════════════════════════════════ -->
+<script>
+(function () {
+  var player = null;
+  var playerReady = false;
+
+  var tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  var firstScript = document.getElementsByTagName('script')[0];
+  firstScript.parentNode.insertBefore(tag, firstScript);
+
+  window.onYouTubeIframeAPIReady = function () {
+    player = new YT.Player('hero-yt-player', {
+      events: {
+        onReady: function () { playerReady = true; }
+      }
+    });
+  };
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!playerReady || !player) return;
+      if (!entry.isIntersecting) {
+        try { player.pauseVideo(); } catch (e) {}
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var iframe = document.getElementById('hero-yt-player');
+    if (iframe) observer.observe(iframe);
+  });
+})();
 </script>
 
 </body>
