@@ -767,6 +767,33 @@ nav:not(.float-nav).scrolled .nav-pill {
   margin-left: 4px;
 }
 
+/* ── HERO VIDEO ── */
+.hero-video {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto var(--space-5);
+}
+
+.hero-video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 */
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+  border: 1.5px solid rgba(255,255,255,0.12);
+}
+
+.hero-video-wrapper iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+
+/* animation delay for video block */
+.anim.a4b { animation-delay: 0.52s; }
+
 .hero .btn-outline {
   background: rgba(255,255,255,0.95);
   color: #1a1a1a;
@@ -2994,6 +3021,11 @@ footer {
   .hero-price-pill .price-main { color: #1a1a1a; }
   .hero-price-pill .price-label { color: #767676; }
   .hero-price-pill .price-old   { color: #a0a0a0; }
+  /* Video — keep shadow subtle in light mode */
+  .hero-video-wrapper {
+    border-color: rgba(0,0,0,0.08);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  }
   /* Btn outline — tetap white pill */
   .hero .btn-outline {
     background: rgba(255,255,255,0.95);
@@ -3249,6 +3281,18 @@ footer {
       <span class="price-main">Rp 185.000</span>
       <span class="price-label">/ bulan</span>
       <span class="price-old">Rp 600.000+</span>
+    </div>
+    <div class="hero-video anim a4b">
+      <div class="hero-video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/U-Q7F1sVy2Q"
+          title="Demo TradingView Premium — Jeki Store"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
     </div>
     <div class="hero-actions anim a5">
       <a href="#order" class="btn-green">
