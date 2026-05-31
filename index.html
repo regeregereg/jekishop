@@ -3298,6 +3298,9 @@ body.glb-noscroll { overflow: hidden; }
   .hero-price-pill .price-main { color: #1a1a1a; }
   .hero-price-pill .price-label { color: #767676; }
   .hero-price-pill .price-old   { color: #a0a0a0; }
+  /* Jam aktif — hitam di mobile (bg putih) */
+  .hero-jam-aktif { color: var(--ink-muted) !important; }
+  .hero-jam-aktif strong { color: var(--ink) !important; }
   /* Video — keep shadow subtle in light mode */
   .hero-video-wrapper {
     border-color: rgba(0,0,0,0.08);
@@ -3559,6 +3562,7 @@ body.glb-noscroll { overflow: hidden; }
       <span class="price-label">/ bulan</span>
       <span class="price-old">Rp 600.000+</span>
     </div>
+    <p class="hero-jam-aktif anim a4" style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:0.8rem;color:rgba(255,255,255,0.75);margin-top:-36px;margin-bottom:var(--space-7);font-weight:500;"><i class="bi bi-clock" style="font-size:0.85rem;flex-shrink:0;"></i> Diproses saat jam aktif admin: <strong style="color:#ffffff;font-weight:700;">08.00 – 22.00 WIB</strong></p>
     <div class="hero-video anim a4b">
       <div class="hero-video-wrapper">
         <iframe
