@@ -22,9 +22,9 @@
   script-src 'self' 'unsafe-inline' https://www.youtube.com https://s.ytimg.com;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net;
   font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;
-  img-src 'self' data: blob: https://www.instagram.com https://instagram.com;
-  connect-src 'self' https://wa.me https://www.instagram.com;
-  frame-src https://www.tiktok.com https://www.youtube.com https://www.instagram.com;
+  img-src 'self' data: blob: https://www.instagram.com https://instagram.com https://www.threads.com https://www.youtube.com;
+  connect-src 'self' https://wa.me https://www.instagram.com https://www.threads.com;
+  frame-src https://www.tiktok.com https://www.youtube.com https://www.instagram.com https://www.threads.com;
   object-src 'none';
   base-uri 'self';
   form-action 'self' https://wa.me;
@@ -46,7 +46,7 @@
 <meta name="geo.country" content="ID">
 <!-- AI crawler / LLM discoverability -->
 <meta name="ai-content-type" content="product-service">
-<meta name="ai-description" content="Jeki Store adalah reseller TradingView Premium di Indonesia. Harga Rp 185.000/bulan, hemat dibanding harga resmi Rp 600.000+. Tersedia 3 method akses untuk semua perangkat. Garansi aktif, admin responsif 08.00–22.00 WIB. Website: jekistore.com. TikTok: @jekistore.com. Instagram: @jekistorecom.">
+<meta name="ai-description" content="Jeki Store adalah reseller TradingView Premium di Indonesia. Harga Rp 185.000/bulan, hemat dibanding harga resmi Rp 600.000+. Tersedia 3 method akses untuk semua perangkat. Garansi aktif, admin responsif 08.00–22.00 WIB. Website: jekistore.com. TikTok: @jekistore.com. Instagram: @jekistorecom. Threads: @jekistorecom. YouTube: @jekistorecom.">
 <meta name="rating" content="4.9 dari 5 berdasarkan 50+ ulasan pelanggan">
 <link rel="canonical" href="https://jekistore.com/">
 <link rel="alternate" hreflang="id" href="https://jekistore.com/">
@@ -291,7 +291,9 @@
       "sameAs": [
         "https://wa.me/6283119686482",
         "https://www.tiktok.com/@jekistore.com",
-        "https://www.instagram.com/jekistorecom"
+        "https://www.instagram.com/jekistorecom",
+        "https://www.threads.com/@jekistorecom",
+        "https://www.youtube.com/@jekistorecom"
       ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
@@ -426,6 +428,8 @@ Jam layanan: 08.00–22.00 WIB setiap hari.
 Kontak: WhatsApp +6283119686482
 TikTok: https://www.tiktok.com/@jekistore.com
 Instagram: https://www.instagram.com/jekistorecom
+Threads: https://www.threads.com/@jekistorecom
+YouTube: https://www.youtube.com/@jekistorecom
 Rating: 4.9/5 dari 50+ pelanggan nyata.
 Berlaku sejak: Maret 2025.
 Kata kunci: tradingview premium murah indonesia, beli tradingview premium, reseller tradingview indonesia, replay mode tradingview, backtest strategi trading.
@@ -439,6 +443,8 @@ Kata kunci: tradingview premium murah indonesia, beli tradingview premium, resel
 <link rel="dns-prefetch" href="https://wa.me">
 <link rel="dns-prefetch" href="https://www.instagram.com">
 <link rel="dns-prefetch" href="https://www.tiktok.com">
+<link rel="dns-prefetch" href="https://www.threads.com">
+<link rel="dns-prefetch" href="https://www.youtube.com">
 
 <!-- Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -2046,6 +2052,16 @@ nav:not(.float-nav).scrolled .nav-pill {
 
 .footer-social a.instagram-icon:hover {
   background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
+  color: white;
+}
+
+.footer-social a.threads-icon:hover {
+  background: #101010;
+  color: white;
+}
+
+.footer-social a.youtube-icon:hover {
+  background: #ff0000;
   color: white;
 }
 
@@ -5338,6 +5354,62 @@ body.glb-noscroll { overflow: hidden; }
   </div>
 </section>
 
+<!-- ══ THREADS STRIP ══ -->
+<section class="tiktok-strip reveal" aria-label="Ikuti Jeki Store di Threads" style="background:#0a0a0a; border-top:1.5px solid #1e1e1e;">
+  <div class="tiktok-strip-left">
+    <div class="tiktok-icon-wrap" style="background:#101010; border-color:#2a2a2a;">
+      <i class="bi bi-threads tiktok-logo" aria-hidden="true" style="color:white;"></i>
+    </div>
+    <div class="tiktok-strip-info">
+      <div class="tiktok-handle" style="color:#fff;">@jekistorecom <span style="color:rgba(255,255,255,0.4);">· Threads</span></div>
+      <div class="tiktok-meta">
+        <div class="tiktok-stat" style="color:rgba(255,255,255,0.45);"><strong style="color:rgba(255,255,255,0.8);">Diskusi</strong> Trading</div>
+        <div class="tiktok-stat-dot"></div>
+        <div class="tiktok-stat" style="color:rgba(255,255,255,0.45);"><strong style="color:rgba(255,255,255,0.8);">Update</strong> Produk</div>
+        <div class="tiktok-stat-dot"></div>
+        <div class="tiktok-stat" style="color:rgba(255,255,255,0.45);"><strong style="color:rgba(255,255,255,0.8);">Q&A</strong> Langsung</div>
+      </div>
+    </div>
+  </div>
+  <div class="tiktok-strip-right">
+    <p class="tiktok-strip-label" style="color:rgba(255,255,255,0.35);">
+      Tanya jawab soal trading, diskusi strategi, dan info update Jeki Store. Follow sekarang.
+    </p>
+    <a href="https://www.threads.com/@jekistorecom" target="_blank" rel="noopener noreferrer" class="btn-tiktok" aria-label="Follow Jeki Store di Threads" style="background:#ffffff; color:#0a0a0a; box-shadow:0 4px 20px rgba(255,255,255,0.15);">
+      <i class="bi bi-threads" aria-hidden="true"></i>
+      Follow di Threads
+    </a>
+  </div>
+</section>
+
+<!-- ══ YOUTUBE STRIP ══ -->
+<section class="tiktok-strip reveal" aria-label="Subscribe Jeki Store di YouTube" style="background:#0d0505; border-top:1.5px solid #2a1010;">
+  <div class="tiktok-strip-left">
+    <div class="tiktok-icon-wrap" style="background:#ff0000; border-color:transparent;">
+      <i class="bi bi-youtube tiktok-logo" aria-hidden="true" style="color:white;"></i>
+    </div>
+    <div class="tiktok-strip-info">
+      <div class="tiktok-handle" style="color:#fff;">@jekistorecom <span style="color:rgba(255,255,255,0.4);">· YouTube</span></div>
+      <div class="tiktok-meta">
+        <div class="tiktok-stat" style="color:rgba(255,255,255,0.45);"><strong style="color:rgba(255,255,255,0.8);">Tutorial</strong> TradingView</div>
+        <div class="tiktok-stat-dot"></div>
+        <div class="tiktok-stat" style="color:rgba(255,255,255,0.45);"><strong style="color:rgba(255,255,255,0.8);">Video</strong> Review</div>
+        <div class="tiktok-stat-dot"></div>
+        <div class="tiktok-stat" style="color:rgba(255,255,255,0.45);"><strong style="color:rgba(255,255,255,0.8);">Tips</strong> Trading</div>
+      </div>
+    </div>
+  </div>
+  <div class="tiktok-strip-right">
+    <p class="tiktok-strip-label" style="color:rgba(255,255,255,0.35);">
+      Tutorial cara pakai fitur TradingView Premium dan tips trading. Subscribe gratis.
+    </p>
+    <a href="https://www.youtube.com/@jekistorecom" target="_blank" rel="noopener noreferrer" class="btn-tiktok" aria-label="Subscribe Jeki Store di YouTube" style="background:#ff0000; box-shadow:0 4px 20px rgba(255,0,0,0.35);">
+      <i class="bi bi-youtube" aria-hidden="true"></i>
+      Subscribe di YouTube
+    </a>
+  </div>
+</section>
+
 <footer role="contentinfo" aria-label="Footer Jeki Store">
   <div class="footer-logo">
     <div class="dot"></div>
@@ -5348,6 +5420,12 @@ body.glb-noscroll { overflow: hidden; }
       </a>
       <a href="https://www.instagram.com/jekistorecom" target="_blank" rel="noopener noreferrer" class="instagram-icon" aria-label="Instagram Jeki Store">
         <i class="bi bi-instagram"></i>
+      </a>
+      <a href="https://www.threads.com/@jekistorecom" target="_blank" rel="noopener noreferrer" class="threads-icon" aria-label="Threads Jeki Store">
+        <i class="bi bi-threads"></i>
+      </a>
+      <a href="https://www.youtube.com/@jekistorecom" target="_blank" rel="noopener noreferrer" class="youtube-icon" aria-label="YouTube Jeki Store">
+        <i class="bi bi-youtube"></i>
       </a>
       <a href="https://wa.me/6283119686482" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Jeki Store">
         <i class="bi bi-whatsapp"></i>
@@ -8338,6 +8416,8 @@ document.getElementById('glbZoom').addEventListener('click', function(e){
   <ul>
     <li>Instagram: <a href="https://www.instagram.com/jekistorecom" rel="noopener">@jekistorecom</a> — konten edukasi trading, tips TradingView, update produk</li>
     <li>TikTok: <a href="https://www.tiktok.com/@jekistore.com" rel="noopener">@jekistore.com</a> — tutorial, tips trading, testimoni</li>
+    <li>Threads: <a href="https://www.threads.com/@jekistorecom" rel="noopener">@jekistorecom</a> — diskusi trading, tanya jawab, update produk</li>
+    <li>YouTube: <a href="https://www.youtube.com/@jekistorecom" rel="noopener">@jekistorecom</a> — video tutorial TradingView Premium dan tips trading</li>
     <li>WhatsApp: <a href="https://wa.me/6283119686482">+6283119686482</a></li>
     <li>Website: <a href="https://jekistore.com">jekistore.com</a></li>
   </ul>
