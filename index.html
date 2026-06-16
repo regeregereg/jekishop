@@ -4443,6 +4443,175 @@ body.glb-noscroll { overflow: hidden; }
     </div>
   </div>
 
+  <!-- ══ 3 TESTI KATA PELANGGAN — Swipe mobile, row desktop ══ -->
+  <div class="ftesti-wrap reveal">
+
+    <div class="ftesti-track" id="ftestiTrack">
+
+      <!-- SLOT 1 — lebih baik mahal sedikit tapi productnya terbaik, ketimbang harga murah tapi kualitas buruk -->
+      <div class="ftesti-card">
+        <div class="ftesti-img-wrap">
+          <img
+            src="testigaleri/1.webp"
+            alt="Testimoni terbaik pelanggan Jeki Store — TradingView Premium terpercaya"
+            class="ftesti-img"
+            loading="lazy"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ftesti-placeholder" style="display:none"><i class="bi bi-image"></i><span>Foto Testi 1</span></div>
+        </div>
+        <div class="ftesti-label"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div>
+      </div>
+
+      <!-- SLOT 2 — pelanggan yang berlangganan tradingview premium melalui jeki store merasakan manfaatnya -->
+      <div class="ftesti-card">
+        <div class="ftesti-img-wrap">
+          <img
+            src="testigaleri/2.webp"
+            alt="Ulasan pelanggan Jeki Store — Proses cepat admin responsif"
+            class="ftesti-img"
+            loading="lazy"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ftesti-placeholder" style="display:none"><i class="bi bi-image"></i><span>Foto Testi 2</span></div>
+        </div>
+        <div class="ftesti-label"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div>
+      </div>
+
+      <!-- SLOT 3 — ini apa kata pelanggan yang benar benar langganan di jekistore.com  -->
+      <div class="ftesti-card">
+        <div class="ftesti-img-wrap">
+          <img
+            src="testigaleri/3.webp"
+            alt="Review pelanggan Jeki Store — Garansi aktif selama berlangganan"
+            class="ftesti-img"
+            loading="lazy"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ftesti-placeholder" style="display:none"><i class="bi bi-image"></i><span>Foto Testi 3</span></div>
+        </div>
+        <div class="ftesti-label"><i class="bi bi-check-circle-fill"></i> Verified Buyer</div>
+      </div>
+
+    </div>
+
+    <!-- Dot indicators (mobile only) -->
+    <div class="ftesti-dots" aria-hidden="true">
+      <span class="ftesti-dot active"></span>
+      <span class="ftesti-dot"></span>
+      <span class="ftesti-dot"></span>
+    </div>
+
+  </div>
+
+  <style>
+  /* ══ FEATURED TESTI ══ */
+  .ftesti-wrap {
+    padding: 0 0 32px;
+    overflow: hidden;
+  }
+  .ftesti-track {
+    display: flex;
+    gap: 16px;
+    padding: 8px 24px 12px;
+    max-width: 1100px;
+    margin: 0 auto;
+    /* mobile: swipe */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .ftesti-track::-webkit-scrollbar { display: none; }
+  .ftesti-card {
+    flex: 0 0 78vw;
+    max-width: 340px;
+    scroll-snap-align: center;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+    background: #111;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .ftesti-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.18); }
+  .ftesti-img-wrap {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ftesti-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .ftesti-placeholder {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #555;
+    font-size: 0.8rem;
+  }
+  .ftesti-placeholder i { font-size: 2rem; }
+  .ftesti-label {
+    padding: 12px 16px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #a8e063;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 0.02em;
+  }
+  /* Dot indicators */
+  .ftesti-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .ftesti-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #ccc;
+    transition: background 0.2s, width 0.2s;
+  }
+  .ftesti-dot.active {
+    background: #222;
+    width: 20px;
+  }
+  /* Desktop: 3 kolom, no scroll, hide dots */
+  @media (min-width: 769px) {
+    .ftesti-track {
+      overflow-x: visible;
+      justify-content: center;
+      scroll-snap-type: none;
+    }
+    .ftesti-card {
+      flex: 0 0 calc(33.333% - 12px);
+      max-width: 320px;
+    }
+    .ftesti-dots { display: none; }
+  }
+  </style>
+
+  <script>
+  /* Dot indicator sync untuk ftesti swipe */
+  (function() {
+    var track = document.getElementById('ftestiTrack');
+    var dots = document.querySelectorAll('.ftesti-dot');
+    if (!track || !dots.length) return;
+    track.addEventListener('scroll', function() {
+      var idx = Math.round(track.scrollLeft / track.clientWidth);
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+    }, { passive: true });
+  })();
+  </script>
+
   <!-- MARQUEE GALERI -->
   <div class="testi-marquee-wrap" id="galleryMarqueeWrap">
     <div class="gallery-marquee" id="galleryMarquee">
