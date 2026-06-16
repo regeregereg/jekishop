@@ -5280,13 +5280,6 @@ body.glb-noscroll { overflow: hidden; }
         </div>
         <div class="faq-a">Untuk saat ini belum tersedia paket tahunan. Kalau ada event diskon dari TradingView sendiri, admin akan menginformasikan ke pelanggan. Stay tuned!</div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          Bagaimana kalau saya tidak paham cara login?
-          <div class="faq-q-icon"><i class="bi bi-plus"></i></div>
-        </div>
-        <div class="faq-a">Admin siap memandu step by step sampai kamu berhasil login. Kirim screenshot kalau ada kendala — kami bantu dengan sabar sampai akun aktif dan bisa digunakan.</div>
-      </div>
     </div>
   </div>
 </section>
@@ -5303,27 +5296,25 @@ body.glb-noscroll { overflow: hidden; }
   </a>
 </div>
 
-<!-- ══ GOOGLE MAPS + INSTAGRAM POSTS ══ -->
-<section class="trust-local-section reveal" aria-label="Lokasi dan konten Instagram Jeki Store">
+<!-- ══ GOOGLE MAPS ══ -->
+<section class="trust-local-section reveal" aria-label="Lokasi Jeki Store di Google Maps">
   <div class="tls-inner">
 
-    <!-- ── Kolom kiri: Google Maps ── -->
     <div class="tls-maps-col">
       <div class="tls-heading">
-        <span class="tls-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Google Maps</span>
+        <span class="tls-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Google Maps
+        </span>
         <h2 class="tls-title">Temukan & Review Kami</h2>
         <p class="tls-sub">Sudah pernah beli? Bantu trader lain dengan memberikan ulasan di Google Maps.</p>
       </div>
       <div class="tls-map-wrap">
-        <!-- CARA UPGRADE EMBED:
-             1. Buka maps.app.goo.gl/Cc3kD7rStS1efY7X6
-             2. Klik Share → Embed a map → Copy src="..." dari iframe
-             3. Tempel di sini untuk pin tepat ke bisnis kamu -->
         <iframe
           title="Lokasi Jeki Store di Google Maps"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.1!2d109.2352404!3d-7.3591509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e655f85fd9a22a3%3A0xfc7537520da663b7!2sJeki%20Store!5e0!3m2!1sid!2sid!4v1749990000000!5m2!1sid!2sid"
           width="100%"
-          height="260"
+          height="300"
           style="border:0; border-radius:16px; display:block;"
           allowfullscreen=""
           loading="lazy"
@@ -5342,46 +5333,41 @@ body.glb-noscroll { overflow: hidden; }
       </a>
     </div>
 
-    <!-- ── Kolom kanan: Instagram Posts ── -->
-    <div class="tls-ig-col">
-      <div class="tls-heading">
-        <span class="tls-badge" style="background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af); color:#fff; border:none;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          @jekistorecom
-        </span>
-        <h2 class="tls-title">Konten Terbaru di Instagram</h2>
-        <p class="tls-sub">Tips trading, update produk, dan promo — langsung dari feed kami.</p>
-      </div>
-      <!-- Instagram grid — 6 post/reel @jekistorecom -->
-      <div class="tls-ig-grid" id="tlsIgGrid"></div>
-      <a
-        href="https://www.instagram.com/jekistorecom"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="tls-ig-btn"
-        aria-label="Lihat semua postingan Instagram Jeki Store">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        Lihat Semua di Instagram
-      </a>
-    </div>
-
   </div>
+
+  <!-- SEO: Tautan media sosial untuk crawler & AI — tidak ditampilkan secara visual -->
+  <div style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;" aria-hidden="true">
+    <p>Jeki Store adalah toko reseller TradingView Premium terpercaya di Indonesia. Tersedia di berbagai platform:</p>
+    <ul>
+      <li><a href="https://jekistore.com" rel="noopener">Website resmi Jeki Store — jekistore.com</a></li>
+      <li><a href="https://www.instagram.com/jekistorecom" rel="noopener">Instagram Jeki Store (@jekistorecom) — tips trading dan info produk TradingView Premium</a></li>
+      <li><a href="https://www.instagram.com/p/DZgguWwkhJV/" rel="noopener">Postingan Instagram Jeki Store tentang TradingView Premium</a></li>
+      <li><a href="https://www.instagram.com/reel/DZblQE4xB_9/" rel="noopener">Reel Instagram Jeki Store — review TradingView Premium</a></li>
+      <li><a href="https://www.instagram.com/p/DZBvpOkkhzf/" rel="noopener">Postingan Instagram Jeki Store — fitur TradingView Premium</a></li>
+      <li><a href="https://www.instagram.com/reel/DZlhzojSo4Q/" rel="noopener">Reel Instagram Jeki Store — cara pakai TradingView Premium</a></li>
+      <li><a href="https://www.instagram.com/reel/DZW199fR31k/" rel="noopener">Reel Instagram Jeki Store — tips trading untuk pemula</a></li>
+      <li><a href="https://www.instagram.com/p/DZBvZMskoIb/" rel="noopener">Postingan Instagram Jeki Store — harga TradingView Premium terjangkau</a></li>
+      <li><a href="https://www.tiktok.com/@jekistore.com" rel="noopener">TikTok Jeki Store (@jekistore.com) — tutorial TradingView dan tips trading</a></li>
+      <li><a href="https://www.youtube.com/@jekistorecom" rel="noopener">YouTube Jeki Store — video tutorial TradingView Premium</a></li>
+      <li><a href="https://www.threads.com/@jekistorecom" rel="noopener">Threads Jeki Store (@jekistorecom)</a></li>
+      <li><a href="https://maps.app.goo.gl/Cc3kD7rStS1efY7X6" rel="noopener">Jeki Store di Google Maps — berikan ulasan</a></li>
+      <li><a href="https://wa.me/6283119686482" rel="noopener">WhatsApp Jeki Store — order TradingView Premium</a></li>
+    </ul>
+  </div>
+
 </section>
 
 <style>
-/* ══ TRUST LOCAL SECTION ══ */
+/* ══ MAPS SECTION ══ */
 .trust-local-section {
   background: #f7f8fa;
   border-top: 1.5px solid #ececec;
   padding: 64px 24px 56px;
+  position: relative;
 }
 .tls-inner {
-  max-width: 1100px;
+  max-width: 680px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: start;
 }
 .tls-badge {
   display: inline-flex;
@@ -5434,121 +5420,11 @@ body.glb-noscroll { overflow: hidden; }
   box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
 .tls-maps-btn:hover { background: #222; transform: translateY(-2px); }
-/* ── IG Grid Cards ── */
-.tls-ig-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 16px;
-}
-.tls-ig-card {
-  aspect-ratio: 1 / 1;
-  border-radius: 12px;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.10);
-}
-.tls-ig-card:hover { transform: scale(1.04); box-shadow: 0 6px 20px rgba(0,0,0,0.16); }
-.tls-ig-card-bg {
-  position: absolute;
-  inset: 0;
-}
-.tls-ig-card-icon {
-  position: relative;
-  z-index: 1;
-  color: rgba(255,255,255,0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.tls-ig-card-badge {
-  position: absolute;
-  bottom: 7px;
-  left: 8px;
-  z-index: 2;
-  background: rgba(0,0,0,0.38);
-  color: #fff;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 2px 7px;
-  border-radius: 999px;
-  backdrop-filter: blur(4px);
-}
-.tls-ig-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 700;
-  padding: 12px 20px;
-  border-radius: 999px;
-  text-decoration: none;
-  transition: opacity 0.2s, transform 0.2s;
-  box-shadow: 0 4px 16px rgba(221,42,123,0.3);
-}
-.tls-ig-btn:hover { opacity: 0.9; transform: translateY(-2px); }
-/* ── Responsive ── */
-@media (max-width: 768px) {
-  .tls-inner {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-}
 @media (max-width: 480px) {
   .trust-local-section { padding: 48px 16px 40px; }
   .tls-title { font-size: 1.15rem; }
 }
 </style>
-
-<!-- Instagram Thumbnail Grid — clean cards, no external JS dependency -->
-<script>
-(function() {
-  var posts = [
-    { url: 'https://www.instagram.com/p/DZgguWwkhJV/',     type: 'post',  label: 'Post' },
-    { url: 'https://www.instagram.com/reel/DZblQE4xB_9/',  type: 'reel',  label: 'Reel' },
-    { url: 'https://www.instagram.com/p/DZBvpOkkhzf/',     type: 'post',  label: 'Post' },
-    { url: 'https://www.instagram.com/reel/DZlhzojSo4Q/',  type: 'reel',  label: 'Reel' },
-    { url: 'https://www.instagram.com/reel/DZW199fR31k/',  type: 'reel',  label: 'Reel' },
-    { url: 'https://www.instagram.com/p/DZBvZMskoIb/',     type: 'post',  label: 'Post' },
-  ];
-  var colors = [
-    'linear-gradient(135deg,#f58529 0%,#dd2a7b 100%)',
-    'linear-gradient(135deg,#8134af 0%,#dd2a7b 100%)',
-    'linear-gradient(135deg,#f58529 0%,#feda77 100%)',
-    'linear-gradient(135deg,#dd2a7b 0%,#8134af 100%)',
-    'linear-gradient(135deg,#feda77 0%,#f58529 100%)',
-    'linear-gradient(135deg,#8134af 0%,#405de6 100%)',
-  ];
-  var reelIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
-  var postIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
-
-  var grid = document.getElementById('tlsIgGrid');
-  if (!grid) return;
-
-  posts.forEach(function(p, i) {
-    var a = document.createElement('a');
-    a.href = p.url;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    a.className = 'tls-ig-card';
-    a.setAttribute('aria-label', 'Lihat ' + p.label + ' Instagram Jeki Store');
-    a.innerHTML =
-      '<div class="tls-ig-card-bg" style="background:' + colors[i] + '"></div>' +
-      '<div class="tls-ig-card-icon">' + (p.type === 'reel' ? reelIcon : postIcon) + '</div>' +
-      '<div class="tls-ig-card-badge">' + p.label + '</div>';
-    grid.appendChild(a);
-  });
-})();
-</script>
 
 <!-- ══ FOOTER ══ -->
 <!-- ══ TIKTOK STRIP ══ -->
@@ -7152,6 +7028,9 @@ document.getElementById('m1').checked = true;
     <button class="skb-tab" role="tab" data-target="skb-art-10">Sebelum Kamu Beli</button>
     <button class="skb-tab" role="tab" data-target="skb-art-11">After-Service Nyata</button>
     <button class="skb-tab" role="tab" data-target="skb-art-12">Panduan Pembeli Baru</button>
+    <button class="skb-tab" role="tab" data-target="skb-art-13">Trader Saham IDX</button>
+    <button class="skb-tab" role="tab" data-target="skb-art-14">Untuk Scalper & Swing</button>
+    <button class="skb-tab" role="tab" data-target="skb-art-15">Pemula Crypto</button>
   </div>
 
   <!-- ─── ARTIKEL 1: FREE VS PREMIUM ─── -->
@@ -7663,92 +7542,115 @@ document.getElementById('m1').checked = true;
     <p style="font-size:0.8rem; color:#999;">Terakhir diperbarui: Mei 2025 · Kategori: Panduan Pemula</p>
   </article>
 
-  <!-- ══ EXTENDED FAQ ACCORDION ══ -->
-  <div class="skb-faq-section" id="skb-faq-ext">
-    <h3 class="skb-faq-title">Pertanyaan yang Sering Ditanyakan</h3>
+  <!-- ─── ARTIKEL 13: TRADER SAHAM IDX ─── -->
+  <article id="skb-art-13" class="skb-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="author" content="Jeki Store">
+    <meta itemprop="publisher" content="Jeki Store">
 
-    <div class="skb-item">
-      <button class="skb-question" aria-expanded="false">Apakah TradingView Premium dari Jeki Store bisa digunakan untuk saham Indonesia (IDX / BEI)?</button>
-      <div class="skb-answer" role="region">
-        <div class="skb-answer-inner">
-          <p>Ya, TradingView Premium mendukung data saham IDX/BEI (Bursa Efek Indonesia). Kamu bisa mengakses chart saham Indonesia, menggunakan indikator teknikal, dan mengatur alert pada saham-saham BEI. Data saham IDX tersedia di TradingView dengan delay tertentu untuk akun gratis, dan real-time atau near real-time untuk akun Premium tergantung data feed yang tersedia.</p>
-        </div>
-      </div>
+    <h3 itemprop="headline">TradingView Premium untuk Trader Saham Indonesia (IDX/BEI): Apakah Worth It?</h3>
+    <p itemprop="description">Banyak trader saham Indonesia bertanya apakah TradingView Premium relevan untuk trading saham IDX dan BEI. Artikel ini menjawab secara jujur dari sudut pandang trader lokal.</p>
+
+    <h4>TradingView Support Saham IDX?</h4>
+    <p>Ya. TradingView menyediakan data saham IDX (Bursa Efek Indonesia) termasuk saham-saham blue chip seperti BBCA, BBRI, TLKM, ASII, GOTO, dan ratusan emiten lainnya. Kamu bisa langsung ketik kode saham di search bar TradingView dan chart-nya langsung muncul.</p>
+    <p>Untuk akun Premium, data yang tersedia lebih lengkap dan alert bisa dipasang langsung pada saham BEI tanpa batasan jumlah.</p>
+
+    <h4>Fitur Premium yang Paling Berguna untuk Trader Saham IDX</h4>
+    <ul>
+      <li><strong>Multi-chart layout</strong> — pantau 4–8 saham sekaligus di satu layar. Cocok untuk screening dan watchlist harian.</li>
+      <li><strong>Alert tidak terbatas</strong> — pasang alert di puluhan saham BEI sekaligus, tidak perlu cek chart satu-satu.</li>
+      <li><strong>Indikator tak terbatas per chart</strong> — kombinasikan MA, MACD, RSI, Bollinger Bands, dan indikator custom dalam satu chart.</li>
+      <li><strong>Replay Mode</strong> — backtest strategi di saham IDX menggunakan data historis. Ideal untuk mengetes setup sebelum live trading.</li>
+      <li><strong>Screener saham</strong> — filter saham BEI berdasarkan kondisi teknikal secara real-time.</li>
+    </ul>
+
+    <h4>Keterbatasan yang Perlu Diketahui</h4>
+    <p>Data saham IDX di TradingView bersifat <em>delayed</em> (tertunda 15 menit) untuk akun apapun termasuk Premium — ini bukan keterbatasan Premium, tapi kebijakan dari data provider IDX. Untuk analisis teknikal dan swing trading, delay ini tidak berpengaruh signifikan karena kamu menganalisis chart historis bukan tick real-time.</p>
+    <p>Untuk trader intraday saham yang butuh data tick real-time IDX, kamu tetap perlu platform broker lokal (RTI, Stockbit, dll.) sebagai referensi harga live. TradingView digunakan untuk analisis teknikalnya.</p>
+
+    <h4>Rekomendasi Setup untuk Trader Saham IDX</h4>
+    <p>Kombinasi yang banyak digunakan trader saham Indonesia: platform broker lokal untuk eksekusi order + TradingView Premium untuk analisis teknikal. Dengan setup ini kamu dapat keunggulan charting TradingView (lebih smooth, lebih banyak indikator, bisa custom) tanpa harus meninggalkan broker lokal.</p>
+
+    <div class="skb-callout">
+      <p><i class="bi bi-lightbulb-fill"></i> <strong>Kesimpulan:</strong> TradingView Premium worth it untuk trader saham IDX yang serius melakukan analisis teknikal, backtest strategi, dan memantau banyak saham sekaligus. Harga Rp 185.000/bulan dari Jeki Store setara Rp 6.000/hari — lebih murah dari secangkir kopi di kafe.</p>
     </div>
+    <hr class="skb-divider">
+    <p style="font-size:0.8rem; color:#999;">Kategori: Trader Saham Indonesia · IDX · BEI</p>
+  </article>
 
-    <div class="skb-item">
-      <button class="skb-question" aria-expanded="false">Berapa lama garansi yang diberikan Jeki Store?</button>
-      <div class="skb-answer" role="region">
-        <div class="skb-answer-inner">
-          <p>Garansi berlaku selama masa berlangganan kamu aktif (30 hari). Jika akun mengalami gangguan — seperti back to basic atau tidak bisa diakses — Jeki Store akan mengganti akun baru tanpa biaya tambahan. Untuk Method 3, penggantian akun adalah hal yang normal dan sudah diantisipasi dalam layanan.</p>
-        </div>
-      </div>
+  <!-- ─── ARTIKEL 14: SCALPER & SWING TRADER ─── -->
+  <article id="skb-art-14" class="skb-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="author" content="Jeki Store">
+    <meta itemprop="publisher" content="Jeki Store">
+
+    <h3 itemprop="headline">TradingView Premium untuk Scalper dan Swing Trader: Fitur yang Benar-Benar Dipakai</h3>
+    <p itemprop="description">Scalper dan swing trader punya kebutuhan berbeda. Artikel ini membahas fitur TradingView Premium mana yang paling berdampak untuk masing-masing style trading.</p>
+
+    <h4>Untuk Scalper (Timeframe M1–M15)</h4>
+    <p>Scalping butuh eksekusi cepat dan chart yang responsif. Fitur Premium yang paling relevan:</p>
+    <ul>
+      <li><strong>Chart tanpa iklan</strong> — tidak ada banner atau popup yang mengganggu saat kamu sedang pantau pergerakan cepat.</li>
+      <li><strong>Multi-chart 4–8 panel</strong> — pantau beberapa pair atau timeframe sekaligus di satu layar. Scalper crypto sering buka BTC, ETH, dan beberapa altcoin bersamaan.</li>
+      <li><strong>Alert berbasis kondisi teknikal</strong> — set alert saat RSI melewati level tertentu atau MA cross, tanpa harus terus menatap chart.</li>
+      <li><strong>Indikator tidak terbatas</strong> — kombinasikan VWAP, Volume Profile, order flow indicators, dan indikator custom dalam satu chart M1.</li>
+    </ul>
+
+    <h4>Untuk Swing Trader (Timeframe H4–Weekly)</h4>
+    <p>Swing trader lebih butuh kedalaman analisis daripada kecepatan. Fitur Premium yang paling dirasakan:</p>
+    <ul>
+      <li><strong>Replay Mode</strong> — ini game changer untuk swing trader. Kamu bisa replay pergerakan harga historis bar per bar, dan latih skill entry/exit tanpa risiko uang nyata.</li>
+      <li><strong>Saved layouts</strong> — simpan template chart dengan setup indikator favorit. Ganti pair atau timeframe, setup langsung teraplikasi.</li>
+      <li><strong>Alert jangka panjang</strong> — set alert di level support/resistance penting, sistem notifikasi jalan sendiri bahkan saat kamu tidak aktif trading.</li>
+      <li><strong>Screener multi-kondisi</strong> — filter pair crypto atau saham yang memenuhi beberapa syarat teknikal sekaligus (misal: RSI oversold + di atas MA200 + volume naik).</li>
+    </ul>
+
+    <h4>Method yang Direkomendasikan per Style Trading</h4>
+    <p><strong>Scalper:</strong> Method 1 (ekstensi browser) paling stabil untuk sesi trading intensif berjam-jam. Tidak ada risiko logout mendadak saat kamu sedang pantau trade aktif.</p>
+    <p><strong>Swing trader:</strong> Method 1 atau 2 sama-sama cocok. Swing trader yang lebih sering cek chart dari HP bisa pilih Method 2 (akses dari browser mobile).</p>
+
+    <div class="skb-callout">
+      <p><i class="bi bi-lightbulb-fill"></i> <strong>Tips:</strong> Belum yakin style trading kamu? Coba dulu 1 bulan, perhatikan fitur mana yang paling sering kamu pakai. Itu indikator style trading asli kamu.</p>
     </div>
+    <hr class="skb-divider">
+    <p style="font-size:0.8rem; color:#999;">Kategori: Scalping · Swing Trading · Strategi Trading</p>
+  </article>
 
-    <div class="skb-item">
-      <button class="skb-question" aria-expanded="false">Apakah data chart dan indikator saya tersimpan jika akun diganti?</button>
-      <div class="skb-answer" role="region">
-        <div class="skb-answer-inner">
-          <p>Tergantung method yang digunakan. <strong>Method 1 dan 2:</strong> Setting chart, layout, dan indikator tersimpan di akun dan bisa dilanjutkan bulan berikutnya karena menggunakan akun yang sama. <strong>Method 3:</strong> Karena akun diganti berkala, kamu perlu setup ulang layout. Namun proses setup ulang cukup cepat, terutama jika kamu sudah familiar dengan indikator yang kamu gunakan.</p>
-        </div>
-      </div>
+  <!-- ─── ARTIKEL 15: PEMULA CRYPTO ─── -->
+  <article id="skb-art-15" class="skb-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="author" content="Jeki Store">
+    <meta itemprop="publisher" content="Jeki Store">
+
+    <h3 itemprop="headline">Panduan TradingView Premium untuk Pemula Crypto: Mulai dari Mana?</h3>
+    <p itemprop="description">Baru mulai trading crypto dan bingung pakai TradingView? Panduan ini membantu trader pemula crypto memahami cara kerja TradingView Premium dan kenapa platform ini jadi standar industri.</p>
+
+    <h4>Kenapa Trader Crypto Pakai TradingView?</h4>
+    <p>TradingView adalah platform charting yang digunakan oleh mayoritas trader crypto profesional di seluruh dunia — bukan karena keharusan, tapi karena memang paling lengkap. Data dari Binance, Bybit, OKX, Coinbase, dan puluhan exchange lain tersedia langsung di TradingView tanpa perlu pindah platform.</p>
+
+    <h4>Perbedaan Akun Gratis vs Premium untuk Pemula Crypto</h4>
+    <p>Akun gratis TradingView sebenarnya sudah cukup untuk belajar membaca chart. Tapi ada beberapa batasan yang cepat terasa saat kamu mulai serius:</p>
+    <ul>
+      <li>Hanya 3 indikator per chart — cukup untuk awal, tapi terbatas saat kamu mulai kombinasikan RSI + MACD + MA sekaligus</li>
+      <li>Alert terbatas — tidak bisa pasang banyak alert harga di berbagai pair crypto sekaligus</li>
+      <li>Tidak ada Replay Mode — kamu tidak bisa "latihan" di chart historis crypto</li>
+      <li>Iklan di chart — mengganggu fokus saat analisis</li>
+    </ul>
+
+    <h4>Langkah Awal yang Disarankan untuk Pemula Crypto</h4>
+    <ol>
+      <li><strong>Pilih 1–2 pair dulu</strong> — BTC/USDT dan ETH/USDT sudah cukup untuk belajar. Jangan langsung scatter ke 20 altcoin.</li>
+      <li><strong>Pelajari 2–3 indikator dasar</strong> — Moving Average, RSI, dan Volume sudah cukup untuk mulai. TradingView Premium memberi akses ke ribuan indikator komunitas, tapi mulai yang simpel dulu.</li>
+      <li><strong>Gunakan Replay Mode untuk latihan</strong> — ini fitur Premium paling valuable untuk pemula. Kamu bisa "putar ulang" pergerakan BTC atau ETH bulan lalu dan latih skill entry/exit tanpa risiko uang nyata.</li>
+      <li><strong>Set alert, jangan nempel di chart</strong> — trading bukan soal siapa yang paling lama menatap layar. Premium memberi alert tidak terbatas — manfaatkan ini.</li>
+    </ol>
+
+    <h4>Berapa Budget yang Realistis untuk Pemula?</h4>
+    <p>Dengan TradingView Premium dari Jeki Store di Rp 185.000/bulan, kamu investasi sekitar Rp 6.000/hari untuk tools analisis yang sama dipakai trader profesional. Bandingkan dengan kursus trading online yang sering dijual Rp 500.000–2.000.000 sekali bayar tapi isinya teori semua — TradingView memberi kamu tools untuk langsung praktik.</p>
+
+    <div class="skb-callout">
+      <p><i class="bi bi-lightbulb-fill"></i> <strong>Saran untuk pemula:</strong> Mulai dengan Method 3 kalau kamu hanya punya HP. Setup paling simpel, langsung bisa digunakan. Saat sudah lebih serius dan butuh stabilitas lebih tinggi, upgrade ke Method 1 atau 2 cukup chat admin.</p>
     </div>
-
-    <div class="skb-item">
-      <button class="skb-question" aria-expanded="false">Apakah bisa perpanjang setiap bulan? Tidak harus komit panjang?</button>
-      <div class="skb-answer" role="region">
-        <div class="skb-answer-inner">
-          <p>Benar, berlangganan di Jeki Store bersifat bulanan dan tidak ada komitmen jangka panjang. Kamu bisa perpanjang setiap bulan sesuai kebutuhan. Tidak ada kontrak, tidak ada auto-debit, dan tidak ada penalti jika kamu memutuskan berhenti berlangganan.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="skb-item">
-      <button class="skb-question" aria-expanded="false">Apa perbedaan TradingView Premium dengan TradingView Plus?</button>
-      <div class="skb-answer" role="region">
-        <div class="skb-answer-inner">
-          <p>TradingView Plus adalah tier di bawah Premium. Perbedaan utama: Plus memiliki batas indikator per chart yang lebih sedikit (5 indikator vs tidak terbatas di Premium), jumlah alert yang lebih terbatas, dan Replay Mode yang hanya tersedia di timeframe tertentu. TradingView Premium memberikan akses penuh tanpa batasan ini, termasuk Replay Mode untuk semua timeframe.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="skb-item">
-      <button class="skb-question" aria-expanded="false">Bisa tidak TradingView Premium digunakan untuk crypto trading?</button>
-      <div class="skb-answer" role="region">
-        <div class="skb-answer-inner">
-          <p>Ya, TradingView adalah salah satu platform charting terbaik untuk crypto. Kamu bisa mengakses chart Bitcoin, Ethereum, dan ratusan altcoin dari berbagai exchange (Binance, Bybit, Coinbase, OKX, dll.) langsung di TradingView. Dengan Premium, kamu bisa set alert harga crypto, gunakan indikator tanpa batas, dan replay pergerakan crypto historis untuk backtest strategi.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="skb-item">
-      <button class="skb-question" aria-expanded="false">Apakah ada diskon untuk berlangganan lebih dari 1 bulan sekaligus?</button>
-      <div class="skb-answer" role="region">
-        <div class="skb-answer-inner">
-          <p>Untuk informasi promo dan paket berlangganan lebih dari 1 bulan, silakan tanyakan langsung ke admin Jeki Store via WhatsApp. Sesekali ada penawaran khusus untuk pelanggan yang berlangganan 3 bulan atau lebih sekaligus. Admin siap menjawab pertanyaan kamu setiap hari pukul 08.00–22.00 WIB.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="skb-item">
-      <button class="skb-question" aria-expanded="false">Apakah TradingView Premium bisa digunakan untuk Pine Script dan membuat indikator sendiri?</button>
-      <div class="skb-answer" role="region">
-        <div class="skb-answer-inner">
-          <p>Ya, TradingView Premium mendukung Pine Script — bahasa pemrograman khusus TradingView untuk membuat indikator dan strategi trading kustom. Dengan Premium, kamu bisa membuat, mengedit, dan menggunakan Pine Script indicators tanpa batas di chart kamu. Tersedia juga ribuan script gratis dari komunitas TradingView yang bisa langsung kamu gunakan.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="skb-item">
-      <button class="skb-question" aria-expanded="false">Bagaimana jika saya butuh bantuan setelah membeli?</button>
-      <div class="skb-answer" role="region">
-        <div class="skb-answer-inner">
-          <p>Admin Jeki Store siap membantu kamu melalui WhatsApp setiap hari pukul 08.00–22.00 WIB. Bantuan yang tersedia meliputi: panduan setup akun step-by-step, troubleshooting jika ada masalah login, penggantian akun jika terjadi gangguan, dan penjelasan cara menggunakan fitur-fitur TradingView Premium. Kamu tidak akan dibiarkan bingung sendirian.</p>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /skb-faq-section -->
+    <hr class="skb-divider">
+    <p style="font-size:0.8rem; color:#999;">Kategori: Pemula Crypto · Bitcoin · Belajar Trading</p>
+  </article>
 
   <!-- CTA STRIP -->
   <div class="skb-cta-strip" role="complementary" aria-label="Call to action pembelian">
