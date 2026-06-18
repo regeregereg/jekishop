@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback & Saran — JekiStore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --green:        #a8ff3e;
+      --green-deep:   #7acc1a;
+      --green-light:  #edffd0;
+      --green-mid:    rgba(168,255,62,0.15);
+      --green-border: rgba(168,255,62,0.35);
+      --black:        #0f0f0f;
+      --ink:          #1a1a1a;
+      --ink-mid:      #3d3d3d;
+      --ink-muted:    #767676;
+      --surface:      #fafaf8;
+      --surface-2:    #f2f2ee;
+      --card:         #ffffff;
+      --border:       #e0e0d8;
+      --shadow-sm:    0 1px 4px rgba(0,0,0,0.06);
+      --shadow-md:    0 4px 20px rgba(0,0,0,0.08);
+      --radius-sm:    8px;
+      --radius-md:    16px;
+      --radius-lg:    24px;
+      --radius-pill:  999px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--surface);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--black);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header-logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--green);
+      letter-spacing: -0.02em;
+    }
+    .header-logo span { color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--black);
+      padding: 48px 24px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(168,255,62,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-mid);
+      border: 1px solid var(--green-border);
+      color: var(--green);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 20px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--green);
+    }
+    .hero p {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.95rem;
+      max-width: 420px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .hero-divider {
+      width: 40px; height: 3px;
+      background: var(--green);
+      border-radius: 99px;
+      margin: 24px auto 0;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    /* ── SEGMENT SWITCHER ── */
+    .segment-wrap {
+      margin-top: -1px;
+      background: var(--black);
+      padding: 0 20px 32px;
+    }
+    .segment-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .segment-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .segment-tabs {
+      display: flex;
+      gap: 8px;
+    }
+    .seg-btn {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid rgba(255,255,255,0.12);
+      background: transparent;
+      color: rgba(255,255,255,0.5);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+    }
+    .seg-btn.active {
+      background: var(--green);
+      border-color: var(--green);
+      color: var(--black);
+    }
+    .seg-btn:not(.active):hover {
+      border-color: rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.8);
+    }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      margin-top: 24px;
+      display: none;
+    }
+    .form-card.visible { display: block; }
+
+    .form-section {
+      padding: 28px 28px 0;
+    }
+    .form-section:last-of-type {
+      padding-bottom: 28px;
+    }
+    .section-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-deep);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-eyebrow::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── FIELD ── */
+    .field {
+      margin-bottom: 24px;
+    }
+    .field-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    .field-hint {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      font-weight: 400;
+      margin-top: 2px;
+      display: block;
+    }
+
+    /* Radio & Checkbox */
+    .options-grid {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: 1fr;
+    }
+    .options-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+
+    .opt-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-size: 0.875rem;
+      color: var(--ink-mid);
+      font-weight: 500;
+      user-select: none;
+    }
+    .opt-item:hover {
+      border-color: var(--green-deep);
+      background: var(--green-light);
+      color: var(--ink);
+    }
+    .opt-item input[type="radio"],
+    .opt-item input[type="checkbox"] {
+      accent-color: var(--green-deep);
+      width: 16px; height: 16px;
+      flex-shrink: 0;
+    }
+    .opt-item.selected {
+      border-color: var(--green-deep);
+      background: var(--green-light);
+      color: var(--ink);
+    }
+
+    /* Text input & textarea */
+    .field input[type="text"],
+    .field textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.875rem;
+      color: var(--ink);
+      background: var(--surface);
+      transition: border-color 0.15s;
+      resize: vertical;
+    }
+    .field input[type="text"]:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--green-deep);
+      background: #fff;
+    }
+    .field textarea { min-height: 96px; }
+
+    /* NPS */
+    .nps-wrap {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nps-btn {
+      width: 40px; height: 40px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ink-mid);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .nps-btn:hover { border-color: var(--green-deep); background: var(--green-light); }
+    .nps-btn.selected { background: var(--green); border-color: var(--green-deep); color: var(--black); }
+    .nps-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 0.68rem;
+      color: var(--ink-muted);
+    }
+
+    /* Rating stars */
+    .stars-wrap {
+      display: flex;
+      gap: 6px;
+    }
+    .star-btn {
+      font-size: 1.6rem;
+      cursor: pointer;
+      color: var(--border);
+      transition: color 0.15s, transform 0.1s;
+      background: none;
+      border: none;
+      padding: 0;
+      line-height: 1;
+    }
+    .star-btn:hover, .star-btn.lit { color: var(--green-deep); }
+    .star-btn:active { transform: scale(1.2); }
+
+    /* Divider */
+    .form-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 4px 0 28px;
+    }
+
+    /* ── SUBMIT ── */
+    .submit-wrap {
+      background: var(--surface-2);
+      border-top: 1px solid var(--border);
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .submit-note {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--black);
+      color: var(--green);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 13px 28px;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-submit:hover {
+      background: var(--green);
+      color: var(--black);
+    }
+
+    /* ── SUCCESS STATE ── */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 64px 28px;
+    }
+    .success-screen.visible { display: block; }
+    .success-icon {
+      width: 72px; height: 72px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 1.8rem;
+    }
+    .success-screen h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .success-screen p {
+      color: var(--ink-muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      max-width: 340px;
+      margin: 0 auto 24px;
+    }
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #25D366;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 32px 20px;
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+    }
+    .footer a { color: var(--green-deep); text-decoration: none; }
+
+
+    .header { justify-content: flex-start; gap: 12px; }
+    .header-back {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .header-back:hover { border-color: var(--green); color: var(--green); }
+    .header-page-label {
+      margin-left: auto;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+
+    @media (max-width: 480px) {
+      .options-grid.cols-2 { grid-template-columns: 1fr; }
+      .submit-wrap { flex-direction: column; align-items: stretch; }
+      .btn-submit { justify-content: center; }
+      .form-section { padding: 20px 18px 0; }
+      .submit-wrap { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <a href="/" class="header-back" aria-label="Kembali ke beranda">
+      <i class="bi bi-arrow-left"></i>
+    </a>
+    <a href="/" class="header-logo" style="text-decoration:none;">Jeki<span>Store</span></a>
+    <span class="header-page-label">Feedback</span>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge"><i class="bi bi-stars"></i> Bantu Kami Berkembang</div>
+    <h1>Pendapat kamu <em>penting</em><br>buat kami</h1>
+    <p>Isi form ini dan bantu JekiStore jadi lebih baik. Tidak ada jawaban yang salah — satu menit kamu bisa berdampak besar.</p>
+    <div class="hero-divider"></div>
+  </section>
+
+  <!-- SEGMENT SWITCHER -->
+  <div class="segment-wrap">
+    <div class="segment-inner">
+      <div class="segment-label">Kamu siapa?</div>
+      <div class="segment-tabs">
+        <button class="seg-btn active" onclick="switchSegment('pelanggan')" id="tab-pelanggan">
+          <i class="bi bi-person-check-fill"></i> Sudah Pernah Beli
+        </button>
+        <button class="seg-btn" onclick="switchSegment('calon')" id="tab-calon">
+          <i class="bi bi-person-plus"></i> Belum Pernah Beli
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- ══ FORM: PELANGGAN ══ -->
+    <div class="form-card visible" id="form-pelanggan">
+
+      <!-- Bagian 1: Asal & Keputusan -->
+      <div class="form-section">
+        <div class="section-eyebrow">Asal & Keputusan Beli</div>
+
+        <div class="field">
+          <label class="field-label">Kamu pertama kali tahu JekiStore dari mana?</label>
+          <div class="options-grid cols-2">
+            <label class="opt-item"><input type="radio" name="p_sumber" value="TikTok"> TikTok</label>
+            <label class="opt-item"><input type="radio" name="p_sumber" value="Instagram"> Instagram</label>
+            <label class="opt-item"><input type="radio" name="p_sumber" value="Google"> Google Search</label>
+            <label class="opt-item"><input type="radio" name="p_sumber" value="Rekomendasi Teman"> Rekomendasi Teman</label>
+            <label class="opt-item"><input type="radio" name="p_sumber" value="Grup/Komunitas Trader"> Grup / Komunitas Trader</label>
+            <label class="opt-item"><input type="radio" name="p_sumber" value="Lainnya"> Lainnya</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Apa yang paling bikin kamu akhirnya memutuskan beli di JekiStore?</label>
+          <div class="options-grid">
+            <label class="opt-item"><input type="radio" name="p_alasan_beli" value="Harga lebih terjangkau"> Harga lebih terjangkau dari beli langsung</label>
+            <label class="opt-item"><input type="radio" name="p_alasan_beli" value="Terpercaya / testimoni banyak"> Terpercaya — testimoni banyak</label>
+            <label class="opt-item"><input type="radio" name="p_alasan_beli" value="Proses cepat dan mudah"> Proses aktivasi cepat dan mudah</label>
+            <label class="opt-item"><input type="radio" name="p_alasan_beli" value="Rekomendasi orang lain"> Direkomendasikan teman / komunitas</label>
+            <label class="opt-item"><input type="radio" name="p_alasan_beli" value="Lainnya"> Lainnya</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-divider" style="margin: 0 28px;"></div>
+
+      <!-- Bagian 2: Pengalaman -->
+      <div class="form-section">
+        <div class="section-eyebrow">Pengalaman Belanja</div>
+
+        <div class="field">
+          <label class="field-label">Seberapa puas kamu dengan proses aktivasi TradingView-nya?
+            <span class="field-hint">1 = Tidak puas, 5 = Sangat puas</span>
+          </label>
+          <div class="stars-wrap" id="stars-p">
+            <button class="star-btn" data-val="1" onclick="setStars('p',1)">★</button>
+            <button class="star-btn" data-val="2" onclick="setStars('p',2)">★</button>
+            <button class="star-btn" data-val="3" onclick="setStars('p',3)">★</button>
+            <button class="star-btn" data-val="4" onclick="setStars('p',4)">★</button>
+            <button class="star-btn" data-val="5" onclick="setStars('p',5)">★</button>
+          </div>
+          <input type="hidden" id="stars-p-val" name="p_rating">
+        </div>
+
+        <div class="field">
+          <label class="field-label">Ada hal yang bikin kamu sempat ragu sebelum beli pertama kali?
+            <span class="field-hint">Tulis jujur — ini yang paling berguna buat kami.</span>
+          </label>
+          <textarea name="p_keraguan" placeholder="Contoh: sempat takut kena ban, tidak yakin proses aktivasinya, dll..."></textarea>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Fitur TradingView Premium mana yang paling sering kamu pakai? <span class="field-hint">Boleh pilih lebih dari satu.</span></label>
+          <div class="options-grid cols-2">
+            <label class="opt-item"><input type="checkbox" name="p_fitur" value="Pine Script"> Pine Script</label>
+            <label class="opt-item"><input type="checkbox" name="p_fitur" value="Multi-chart Layout"> Multi-chart Layout</label>
+            <label class="opt-item"><input type="checkbox" name="p_fitur" value="Custom Alert"> Custom Alert</label>
+            <label class="opt-item"><input type="checkbox" name="p_fitur" value="Screener"> Screener</label>
+            <label class="opt-item"><input type="checkbox" name="p_fitur" value="Bar Replay"> Bar Replay</label>
+            <label class="opt-item"><input type="checkbox" name="p_fitur" value="Belum maksimal pakai"> Belum maksimal pakai</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-divider" style="margin: 0 28px;"></div>
+
+      <!-- Bagian 3: Saran & NPS -->
+      <div class="form-section">
+        <div class="section-eyebrow">Saran & Loyalitas</div>
+
+        <div class="field">
+          <label class="field-label">Kalau JekiStore bisa improve satu hal saja, itu apa menurutmu?</label>
+          <textarea name="p_saran" placeholder="Bebas — soal layanan, harga, konten, kecepatan respon, dll..."></textarea>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Seberapa besar kemungkinan kamu rekomendasikan JekiStore ke teman trader?
+            <span class="field-hint">0 = Tidak mungkin, 10 = Pasti rekomendasikan</span>
+          </label>
+          <div class="nps-wrap" id="nps-p">
+            <button class="nps-btn" onclick="setNPS('p',0)">0</button>
+            <button class="nps-btn" onclick="setNPS('p',1)">1</button>
+            <button class="nps-btn" onclick="setNPS('p',2)">2</button>
+            <button class="nps-btn" onclick="setNPS('p',3)">3</button>
+            <button class="nps-btn" onclick="setNPS('p',4)">4</button>
+            <button class="nps-btn" onclick="setNPS('p',5)">5</button>
+            <button class="nps-btn" onclick="setNPS('p',6)">6</button>
+            <button class="nps-btn" onclick="setNPS('p',7)">7</button>
+            <button class="nps-btn" onclick="setNPS('p',8)">8</button>
+            <button class="nps-btn" onclick="setNPS('p',9)">9</button>
+            <button class="nps-btn" onclick="setNPS('p',10)">10</button>
+          </div>
+          <div class="nps-labels"><span>Tidak mungkin</span><span>Pasti rekomendasikan</span></div>
+          <input type="hidden" id="nps-p-val" name="p_nps">
+        </div>
+
+        <div class="field">
+          <label class="field-label">Nama kamu (opsional)</label>
+          <input type="text" name="p_nama" placeholder="Boleh nickname atau nama depan saja">
+        </div>
+      </div>
+
+      <div class="submit-wrap">
+        <span class="submit-note"><i class="bi bi-shield-lock"></i> Jawaban kamu aman & tidak akan dipublikasikan</span>
+        <button class="btn-submit" onclick="submitForm('pelanggan')">
+          Kirim Feedback <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- Success -->
+      <div class="success-screen" id="success-pelanggan">
+        <div class="success-icon">✓</div>
+        <h2>Makasih banyak! 🙏</h2>
+        <p>Feedback kamu sangat berarti buat perkembangan JekiStore. Kalau ada yang mau ditanyain soal akun, langsung chat kami ya.</p>
+        <a href="https://wa.me/6283119686482" class="btn-wa" target="_blank">
+          <i class="bi bi-whatsapp"></i> Chat JekiStore
+        </a>
+      </div>
+
+    </div><!-- end form-pelanggan -->
+
+
+    <!-- ══ FORM: CALON PEMBELI ══ -->
+    <div class="form-card" id="form-calon">
+
+      <!-- Bagian 1: Awareness -->
+      <div class="form-section">
+        <div class="section-eyebrow">Kamu & JekiStore</div>
+
+        <div class="field">
+          <label class="field-label">Kamu tahu JekiStore dari mana?</label>
+          <div class="options-grid cols-2">
+            <label class="opt-item"><input type="radio" name="c_sumber" value="TikTok"> TikTok</label>
+            <label class="opt-item"><input type="radio" name="c_sumber" value="Instagram"> Instagram</label>
+            <label class="opt-item"><input type="radio" name="c_sumber" value="Google"> Google Search</label>
+            <label class="opt-item"><input type="radio" name="c_sumber" value="Rekomendasi Teman"> Rekomendasi Teman</label>
+            <label class="opt-item"><input type="radio" name="c_sumber" value="Grup/Komunitas Trader"> Grup / Komunitas Trader</label>
+            <label class="opt-item"><input type="radio" name="c_sumber" value="Lainnya"> Lainnya</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Sudah pernah cek jekistore.com atau konten JekiStore di sosmed?</label>
+          <div class="options-grid cols-2">
+            <label class="opt-item"><input type="radio" name="c_cek_web" value="Ya, sudah lihat website-nya"> Ya, sudah lihat website-nya</label>
+            <label class="opt-item"><input type="radio" name="c_cek_web" value="Ya, cuma lihat konten sosmed"> Ya, cuma lihat konten sosmed</label>
+            <label class="opt-item"><input type="radio" name="c_cek_web" value="Keduanya"> Keduanya</label>
+            <label class="opt-item"><input type="radio" name="c_cek_web" value="Belum sama sekali"> Belum sama sekali</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-divider" style="margin: 0 28px;"></div>
+
+      <!-- Bagian 2: Hambatan -->
+      <div class="form-section">
+        <div class="section-eyebrow">Kenapa Belum Beli?</div>
+
+        <div class="field">
+          <label class="field-label">Apa alasan utama kamu belum beli sampai sekarang? <span class="field-hint">Boleh pilih lebih dari satu.</span></label>
+          <div class="options-grid">
+            <label class="opt-item"><input type="checkbox" name="c_hambatan" value="Harga belum cocok"> Harga belum cocok / lagi tidak ada dana</label>
+            <label class="opt-item"><input type="checkbox" name="c_hambatan" value="Masih ragu keamanannya"> Masih ragu — takut kena ban atau tidak resmi</label>
+            <label class="opt-item"><input type="checkbox" name="c_hambatan" value="Belum butuh Premium"> Belum ngerasa butuh fitur Premium sekarang</label>
+            <label class="opt-item"><input type="checkbox" name="c_hambatan" value="Informasi kurang jelas"> Informasi di website / konten kurang jelas</label>
+            <label class="opt-item"><input type="checkbox" name="c_hambatan" value="Cari perbandingan dulu"> Masih cari perbandingan dengan tempat lain</label>
+            <label class="opt-item"><input type="checkbox" name="c_hambatan" value="Lainnya"> Lainnya</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Informasi apa yang kamu cari tapi tidak kamu temukan di konten atau website JekiStore?
+            <span class="field-hint">Ini sangat penting — ceritain sedetail mungkin.</span>
+          </label>
+          <textarea name="c_info_kurang" placeholder="Contoh: tidak tahu bedanya sama beli langsung, tidak ada info kalau akun bermasalah diapain, dll..."></textarea>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Kalau ada garansi uang kembali atau garansi akun, itu akan mempengaruhi keputusan beli kamu?</label>
+          <div class="options-grid cols-2">
+            <label class="opt-item"><input type="radio" name="c_garansi" value="Ya, sangat berpengaruh"> Ya, sangat berpengaruh</label>
+            <label class="opt-item"><input type="radio" name="c_garansi" value="Mungkin iya"> Mungkin iya</label>
+            <label class="opt-item"><input type="radio" name="c_garansi" value="Tidak terlalu"> Tidak terlalu</label>
+            <label class="opt-item"><input type="radio" name="c_garansi" value="Tidak berpengaruh"> Tidak berpengaruh</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-divider" style="margin: 0 28px;"></div>
+
+      <!-- Bagian 3: Intent -->
+      <div class="form-section">
+        <div class="section-eyebrow">Niat & Saran</div>
+
+        <div class="field">
+          <label class="field-label">Seberapa besar kemungkinan kamu beli TradingView Premium di JekiStore dalam 1 bulan ke depan?</label>
+          <div class="options-grid">
+            <label class="opt-item"><input type="radio" name="c_intent" value="Sangat besar — tinggal nunggu waktu yang tepat"> Sangat besar — tinggal nunggu waktu yang tepat</label>
+            <label class="opt-item"><input type="radio" name="c_intent" value="Lumayan — masih pertimbangkan"> Lumayan — masih pertimbangkan</label>
+            <label class="opt-item"><input type="radio" name="c_intent" value="Kecil — belum butuh sekarang"> Kecil — belum butuh sekarang</label>
+            <label class="opt-item"><input type="radio" name="c_intent" value="Tidak akan beli"> Tidak akan beli</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Ada satu hal yang kalau JekiStore lakuin, kamu langsung mau beli?</label>
+          <textarea name="c_deal_maker" placeholder="Misalnya: kalau ada cicilan, kalau ada trial gratis, kalau ada konten tutorial lengkap, dll..."></textarea>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Nama kamu (opsional)</label>
+          <input type="text" name="c_nama" placeholder="Boleh nickname atau nama depan saja">
+        </div>
+      </div>
+
+      <div class="submit-wrap">
+        <span class="submit-note"><i class="bi bi-shield-lock"></i> Jawaban kamu aman & tidak akan dipublikasikan</span>
+        <button class="btn-submit" onclick="submitForm('calon')">
+          Kirim Feedback <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- Success -->
+      <div class="success-screen" id="success-calon">
+        <div class="success-icon">✓</div>
+        <h2>Makasih udah ngisi! 🙏</h2>
+        <p>Feedbackmu bakal langsung kami baca dan jadikan bahan evaluasi. Kalau ada pertanyaan soal TradingView Premium, langsung tanya aja ya.</p>
+        <a href="https://wa.me/6283119686482" class="btn-wa" target="_blank">
+          <i class="bi bi-whatsapp"></i> Tanya ke JekiStore
+        </a>
+      </div>
+
+    </div><!-- end form-calon -->
+
+  </div><!-- end container -->
+
+  <footer class="footer">
+    <p>© 2025 JekiStore · <a href="https://jekistore.com" target="_blank">jekistore.com</a></p>
+    <p style="margin-top:4px;">Reseller resmi TradingView Premium terpercaya di Indonesia</p>
+  </footer>
+
+  <script>
+    // ── Segment switch ──
+    function switchSegment(seg) {
+      document.getElementById('form-pelanggan').classList.toggle('visible', seg === 'pelanggan');
+      document.getElementById('form-calon').classList.toggle('visible', seg === 'calon');
+      document.getElementById('tab-pelanggan').classList.toggle('active', seg === 'pelanggan');
+      document.getElementById('tab-calon').classList.toggle('active', seg === 'calon');
+    }
+
+    // ── Radio/checkbox visual state ──
+    document.addEventListener('change', function(e) {
+      if (e.target.type === 'radio') {
+        const name = e.target.name;
+        document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+          r.closest('.opt-item').classList.toggle('selected', r.checked);
+        });
+      }
+      if (e.target.type === 'checkbox') {
+        e.target.closest('.opt-item').classList.toggle('selected', e.target.checked);
+      }
+    });
+
+    // ── Star rating ──
+    function setStars(form, val) {
+      document.getElementById(`stars-${form}-val`).value = val;
+      document.querySelectorAll(`#stars-${form} .star-btn`).forEach(btn => {
+        btn.classList.toggle('lit', parseInt(btn.dataset.val) <= val);
+      });
+    }
+
+    // ── NPS ──
+    function setNPS(form, val) {
+      document.getElementById(`nps-${form}-val`).value = val;
+      document.querySelectorAll(`#nps-${form} .nps-btn`).forEach((btn, i) => {
+        btn.classList.toggle('selected', i === val);
+      });
+    }
+
+    // ── CONFIG: ganti dengan URL Apps Script kamu setelah deploy ──
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwC1SEEpZvxRh_OrHmpxCugGMMmxCGa3MpTpYbXKTShz5CqNBBkycs4yobStVpmoRBN/exec';
+
+    // ── Submit ──
+    async function submitForm(segment) {
+      const formEl  = document.getElementById(`form-${segment}`);
+      const btn     = formEl.querySelector('.btn-submit');
+      const answers = { segment, timestamp: new Date().toISOString() };
+
+      // Kumpulkan semua jawaban
+      formEl.querySelectorAll('input[type="radio"]:checked').forEach(i => answers[i.name] = i.value);
+      formEl.querySelectorAll('input[type="hidden"]').forEach(i => { if (i.value) answers[i.name] = i.value; });
+      formEl.querySelectorAll('input[type="text"]').forEach(i => { if (i.value.trim()) answers[i.name] = i.value.trim(); });
+      formEl.querySelectorAll('textarea').forEach(i => { if (i.value.trim()) answers[i.name] = i.value.trim(); });
+
+      // Checkbox: gabung jadi string dipisah koma
+      const checkboxGroups = {};
+      formEl.querySelectorAll('input[type="checkbox"]:checked').forEach(i => {
+        if (!checkboxGroups[i.name]) checkboxGroups[i.name] = [];
+        checkboxGroups[i.name].push(i.value);
+      });
+      Object.keys(checkboxGroups).forEach(k => answers[k] = checkboxGroups[k].join(', '));
+
+      // Loading state
+      btn.disabled = true;
+      btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Mengirim...';
+
+      try {
+        // mode: no-cors diperlukan untuk Apps Script web app
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(answers)
+        });
+        showSuccess(formEl, segment);
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerHTML = 'Kirim Feedback <i class="bi bi-arrow-right"></i>';
+        alert('Gagal mengirim. Cek koneksi internet kamu dan coba lagi.');
+        console.error(err);
+      }
+    }
+
+    function showSuccess(formEl, segment) {
+      formEl.querySelectorAll('.form-section, .form-divider, .submit-wrap').forEach(el => el.style.display = 'none');
+      document.getElementById(`success-${segment}`).classList.add('visible');
+      formEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  </script>
+</body>
+</html>
