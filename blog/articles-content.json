@@ -1,0 +1,226 @@
+[
+  {
+    "slug": "tradingview-free-vs-premium",
+    "blocks": [
+      {
+        "type": "intro",
+        "text": "Pertanyaan ini muncul terus di komunitas trader Indonesia: \"Worth it gak sih upgrade ke Premium?\" Jawabannya tergantung gimana kamu trading — dan artikel ini akan bantu kamu jawab itu dengan jujur, fitur per fitur."
+      },
+      {
+        "type": "h2",
+        "text": "Perbedaan Utama Free vs Premium"
+      },
+      {
+        "type": "p",
+        "text": "TradingView Free sudah cukup poweful untuk pemula. Kamu dapat 1 chart per tab, 3 indikator per chart, dan akses ke data real-time untuk beberapa aset. Tapi begitu kamu mulai serius, batasannya terasa."
+      },
+      {
+        "type": "table",
+        "caption": "Perbandingan fitur Free vs Premium (Essential)",
+        "headers": ["Fitur", "Free", "Essential / Plus", "Premium"],
+        "rows": [
+          ["Indikator per chart", "3", "5 / 10", "25"],
+          ["Chart per tab", "1", "2 / 4", "8"],
+          ["Alert aktif", "1", "20 / 100", "400"],
+          ["Bar Replay", "✗", "✓ / ✓", "✓"],
+          ["Volume Profile", "✗", "✗ / ✓", "✓"],
+          ["Data export (CSV)", "✗", "✓ / ✓", "✓"],
+          ["Iklan", "Ada", "Tidak ada", "Tidak ada"],
+          ["Second chart (overlay)", "✗", "✗ / ✓", "✓"]
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Fitur yang Beneran Bikin Perbedaan"
+      },
+      {
+        "type": "h3",
+        "text": "1. Jumlah Indikator per Chart"
+      },
+      {
+        "type": "p",
+        "text": "Di Free kamu cuma dapat 3 indikator. Kedengarannya cukup, sampai kamu sadar EMA 20, EMA 50, dan RSI saja sudah habis 3 slot — belum MACD, Volume, atau apapun lainnya. Premium memberi 25 indikator per chart, yang artinya kamu bisa setup strategi selengkap apapun tanpa kompromi."
+      },
+      {
+        "type": "h3",
+        "text": "2. Multi-Chart Layout"
+      },
+      {
+        "type": "p",
+        "text": "Analisis multi-timeframe adalah fondasi trading yang baik. Dengan Free, kamu harus bolak-balik tab setiap kali ingin lihat timeframe berbeda. Premium memungkinkan kamu lihat 4-8 chart sekaligus dalam satu layar — H4, H1, M15, M5 semua terlihat bersamaan."
+      },
+      {
+        "type": "h3",
+        "text": "3. Alert yang Cukup"
+      },
+      {
+        "type": "p",
+        "text": "Free hanya memberi 1 alert aktif. Satu. Itu hampir tidak berguna kalau kamu watchlist-nya lebih dari 1 aset. Essential sudah memberi 20, dan Premium sampai 400 alert — termasuk alert berbasis kondisi indikator, bukan cuma crossing harga."
+      },
+      {
+        "type": "h3",
+        "text": "4. Bar Replay untuk Backtest"
+      },
+      {
+        "type": "p",
+        "text": "Fitur ini tidak ada di Free, tapi sudah tersedia sejak Essential. Bar Replay adalah cara paling praktis untuk latihan trading tanpa risiko — kamu bisa \"putar ulang\" market di masa lalu dan latih keputusan entry/exit kamu secara manual."
+      },
+      {
+        "type": "h3",
+        "text": "5. Volume Profile"
+      },
+      {
+        "type": "p",
+        "text": "Volume Profile hanya tersedia di Plus ke atas. Ini tool yang dipakai trader profesional untuk identifikasi area high-value (POC, VAH, VAL) berdasarkan distribusi volume nyata — jauh lebih akurat daripada support/resistance biasa."
+      },
+      {
+        "type": "h2",
+        "text": "Kapan Worth It Upgrade?"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Kamu sudah aktif trading (bukan cuma belajar) dan merasa terhambat oleh limit indikator atau alert",
+          "Kamu ingin melakukan backtest manual secara rutin dengan Bar Replay",
+          "Kamu trading lebih dari 1 aset dan butuh multi-chart layout",
+          "Kamu ingin pakai Volume Profile, Anchored VWAP, atau indikator advanced lainnya",
+          "Kamu terganggu oleh iklan di Free dan ingin pengalaman bersih"
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Kapan Free Masih Cukup?"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Kamu masih di tahap belajar dan belum konsisten profit",
+          "Kamu hanya trading 1-2 aset dengan strategi sederhana (1-2 indikator)",
+          "Kamu menggunakan platform lain untuk charting dan TradingView hanya sebagai referensi",
+          "Budget untuk upgrade belum ada atau ada prioritas yang lebih penting dulu"
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Berapa Harganya?"
+      },
+      {
+        "type": "p",
+        "text": "Harga resmi TradingView di site mereka bisa sangat mahal untuk trader Indonesia — bisa tembus Rp 400.000–600.000+ per bulan untuk plan Premium. Tapi ada cara legal untuk mendapatkannya jauh lebih murah."
+      },
+      {
+        "type": "p",
+        "text": "JekiStore menyediakan akses TradingView Premium mulai dari Rp 185.000/bulan dengan garansi aktif. Ini bukan akun bajakan — ini akses resmi yang didapat melalui mekanisme berbagi plan yang diizinkan TradingView."
+      },
+      {
+        "type": "cta",
+        "text": "Cek harga dan cara order TradingView Premium di JekiStore",
+        "href": "https://wa.me/6283119686482",
+        "label": "Order via WhatsApp"
+      }
+    ]
+  },
+  {
+    "slug": "cara-pakai-bar-replay-tradingview",
+    "blocks": [
+      {
+        "type": "intro",
+        "text": "Bar Replay adalah salah satu fitur paling underrated di TradingView. Dengan fitur ini, kamu bisa \"mundur waktu\" ke titik mana saja di chart dan mereplay market bar per bar — persis seperti trading live, tapi dari data historis."
+      },
+      {
+        "type": "h2",
+        "text": "Apa Itu Bar Replay?"
+      },
+      {
+        "type": "p",
+        "text": "Bar Replay memungkinkan kamu memilih titik waktu di masa lalu, lalu memutar maju chart bar demi bar (atau lebih cepat). Semua indikator yang kamu pasang akan ikut update secara real-time sesuai data yang \"muncul\" — persis seperti kondisi market nyata."
+      },
+      {
+        "type": "p",
+        "text": "Ini berbeda dari sekadar scroll ke kiri. Saat scroll biasa, kamu sudah bisa lihat bar-bar berikutnya. Dengan Bar Replay, chart benar-benar terpotong di titik yang kamu pilih — informasi masa depan benar-benar tersembunyi."
+      },
+      {
+        "type": "h2",
+        "text": "Cara Mengaktifkan Bar Replay"
+      },
+      {
+        "type": "steps",
+        "items": [
+          "Pastikan kamu punya akun TradingView Essential ke atas (Bar Replay tidak tersedia di Free).",
+          "Buka chart aset yang ingin kamu backtest. Pilih timeframe yang akan kamu gunakan untuk trading.",
+          "Di toolbar atas chart, cari ikon \"Bar Replay\" — bentuknya seperti tombol play dengan garis vertikal di kiri (⏮). Klik ikonnya.",
+          "Cursor kamu akan berubah menjadi crosshair. Klik di bar mana saja di chart untuk menentukan titik mulai replay.",
+          "Chart akan \"terpotong\" di titik yang kamu pilih. Gunakan tombol Play untuk memutar maju, atau Step (panah kanan) untuk maju satu bar sekaligus.",
+          "Untuk keluar dari mode replay, klik tombol \"X\" di toolbar yang muncul, atau tekan Escape."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Tips Penggunaan untuk Backtest yang Akurat"
+      },
+      {
+        "type": "h3",
+        "text": "Jangan Lihat Chart Lebih dari Sekali Sebelum Replay"
+      },
+      {
+        "type": "p",
+        "text": "Kalau kamu sudah pernah lihat chart periode itu sebelumnya, otak kamu sudah punya bias (disebut hindsight bias). Idealnya pilih periode yang belum pernah kamu analisis, atau tunggu beberapa minggu setelah data itu terjadi sebelum kamu backtest."
+      },
+      {
+        "type": "h3",
+        "text": "Gunakan Timeframe yang Sama dengan Trading Real-mu"
+      },
+      {
+        "type": "p",
+        "text": "Kalau kamu biasa trading di H1, backtest di H1. Jangan backtest di M15 lalu expect hasilnya representatif untuk H1. Psikologi dan konteks bar yang kelihatan berbeda antar timeframe."
+      },
+      {
+        "type": "h3",
+        "text": "Simulasikan Proses Pengambilan Keputusan Lengkap"
+      },
+      {
+        "type": "p",
+        "text": "Berhenti di setiap potential setup. Tanya ke diri sendiri: \"Kalau ini kondisi live, apa yang akan aku lakukan?\" Catat entry, SL, TP yang kamu rencanakan — baru tekan play untuk lihat hasilnya. Jangan skip langkah ini."
+      },
+      {
+        "type": "h3",
+        "text": "Catat Setiap Trade dalam Jurnal"
+      },
+      {
+        "type": "p",
+        "text": "Bar Replay berguna untuk latihan, tapi manfaatnya baru maksimal kalau kamu catat hasilnya. Minimal catat: tanggal/waktu entry, aset, timeframe, alasan entry, SL/TP, dan hasil (profit/loss). Setelah 20-30 trade, kamu sudah punya data yang cukup untuk evaluasi strategi."
+      },
+      {
+        "type": "h2",
+        "text": "Batasan yang Perlu Diketahui"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Bar Replay tidak mensimulasikan slippage atau spread — hasil backtest akan terlihat lebih bagus dari trading nyata",
+          "Tidak bisa replay data dari broker tertentu — hanya data TradingView yang tersedia",
+          "Pada beberapa aset dengan volume rendah, data historis mungkin tidak lengkap",
+          "Bar Replay tidak tersedia di plan Free — minimal Essential"
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Bar Replay vs Backtester Otomatis"
+      },
+      {
+        "type": "p",
+        "text": "Bar Replay adalah backtest manual — kamu yang ambil setiap keputusan. Ini lebih lambat tapi melatih intuisi dan disiplin. Backtester otomatis (Pine Script Strategy Tester) lebih cepat untuk test aturan mekanis, tapi tidak melatih psikologi trading."
+      },
+      {
+        "type": "p",
+        "text": "Untuk trader yang masih developing strategi dan belum punya sistem yang 100% rule-based, Bar Replay manual jauh lebih valuable."
+      },
+      {
+        "type": "cta",
+        "text": "Butuh akses Bar Replay? Tersedia mulai dari Essential di JekiStore",
+        "href": "https://wa.me/6283119686482",
+        "label": "Tanya via WhatsApp"
+      }
+    ]
+  }
+]
