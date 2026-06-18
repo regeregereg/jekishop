@@ -1659,6 +1659,47 @@ nav:not(.float-nav).scrolled .nav-pill {
 ═══════════════════════════════════════ */
 .testi-section { background: var(--surface); padding: var(--space-9) 0; }
 
+/* ── FEEDBACK CTA ── */
+.feedback-cta {
+  text-align: center;
+  margin-top: 48px;
+  padding: 32px 28px;
+  background: var(--black);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(168,255,62,0.15);
+}
+.feedback-cta p {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.88rem;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+.feedback-cta h3 {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.btn-feedback {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--green);
+  color: var(--black);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.btn-feedback:hover { opacity: 0.85; }
+
+
 .testi-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -4449,6 +4490,15 @@ body.glb-noscroll { overflow: hidden; }
     </div>
   </div>
 
+<!-- ── FEEDBACK CTA ── -->
+<div class="feedback-cta reveal">
+  <h3>Punya pengalaman atau saran untuk kami?</h3>
+  <p>Ceritain jujur — feedback kamu langsung kami baca dan jadikan bahan perbaikan.</p>
+  <a href="/feedback" class="btn-feedback">
+    <i class="bi bi-chat-square-text-fill"></i> Kasih Feedback
+  </a>
+</div>
+
 </section>
 
 <!-- ══ GALERI PELANGGAN ══ -->
@@ -5756,7 +5806,7 @@ body.glb-noscroll { overflow: hidden; }
   <div class="footer-right">
     <strong style="color:var(--ink-mid);">Jam Operasional</strong><br>
     Setiap hari 08.00 – 22.00 WIB<br>
-    <span>© 2025 Jeki Store</span>
+    <span>© 2025 Jeki Store</span> · <a href="/feedback" style="color:var(--ink-muted);text-decoration:none;" onmouseover="this.style.color='#7acc1a'" onmouseout="this.style.color=''">Kritik & Saran</a>
   </div>
 </footer>
 </main>
