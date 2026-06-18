@@ -65,6 +65,20 @@
 }
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Daftar Artikel Blog JekiStore",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "url": "https://jekistore.com/blog/tradingview-free-vs-premium", "name": "TradingView Free vs Premium: Bedanya Apa dan Kapan Worth It Upgrade?" },
+    { "@type": "ListItem", "position": 2, "url": "https://jekistore.com/blog/cara-pakai-bar-replay-tradingview", "name": "Cara Pakai Bar Replay TradingView untuk Backtest Manual yang Lebih Akurat" },
+    { "@type": "ListItem", "position": 3, "url": "https://jekistore.com/blog/volume-profile-tradingview", "name": "Panduan Volume Profile TradingView: Cara Baca POC, VAH, dan VAL" },
+    { "@type": "ListItem", "position": 4, "url": "https://jekistore.com/blog/harga-tradingview-premium-indonesia", "name": "Berapa Harga TradingView Premium di Indonesia? Perbandingan Lengkap 2026" }
+  ]
+}
+</script>
+
 <!-- Performance -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -132,7 +146,7 @@ a { text-decoration: none; color: inherit; }
 img { display: block; max-width: 100%; }
 
 /* ══ NAVBAR — identik dgn index.html ══ */
-nav {
+#navbar {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 200;
@@ -905,7 +919,7 @@ footer a:hover { color: var(--green); }
     <ul class="nav-menu">
       <li><a href="/#produk">Produk</a></li>
       <li><a href="/#testi">Testimoni</a></li>
-      <li><a href="/blog" class="active">Blog</a></li>
+      <li><a href="/blog" class="active" aria-current="page">Blog</a></li>
       <li><a href="/#faq">FAQ</a></li>
     </ul>
     <a href="https://wa.me/6283119686482" class="nav-cta" target="_blank" rel="noopener">Order Sekarang →</a>
@@ -1158,41 +1172,38 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.08 });
 reveals.forEach(el => observer.observe(el));
 
-// ── Filter by category ──
+// ── Filter + Search (combined state, so they don't override each other) ──
+let currentCategory = 'semua';
+
+function applyFilters() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const featured = document.querySelector('.article-featured');
+  const cards = document.querySelectorAll('.article-card');
+
+  const matches = el => {
+    const inCategory = currentCategory === 'semua' || el.dataset.cat === currentCategory;
+    const inSearch = !q || el.textContent.toLowerCase().includes(q);
+    return inCategory && inSearch;
+  };
+
+  if (featured) featured.style.display = matches(featured) ? '' : 'none';
+  cards.forEach(card => {
+    card.style.display = matches(card) ? '' : 'none';
+  });
+}
+
 document.getElementById('filterBar').addEventListener('click', e => {
   const btn = e.target.closest('.filter-tag');
   if (!btn) return;
 
   document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-
-  const cat = btn.dataset.cat;
-  const featured = document.querySelector('.article-featured');
-  const cards = document.querySelectorAll('.article-card');
-
-  // Featured
-  if (cat === 'semua' || featured.dataset.cat === cat) {
-    featured.style.display = '';
-  } else {
-    featured.style.display = 'none';
-  }
-
-  // Cards
-  cards.forEach(card => {
-    card.style.display = (cat === 'semua' || card.dataset.cat === cat) ? '' : 'none';
-  });
+  currentCategory = btn.dataset.cat;
+  applyFilters();
 });
 
-// ── Search ──
-document.getElementById('searchInput').addEventListener('input', function() {
-  const q = this.value.toLowerCase().trim();
-  const allArticles = document.querySelectorAll('.article-card, .article-featured');
+document.getElementById('searchInput').addEventListener('input', applyFilters);
 
-  allArticles.forEach(el => {
-    const text = el.textContent.toLowerCase();
-    el.style.display = (!q || text.includes(q)) ? '' : 'none';
-  });
-});
 
 // ── Newsletter WA ──
 function subscribeWA() {
