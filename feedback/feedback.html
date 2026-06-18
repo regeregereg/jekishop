@@ -818,13 +818,17 @@
       btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Mengirim...';
 
       try {
-        // mode: no-cors diperlukan untuk Apps Script web app
+        // Kirim via FormData — satu-satunya cara yang bekerja dengan Apps Script + no-cors
+        const formData = new FormData();
+        formData.append('payload', JSON.stringify(answers));
+
         await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
           mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(answers)
+          body: formData
         });
+
+        // no-cors tidak bisa baca response, tapi jika fetch tidak throw = request terkirim
         showSuccess(formEl, segment);
       } catch (err) {
         btn.disabled = false;
