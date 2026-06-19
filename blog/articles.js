@@ -63,6 +63,21 @@ const ARTICLES = [
   //  ARTIKEL LIVE
   // ─────────────────────────────────────────────────────────
   {
+    slug:     "krypton-framework-siklus-market-crypto",
+    title:    "Krypton Framework: Cara Baca Siklus Market Crypto Tanpa Tebak-Tebakan",
+    excerpt:  "9 fase siklus crypto dari bull sampai bear, dijelaskan dengan logika MA 50 dan zona supply-demand. Panduan lengkap untuk trader yang capek nebak arah harga.",
+    category: "market",
+    icon:     "bi-activity",
+    readTime: "9 menit",
+    date:     "19 Juni 2026",
+    dateISO:  "2026-06-19",
+    image:    "/blog/imgblog/krypton-framework-siklus-market.jpg",
+    imageAlt: "Krypton Framework — Siklus Market Crypto 9 Fase",
+    featured: false,
+    tags:     ["Krypton Framework", "Siklus Pasar", "Market", "Analisis Teknikal"]
+  },
+
+  {
     slug:     "crypto-etf-2026-panduan-trader-indonesia",
     title:    "Crypto ETF 2026: Apa Artinya Buat Trader Indonesia?",
     excerpt:  "ETF crypto sudah menyedot $55 miliar+ dan kini jadi penggerak utama harga Bitcoin. Kalau kamu belum memperhatikan data ETF flow, kamu trading dengan mata tertutup.",
