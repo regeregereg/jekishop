@@ -63,6 +63,36 @@ const ARTICLES = [
   //  ARTIKEL LIVE
   // ─────────────────────────────────────────────────────────
   {
+    slug:     "crypto-etf-2026-panduan-trader-indonesia",
+    title:    "Crypto ETF 2026: Apa Artinya Buat Trader Indonesia?",
+    excerpt:  "ETF crypto sudah menyedot $55 miliar+ dan kini jadi penggerak utama harga Bitcoin. Kalau kamu belum memperhatikan data ETF flow, kamu trading dengan mata tertutup.",
+    category: "panduan",
+    icon:     "bi-bar-chart-line",
+    readTime: "7 menit",
+    date:     "19 Juni 2026",
+    dateISO:  "2026-06-19",
+    image:    "/blog/imgblog/crypto-etf-2026-indonesia.jpg",
+    imageAlt: "Panduan Crypto ETF 2026 untuk Trader Indonesia",
+    featured: false,
+    tags:     ["ETF", "Bitcoin", "Market", "Panduan"]
+  },
+
+  {
+    slug:     "bitcoin-sideways-juni-2026",
+    title:    "Bitcoin Sideways di $63K — Ini yang Sebenarnya Terjadi",
+    excerpt:  "Bitcoin stuck di kisaran $60K–$64K hampir sebulan penuh. Bukan karena pasar mati — ada data konkret di baliknya dan ada yang bisa kamu lakukan sekarang.",
+    category: "market",
+    icon:     "bi-graph-up",
+    readTime: "6 menit",
+    date:     "19 Juni 2026",
+    dateISO:  "2026-06-19",
+    image:    "/blog/imgblog/bitcoin-sideways-juni-2026.jpg",
+    imageAlt: "Analisis Bitcoin Sideways Juni 2026",
+    featured: false,
+    tags:     ["Bitcoin", "Market", "Analisis", "ETF"]
+  },
+
+  {
     slug:     "tradingview-free-vs-premium",
     title:    "TradingView Free vs Premium: Bedanya Apa dan Kapan Worth It Upgrade?",
     excerpt:  "Banyak trader masih ragu upgrade ke Premium karena belum tahu apa yang beneran berubah. Artikel ini breakdown fitur per fitur secara jujur — mana yang krusial, mana yang cuma nice-to-have.",
