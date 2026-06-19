@@ -71,7 +71,7 @@ const ARTICLES = [
     readTime: "7 menit",
     date:     "19 Juni 2026",
     dateISO:  "2026-06-19",
-    image:    "/blog/imgblog/crypto-etf-2026-indonesia.jpg",
+    image:    "/blog/imgblog/crypto-cosmos-hijau-jekistore.webp",
     imageAlt: "Panduan Crypto ETF 2026 untuk Trader Indonesia",
     featured: false,
     tags:     ["ETF", "Bitcoin", "Market", "Panduan"]
@@ -86,7 +86,7 @@ const ARTICLES = [
     readTime: "6 menit",
     date:     "19 Juni 2026",
     dateISO:  "2026-06-19",
-    image:    "/blog/imgblog/bitcoin-sideways-juni-2026.jpg",
+    image:    "/blog/imgblog/coin-btc-eth-jekistore.webp",
     imageAlt: "Analisis Bitcoin Sideways Juni 2026",
     featured: false,
     tags:     ["Bitcoin", "Market", "Analisis", "ETF"]
