@@ -71,7 +71,7 @@ const ARTICLES = [
     readTime: "9 menit",
     date:     "19 Juni 2026",
     dateISO:  "2026-06-19",
-    image:    "/blog/imgblog/krypton-framework-siklus-market.jpg",
+    image:    "/blog/imgblog/wolf.webp",
     imageAlt: "Krypton Framework — Siklus Market Crypto 9 Fase",
     featured: false,
     tags:     ["Krypton Framework", "Siklus Pasar", "Market", "Analisis Teknikal"]
