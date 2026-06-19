@@ -436,43 +436,8 @@ footer a:hover { color:var(--green-deep); }
       </a>
     </div>
 
-    <section class="related-section">
-    <h2 class="related-heading">Artikel Lainnya</h2>
-    <div class="related-grid">
-      
-    <a href="/blog/cara-pakai-bar-replay-tradingview" class="related-card">
-      <div class="related-thumb">
-        <div class="thumb-pattern"></div>
-        <i class="bi bi-skip-backward-circle related-icon"></i>
-      </div>
-      <div class="related-body">
-        <div class="related-cat"><i class="bi bi-play-circle"></i> Fitur TradingView</div>
-        <div class="related-title">Cara Pakai Bar Replay TradingView untuk Backtest Manual yang Lebih Akurat</div>
-        <div class="related-meta"><i class="bi bi-clock"></i> 5 menit</div>
-      </div>
-    </a>
-    <a href="/blog/market-digerakan-oleh-emosi" class="related-card">
-      <div class="related-thumb">
-          <img src="/blog/imgblog/behine-market-marketdigerakanemosi.webp" alt="Mengapa 80% Market Digerakkan Emosi" class="thumb-img"> 
-      </div>
-      <div class="related-body">
-        <div class="related-cat"><i class="bi bi-play-circle"></i>Behine Market</div>
-        <div class="related-title">Mengapa 80% Market Digerakkan Emosi dan Hanya 20% Oleh Teori?</div>
-        <div class="related-meta"><i class="bi bi-clock"></i> 4 menit</div>
-      </div>
-    </a>
-    <a href="/blog/tradingview-free-vs-premium" class="related-card">
-      <div class="related-thumb">
-          <img src="/blog/imgblog/tradingviewpremiumvsfree.jpg" alt="Trading View Premium Vs Free Apa manfaatnya" class="thumb-img">
-      </div>
-      <div class="related-body">
-        <div class="related-cat"><i class="bi bi-play-circle"></i> Fitur TradingView</div>
-        <div class="related-title">TradingView Free vs Premium: Bedanya Apa dan Kapan Worth It Upgrade?</div>
-        <div class="related-meta"><i class="bi bi-clock"></i> 8 menit</div>
-      </div>
-    </a>
-    </div>
-  </section>
+    <!-- Related articles — diisi otomatis oleh blog-engine.js -->
+    <div id="js-related"></div>
   </article>
 
   <aside class="article-sidebar">
@@ -534,6 +499,10 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 </script>
+
+<!-- Blog Engine -->
+<script src="/blog/articles.js"></script>
+<script src="/blog/blog-engine.js"></script>
 
 </body>
 </html>
