@@ -1,0 +1,427 @@
+[
+  {
+    "slug": "tradingview-free-vs-premium",
+    "blocks": [
+      {
+        "type": "intro",
+        "text": "Pertanyaan ini muncul terus di komunitas trader Indonesia: \"Worth it gak sih upgrade ke Premium?\" Jawabannya tergantung gimana kamu trading — dan artikel ini akan bantu kamu jawab itu dengan jujur, fitur per fitur."
+      },
+      {
+        "type": "h2",
+        "text": "Perbedaan Utama Free vs Premium"
+      },
+      {
+        "type": "p",
+        "text": "TradingView Free sudah cukup poweful untuk pemula. Kamu dapat 1 chart per tab, 3 indikator per chart, dan akses ke data real-time untuk beberapa aset. Tapi begitu kamu mulai serius, batasannya terasa."
+      },
+      {
+        "type": "table",
+        "caption": "Perbandingan fitur Free vs Premium (Essential)",
+        "headers": [
+          "Fitur",
+          "Free",
+          "Essential / Plus",
+          "Premium"
+        ],
+        "rows": [
+          [
+            "Indikator per chart",
+            "3",
+            "5 / 10",
+            "25"
+          ],
+          [
+            "Chart per tab",
+            "1",
+            "2 / 4",
+            "8"
+          ],
+          [
+            "Alert aktif",
+            "1",
+            "20 / 100",
+            "400"
+          ],
+          [
+            "Bar Replay",
+            "✗",
+            "✓ / ✓",
+            "✓"
+          ],
+          [
+            "Volume Profile",
+            "✗",
+            "✗ / ✓",
+            "✓"
+          ],
+          [
+            "Data export (CSV)",
+            "✗",
+            "✓ / ✓",
+            "✓"
+          ],
+          [
+            "Iklan",
+            "Ada",
+            "Tidak ada",
+            "Tidak ada"
+          ],
+          [
+            "Second chart (overlay)",
+            "✗",
+            "✗ / ✓",
+            "✓"
+          ]
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Fitur yang Beneran Bikin Perbedaan"
+      },
+      {
+        "type": "h3",
+        "text": "1. Jumlah Indikator per Chart"
+      },
+      {
+        "type": "p",
+        "text": "Di Free kamu cuma dapat 3 indikator. Kedengarannya cukup, sampai kamu sadar EMA 20, EMA 50, dan RSI saja sudah habis 3 slot — belum MACD, Volume, atau apapun lainnya. Premium memberi 25 indikator per chart, yang artinya kamu bisa setup strategi selengkap apapun tanpa kompromi."
+      },
+      {
+        "type": "h3",
+        "text": "2. Multi-Chart Layout"
+      },
+      {
+        "type": "p",
+        "text": "Analisis multi-timeframe adalah fondasi trading yang baik. Dengan Free, kamu harus bolak-balik tab setiap kali ingin lihat timeframe berbeda. Premium memungkinkan kamu lihat 4-8 chart sekaligus dalam satu layar — H4, H1, M15, M5 semua terlihat bersamaan."
+      },
+      {
+        "type": "h3",
+        "text": "3. Alert yang Cukup"
+      },
+      {
+        "type": "p",
+        "text": "Free hanya memberi 1 alert aktif. Satu. Itu hampir tidak berguna kalau kamu watchlist-nya lebih dari 1 aset. Essential sudah memberi 20, dan Premium sampai 400 alert — termasuk alert berbasis kondisi indikator, bukan cuma crossing harga."
+      },
+      {
+        "type": "h3",
+        "text": "4. Bar Replay untuk Backtest"
+      },
+      {
+        "type": "p",
+        "text": "Fitur ini tidak ada di Free, tapi sudah tersedia sejak Essential. Bar Replay adalah cara paling praktis untuk latihan trading tanpa risiko — kamu bisa \"putar ulang\" market di masa lalu dan latih keputusan entry/exit kamu secara manual."
+      },
+      {
+        "type": "h3",
+        "text": "5. Volume Profile"
+      },
+      {
+        "type": "p",
+        "text": "Volume Profile hanya tersedia di Plus ke atas. Ini tool yang dipakai trader profesional untuk identifikasi area high-value (POC, VAH, VAL) berdasarkan distribusi volume nyata — jauh lebih akurat daripada support/resistance biasa."
+      },
+      {
+        "type": "h2",
+        "text": "Kapan Worth It Upgrade?"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Kamu sudah aktif trading (bukan cuma belajar) dan merasa terhambat oleh limit indikator atau alert",
+          "Kamu ingin melakukan backtest manual secara rutin dengan Bar Replay",
+          "Kamu trading lebih dari 1 aset dan butuh multi-chart layout",
+          "Kamu ingin pakai Volume Profile, Anchored VWAP, atau indikator advanced lainnya",
+          "Kamu terganggu oleh iklan di Free dan ingin pengalaman bersih"
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Kapan Free Masih Cukup?"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Kamu masih di tahap belajar dan belum konsisten profit",
+          "Kamu hanya trading 1-2 aset dengan strategi sederhana (1-2 indikator)",
+          "Kamu menggunakan platform lain untuk charting dan TradingView hanya sebagai referensi",
+          "Budget untuk upgrade belum ada atau ada prioritas yang lebih penting dulu"
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Berapa Harganya?"
+      },
+      {
+        "type": "p",
+        "text": "Harga resmi TradingView di site mereka bisa sangat mahal untuk trader Indonesia — bisa tembus Rp 400.000–600.000+ per bulan untuk plan Premium. Tapi ada cara legal untuk mendapatkannya jauh lebih murah."
+      },
+      {
+        "type": "p",
+        "text": "JekiStore menyediakan akses TradingView Premium mulai dari Rp 185.000/bulan dengan garansi aktif. Ini bukan akun bajakan — ini akses resmi yang didapat melalui mekanisme berbagi plan yang diizinkan TradingView."
+      },
+      {
+        "type": "cta",
+        "text": "Cek harga dan cara order TradingView Premium di JekiStore",
+        "href": "https://wa.me/6283119686482",
+        "label": "Order via WhatsApp"
+      }
+    ]
+  },
+  {
+    "slug": "cara-pakai-bar-replay-tradingview",
+    "blocks": [
+      {
+        "type": "intro",
+        "text": "Bar Replay adalah salah satu fitur paling underrated di TradingView. Dengan fitur ini, kamu bisa \"mundur waktu\" ke titik mana saja di chart dan mereplay market bar per bar — persis seperti trading live, tapi dari data historis."
+      },
+      {
+        "type": "h2",
+        "text": "Apa Itu Bar Replay?"
+      },
+      {
+        "type": "p",
+        "text": "Bar Replay memungkinkan kamu memilih titik waktu di masa lalu, lalu memutar maju chart bar demi bar (atau lebih cepat). Semua indikator yang kamu pasang akan ikut update secara real-time sesuai data yang \"muncul\" — persis seperti kondisi market nyata."
+      },
+      {
+        "type": "p",
+        "text": "Ini berbeda dari sekadar scroll ke kiri. Saat scroll biasa, kamu sudah bisa lihat bar-bar berikutnya. Dengan Bar Replay, chart benar-benar terpotong di titik yang kamu pilih — informasi masa depan benar-benar tersembunyi."
+      },
+      {
+        "type": "h2",
+        "text": "Cara Mengaktifkan Bar Replay"
+      },
+      {
+        "type": "steps",
+        "items": [
+          "Pastikan kamu punya akun TradingView Essential ke atas (Bar Replay tidak tersedia di Free).",
+          "Buka chart aset yang ingin kamu backtest. Pilih timeframe yang akan kamu gunakan untuk trading.",
+          "Di toolbar atas chart, cari ikon \"Bar Replay\" — bentuknya seperti tombol play dengan garis vertikal di kiri (⏮). Klik ikonnya.",
+          "Cursor kamu akan berubah menjadi crosshair. Klik di bar mana saja di chart untuk menentukan titik mulai replay.",
+          "Chart akan \"terpotong\" di titik yang kamu pilih. Gunakan tombol Play untuk memutar maju, atau Step (panah kanan) untuk maju satu bar sekaligus.",
+          "Untuk keluar dari mode replay, klik tombol \"X\" di toolbar yang muncul, atau tekan Escape."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Tips Penggunaan untuk Backtest yang Akurat"
+      },
+      {
+        "type": "h3",
+        "text": "Jangan Lihat Chart Lebih dari Sekali Sebelum Replay"
+      },
+      {
+        "type": "p",
+        "text": "Kalau kamu sudah pernah lihat chart periode itu sebelumnya, otak kamu sudah punya bias (disebut hindsight bias). Idealnya pilih periode yang belum pernah kamu analisis, atau tunggu beberapa minggu setelah data itu terjadi sebelum kamu backtest."
+      },
+      {
+        "type": "h3",
+        "text": "Gunakan Timeframe yang Sama dengan Trading Real-mu"
+      },
+      {
+        "type": "p",
+        "text": "Kalau kamu biasa trading di H1, backtest di H1. Jangan backtest di M15 lalu expect hasilnya representatif untuk H1. Psikologi dan konteks bar yang kelihatan berbeda antar timeframe."
+      },
+      {
+        "type": "h3",
+        "text": "Simulasikan Proses Pengambilan Keputusan Lengkap"
+      },
+      {
+        "type": "p",
+        "text": "Berhenti di setiap potential setup. Tanya ke diri sendiri: \"Kalau ini kondisi live, apa yang akan aku lakukan?\" Catat entry, SL, TP yang kamu rencanakan — baru tekan play untuk lihat hasilnya. Jangan skip langkah ini."
+      },
+      {
+        "type": "h3",
+        "text": "Catat Setiap Trade dalam Jurnal"
+      },
+      {
+        "type": "p",
+        "text": "Bar Replay berguna untuk latihan, tapi manfaatnya baru maksimal kalau kamu catat hasilnya. Minimal catat: tanggal/waktu entry, aset, timeframe, alasan entry, SL/TP, dan hasil (profit/loss). Setelah 20-30 trade, kamu sudah punya data yang cukup untuk evaluasi strategi."
+      },
+      {
+        "type": "h2",
+        "text": "Batasan yang Perlu Diketahui"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Bar Replay tidak mensimulasikan slippage atau spread — hasil backtest akan terlihat lebih bagus dari trading nyata",
+          "Tidak bisa replay data dari broker tertentu — hanya data TradingView yang tersedia",
+          "Pada beberapa aset dengan volume rendah, data historis mungkin tidak lengkap",
+          "Bar Replay tidak tersedia di plan Free — minimal Essential"
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Bar Replay vs Backtester Otomatis"
+      },
+      {
+        "type": "p",
+        "text": "Bar Replay adalah backtest manual — kamu yang ambil setiap keputusan. Ini lebih lambat tapi melatih intuisi dan disiplin. Backtester otomatis (Pine Script Strategy Tester) lebih cepat untuk test aturan mekanis, tapi tidak melatih psikologi trading."
+      },
+      {
+        "type": "p",
+        "text": "Untuk trader yang masih developing strategi dan belum punya sistem yang 100% rule-based, Bar Replay manual jauh lebih valuable."
+      },
+      {
+        "type": "cta",
+        "text": "Butuh akses Bar Replay? Tersedia mulai dari Essential di JekiStore",
+        "href": "https://wa.me/6283119686482",
+        "label": "Tanya via WhatsApp"
+      }
+    ]
+  },
+  {
+    "slug": "roadmap-belajar-trading-crypto-akademi-crypto-bootcamp",
+    "blocks": [
+      {
+        "type": "intro",
+        "text": "Kalau kamu googling \"cara belajar trading crypto dari nol\", isinya kebanyakan cuma teori indikator yang dipotong-potong tanpa urutan jelas. Akademi Crypto punya pendekatan yang lebih runtut lewat seri Crypto Trading Bootcamp — 16 video yang disusun dari dasar mutlak sampai analisis lanjutan. Di artikel ini kita breakdown jadi roadmap belajar yang lebih mudah diikuti, plus konteks kenapa setiap fase penting sebelum kamu lanjut ke fase berikutnya."
+      },
+      {
+        "type": "callout",
+        "text": "Artikel ini adalah ringkasan dan pemetaan dari playlist \"Crypto Trading Bootcamp\" oleh Akademi Crypto. Untuk penjelasan lengkap, contoh chart, dan demo langsung di setiap topik, tonton videonya di channel YouTube Akademi Crypto — link ada di bagian bawah artikel."
+      },
+      {
+        "type": "h2",
+        "text": "Kenapa Belajar Trading Butuh Roadmap, Bukan Cuma Nonton Acak"
+      },
+      {
+        "type": "p",
+        "text": "Masalah paling umum trader pemula bukan kekurangan informasi — justru kebanyakan informasi yang nggak terurut. Nonton video tentang indikator RSI sebelum paham cara baca trend itu seperti belajar rumus sebelum tahu apa soalnya. Bootcamp ini menariknya nyusun materi dengan logika bertingkat: dari mindset dan fondasi, lanjut ke membaca chart, baru masuk ke tools dan analisis lanjutan. Roadmap di bawah ini ngikutin logika itu, dipecah jadi 4 fase besar."
+      },
+      {
+        "type": "h2",
+        "text": "Fase 1: Fondasi Sebelum Mulai Trading (Ep 1-4)"
+      },
+      {
+        "type": "p",
+        "text": "Fase ini jawab pertanyaan paling dasar yang sering dilewatkan trader baru: kenapa crypto ini ada, apa beda jadi trader dengan investor, dan apa yang harus disiapkan sebelum buka posisi pertama."
+      },
+      {
+        "type": "list",
+        "items": [
+          "Ep 1 — Mulai Sekarang: orientasi awal bootcamp dan mindset yang dibutuhkan sebelum masuk dunia trading crypto",
+          "Ep 2 — Sejarah Bitcoin dan Altcoin: konteks kenapa Bitcoin diciptakan dan bagaimana ekosistem altcoin berkembang dari sana",
+          "Ep 3 — Trader vs Investor Crypto: perbedaan horizon waktu, tujuan, dan cara berpikir antara dua pendekatan ini — penting supaya kamu nggak \"trading\" dengan mindset investor atau sebaliknya",
+          "Ep 4 — Persiapan Wajib Sebelum Trading Crypto: checklist praktis sebelum eksekusi posisi pertama, dari modal sampai mental"
+        ]
+      },
+      {
+        "type": "callout",
+        "text": "Kalau kamu baru mulai, jangan skip fase ini meski kelihatannya \"basic banget\". Kebanyakan trader yang rugi besar di awal justru karena loncat ke chart dan indikator tanpa paham dulu apa bedanya trading dan investasi, atau tanpa persiapan modal dan mental yang jelas."
+      },
+      {
+        "type": "h2",
+        "text": "Fase 2: Membaca Chart dan Price Action (Ep 5-8)"
+      },
+      {
+        "type": "p",
+        "text": "Ini fase inti technical analysis tahap awal — gimana cara baca chart itu sendiri sebelum kamu pakai indikator apapun. Pendekatan ini sejalan dengan prinsip umum technical analysis: harga itu sendiri sudah menyimpan informasi, sebelum ditambah indikator pendukung."
+      },
+      {
+        "type": "list",
+        "items": [
+          "Ep 5 — Cara Memahami Technical Analysis Crypto dari Nol: pengantar konsep TA, kenapa dipakai, dan batasannya",
+          "Ep 6 — Cara Membaca Chart Crypto: dasar membaca candlestick dan struktur chart",
+          "Ep 7 — Cara Membaca Tren Crypto: identifikasi arah market — uptrend, downtrend, atau sideways",
+          "Ep 8 — Menentukan Support dan Resistance di Crypto: cara menandai area harga yang historis jadi titik balik"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Kalau kamu sudah pakai TradingView untuk praktik di fase ini, satu kebiasaan yang sering dilewatkan pemula adalah langsung gambar garis support/resistance di chart real-time. Lebih efektif kalau kamu uji dulu di data historis — bisa pakai fitur Bar Replay untuk mundur ke periode lama dan latih mata kamu menandai level-level itu tanpa bias karena sudah tahu hasilnya."
+      },
+      {
+        "type": "h2",
+        "text": "Fase 3: Tools dan Trigger Entry (Ep 9-11)"
+      },
+      {
+        "type": "p",
+        "text": "Setelah paham baca chart manual, fase ini masuk ke alat bantu — indikator dan logika kapan waktu yang tepat untuk eksekusi, bukan cuma tahu arah tren tapi juga momen masuknya."
+      },
+      {
+        "type": "list",
+        "items": [
+          "Ep 9 — Cara Pakai Trading Indicators: pengenalan indikator teknikal umum dan kapan masing-masing relevan dipakai",
+          "Ep 10 — Cara Trigger Analysis di Pasar Kripto: logika menentukan sinyal entry berdasarkan kombinasi price action dan indikator",
+          "Ep 11 — lanjutan seputar membaca data trading di chart sebagai dasar keputusan entry/exit"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Ini fase di mana jumlah indikator yang bisa kamu pasang sekaligus mulai jadi kendala teknis kalau masih pakai TradingView versi gratis — yang cuma kasih jatah 3 indikator per chart. Begitu kamu mulai kombinasi trend indicator, momentum, dan volume sekaligus, batas itu kerasa cepat penuh."
+      },
+      {
+        "type": "h2",
+        "text": "Fase 4: Analisis Lanjutan (Ep 13-15)"
+      },
+      {
+        "type": "p",
+        "text": "Fase ini melampaui chart — masuk ke analisis yang sering dianggap \"level lanjutan\" karena butuh data di luar candlestick: narasi market, fundamental proyek, dan aktivitas on-chain."
+      },
+      {
+        "type": "list",
+        "items": [
+          "Ep 13 — Crypto Narrative Analysis: cara membaca narasi atau tema yang sedang menggerakkan minat pasar terhadap sektor crypto tertentu",
+          "Ep 14 — Analisa Fundamental Crypto: evaluasi proyek dari sisi use case, tim, dan tokenomics, bukan cuma harga",
+          "Ep 15 — Cara Analisa On-Chain di Crypto: membaca data langsung dari blockchain — pergerakan wallet besar, volume transaksi, dan metrik lain yang nggak kelihatan di chart harga biasa"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Tiga topik ini saling melengkapi: narrative kasih kamu konteks \"kenapa orang tertarik ke sektor ini sekarang\", fundamental kasih konteks \"apakah proyeknya solid\", dan on-chain kasih bukti \"apa yang sebenarnya terjadi di balik harga\". Kombinasi ketiganya jauh lebih kuat daripada cuma andalin chart teknikal sendirian."
+      },
+      {
+        "type": "h2",
+        "text": "Modul Lanjutan yang Belum Tercakup di Sini"
+      },
+      {
+        "type": "p",
+        "text": "Playlist ini berisi 16 video total. Selain 13 episode yang sudah dipetakan di atas, ada 2 episode lain (termasuk episode penutup) yang membahas materi lanjutan dan kemungkinan psikologi trading atau manajemen risiko sebagai penutup bootcamp. Karena materinya cukup teknis dan lebih pas dijelaskan langsung dengan demonstrasi visual, kami sarankan tonton langsung episode-episode itu di playlist aslinya untuk dapat konteks penuh."
+      },
+      {
+        "type": "h2",
+        "text": "Cara Pakai Roadmap Ini Biar Nggak Cuma Jadi Tontonan Pasif"
+      },
+      {
+        "type": "steps",
+        "items": [
+          "Tonton 1 fase per minggu, jangan langsung semua — kasih waktu otak kamu konsolidasi sebelum nambah informasi baru",
+          "Setelah tiap fase, praktikkan langsung di chart TradingView kamu sendiri — bukan cuma manggut-manggut nonton",
+          "Pakai aset yang sama (misal BTC/USDT) di sepanjang proses belajar, biar kamu fokus ke skill, bukan kebingungan ganti-ganti aset",
+          "Catat insight penting tiap episode di jurnal trading kamu — ini akan jadi referensi pribadi yang lebih personal daripada nonton ulang videonya"
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Apresiasi untuk Akademi Crypto"
+      },
+      {
+        "type": "p",
+        "text": "Roadmap di atas adalah hasil pemetaan kami atas struktur edukasi yang sudah disusun Akademi Crypto lewat seri Crypto Trading Bootcamp. Kami sangat menyarankan kamu menonton videonya secara langsung untuk dapat penjelasan detail, contoh chart real, dan gaya mengajar yang nggak bisa digantikan ringkasan teks manapun — termasuk artikel ini."
+      },
+      {
+        "type": "cta",
+        "text": "Tonton playlist lengkap Crypto Trading Bootcamp di channel YouTube Akademi Crypto",
+        "href": "https://youtube.com/playlist?list=PLzHZ6a6dMGhnpv73SMTlX_DVd_1u5UFDj",
+        "label": "Buka Playlist di YouTube"
+      },
+      {
+        "type": "h2",
+        "text": "Setelah Paham Teorinya, Tinggal Praktik di Tools yang Tepat"
+      },
+      {
+        "type": "p",
+        "text": "Begitu kamu mulai praktik fase 2 dan 3 — baca chart, pasang indikator, latihan trigger entry — kamu akan cepat sadar TradingView versi gratis cukup membatasi: cuma 3 indikator per chart, 1 alert aktif, dan nggak ada Bar Replay untuk latihan backtest manual. Kalau kamu serius mau praktikkan roadmap ini sampai tuntas, akses ke fitur-fitur itu bakal banyak membantu proses belajarnya."
+      },
+      {
+        "type": "cta",
+        "text": "Akses TradingView Premium mulai dari Rp 185.000/bulan buat dukung proses belajar trading kamu",
+        "href": "https://wa.me/6283119686482",
+        "label": "Tanya via WhatsApp"
+      },
+      {
+        "type": "callout",
+        "text": "Disclaimer: artikel ini bersifat edukasi dan bukan nasihat keuangan atau ajakan untuk membeli/menjual aset crypto tertentu. Trading dan investasi crypto memiliki risiko tinggi termasuk risiko kehilangan modal. Selalu lakukan riset mandiri dan sesuaikan dengan profil risiko kamu sendiri."
+      }
+    ]
+  }
+]

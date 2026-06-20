@@ -39,7 +39,65 @@
   }
 }
 </script>
-<script type="application/ld+json" id="js-schema-itemlist"></script>
+<!-- BUILD:SCHEMA:START -->
+<script type="application/ld+json" id="js-schema-itemlist">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Daftar Artikel Blog JekiStore",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "url": "https://jekistore.com/blog/roadmap-belajar-trading-crypto-akademi-crypto-bootcamp",
+      "name": "Roadmap Belajar Trading Crypto dari Nol: Pemetaan Crypto Trading Bootcamp Akademi Crypto"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "url": "https://jekistore.com/blog/krypton-framework-siklus-market-crypto",
+      "name": "Krypton Framework: Cara Baca Siklus Market Crypto Tanpa Tebak-Tebakan"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "url": "https://jekistore.com/blog/crypto-etf-2026-panduan-trader-indonesia",
+      "name": "Crypto ETF 2026: Apa Artinya Buat Trader Indonesia?"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "url": "https://jekistore.com/blog/bitcoin-sideways-juni-2026",
+      "name": "Bitcoin Sideways di $63K — Ini yang Sebenarnya Terjadi"
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "url": "https://jekistore.com/blog/tradingview-free-vs-premium",
+      "name": "TradingView Free vs Premium: Bedanya Apa dan Kapan Worth It Upgrade?"
+    },
+    {
+      "@type": "ListItem",
+      "position": 6,
+      "url": "https://jekistore.com/blog/cara-pakai-bar-replay-tradingview",
+      "name": "Cara Pakai Bar Replay TradingView untuk Backtest Manual yang Lebih Akurat"
+    },
+    {
+      "@type": "ListItem",
+      "position": 7,
+      "url": "https://jekistore.com/blog/market-digerakan-oleh-emosi",
+      "name": "Mengapa 80% Market Digerakkan Emosi dan Hanya 20% Oleh Teori?"
+    },
+    {
+      "@type": "ListItem",
+      "position": 8,
+      "url": "https://jekistore.com/blog/navigasi-labirin-trading-mindset-vs-strategi",
+      "name": "Navigasi Labirin Trading: Mengapa Mindset dan Pemahaman Siklus Jauh Lebih Penting"
+    }
+  ]
+}
+</script>
+    <!-- BUILD:SCHEMA:END -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -434,6 +492,8 @@ button { font-family:inherit; cursor:pointer; border:none; background:none; }
 .sidebar-left {
   position: sticky;
   top: 80px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .sl-title {
@@ -514,7 +574,10 @@ button { font-family:inherit; cursor:pointer; border:none; background:none; }
 /* ══════════════════════════════════════
    MAIN CONTENT
 ══════════════════════════════════════ */
-.blog-main {}
+.blog-main {
+  min-width: 0; /* prevent grid blowout */
+  overflow: hidden;
+}
 
 /* ══ FEATURED — full-width image hero card ══ */
 .featured-wrap {
@@ -892,6 +955,8 @@ button { font-family:inherit; cursor:pointer; border:none; background:none; }
   display: flex;
   flex-direction: column;
   gap: 18px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 /* CTA */
@@ -1147,77 +1212,211 @@ footer a:hover { color: var(--green); }
 ══════════════════════════════════════ */
 @media (max-width: 640px) {
 
+  /* ── Prevent EVERYTHING from overflowing ── */
+  .blog-layout,
+  .blog-main,
+  .sidebar-left,
+  .sidebar-right,
+  .article-grid,
+  .article-card,
+  .featured-wrap,
+  .f-body,
+  .f-body-left,
+  .widget,
+  .cta-card,
+  .newsletter-inner,
+  .breadcrumb { max-width: 100%; overflow: hidden; }
+
   /* Navbar */
   .nav-menu { display: none; }
   .nav-cta  { display: none; }
   .nav-hamburger { display: flex; }
   .nav-div { display: none; }
-  .nav-pill { padding: 7px 7px 7px 18px; }
+  .nav-pill { padding: 7px 7px 7px 16px; max-width: calc(100vw - 28px); }
 
   /* Hero */
   .page-hero { padding: 88px 16px 44px; }
-  .page-hero h1 { font-size: 1.65rem; }
+  .page-hero h1 { font-size: 1.55rem; }
+  .search-wrap { max-width: 100%; }
 
-  /* Layout — single column, reorder */
+  /* Breadcrumb */
+  .breadcrumb { padding: 14px 14px 0; overflow: hidden; white-space: nowrap; }
+
+  /* Layout */
   .blog-layout {
-    padding: 14px 14px 48px;
-    gap: 14px;
+    padding: 12px 12px 48px;
+    gap: 12px;
     grid-template-areas:
       "cats"
       "main"
       "side";
+    /* Penting: mencegah grid child melebar */
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  /* Sidebar left — horizontal scroll chips */
-  .sidebar-left { padding: 10px 12px; }
+  /* Sidebar left — chip scroll horizontal */
+  .sidebar-left {
+    grid-area: cats;
+    padding: 10px 12px;
+    overflow: hidden;
+  }
   .cat-list {
     flex-wrap: nowrap;
     overflow-x: auto;
+    overflow-y: hidden;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
     padding-bottom: 2px;
   }
   .cat-list::-webkit-scrollbar { display: none; }
-  .cat-item { white-space: nowrap; flex-shrink: 0; font-size: 0.78rem; padding: 6px 12px; }
+  .cat-item {
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    padding: 6px 12px;
+  }
 
   /* Featured */
-  .featured-wrap { aspect-ratio: 3/2; border-radius: var(--radius-md); }
-  .f-body { flex-direction: column; align-items: flex-start; padding: 14px 16px; gap: 8px; }
+  .featured-wrap {
+    aspect-ratio: 3/2;
+    border-radius: var(--radius-md);
+    width: 100%;
+    max-width: 100%;
+  }
+  .f-body {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 14px;
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .f-body-left { width: 100%; min-width: 0; overflow: hidden; }
   .f-cta { display: none; }
-  .f-title { font-size: 0.95rem; -webkit-line-clamp: 2; }
+  .f-title {
+    font-size: 0.9rem;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    word-break: break-word;
+  }
   .f-excerpt { display: none; }
-  .f-meta { gap: 10px; }
+  .f-meta { gap: 8px; flex-wrap: wrap; overflow: hidden; }
+  .f-meta span { font-size: 0.7rem; white-space: nowrap; }
 
-  /* Filter tabs — hidden on mobile */
+  /* Filter tabs */
   .filter-tabs-row { display: none; }
 
-  /* Grid */
-  .article-grid { grid-template-columns: 1fr; gap: 10px; }
+  /* Grid header */
+  .grid-header { padding: 0 2px; }
 
-  /* Cards — horizontal on mobile */
-  .article-card { flex-direction: row; min-height: 100px; }
-  .card-thumb { width: 100px; min-width: 100px; height: auto; min-height: 100px; flex-shrink: 0; }
+  /* Article grid */
+  .article-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+
+  /* Cards — horizontal */
+  .article-card {
+    flex-direction: row;
+    width: 100%;
+    min-height: 96px;
+    max-height: 110px;
+    overflow: hidden;
+  }
+  .card-thumb {
+    width: 96px;
+    min-width: 96px;
+    max-width: 96px;
+    height: 100%;
+    min-height: 96px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
   .cat-pill { display: none; }
-  .card-body { padding: 11px 12px; }
-  .card-title { font-size: 0.825rem; -webkit-line-clamp: 2; margin-bottom: 4px; }
+
+  /* Card body — kunci agar tidak overflow */
+  .card-body {
+    padding: 10px 11px;
+    flex: 1;
+    min-width: 0;          /* ← kunci utama: flex child tidak boleh expand */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-title {
+    font-size: 0.8rem;
+    line-height: 1.35;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    margin-bottom: 4px;
+    word-break: break-word;
+    /* Pastikan -webkit-box aktif */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+  }
   .card-excerpt { display: none; }
-  .card-foot { padding-top: 6px; border-top: none; }
+  .card-foot {
+    padding-top: 5px;
+    border-top: none;
+    margin-top: auto;
+  }
+  .card-meta {
+    font-size: 0.65rem;
+    gap: 8px;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  .card-meta span { white-space: nowrap; }
   .card-arrow { display: none; }
 
-  /* Sidebar right — CTA disembunyikan di mobile (sudah ada tombol di drawer),
-     Populer & Topik tetap tampil tapi stacked */
-  .sidebar-right { grid-template-columns: 1fr; gap: 12px; }
+  /* Sidebar right */
+  .sidebar-right {
+    grid-area: side;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
   .cta-card { display: none; }
 
+  /* Widget teks jangan overflow */
+  .pop-title {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+  }
+
   /* Newsletter */
-  .nl-form { flex-direction: column; }
-  .newsletter h2 { font-size: 1.4rem; }
+  .newsletter { padding: 40px 16px; }
+  .newsletter h2 { font-size: 1.35rem; }
+  .nl-form { flex-direction: column; max-width: 100%; }
+  .nl-input, .nl-btn { width: 100%; }
+
+  /* Footer */
+  footer { padding: 20px 16px; word-break: break-word; }
 }
 
 @media (max-width: 380px) {
-  .article-card { flex-direction: column; min-height: unset; }
-  .card-thumb { width: 100%; min-width: unset; height: 140px; }
-  .card-excerpt { display: -webkit-box; }
+  .article-card {
+    flex-direction: column;
+    max-height: unset;
+    min-height: unset;
+  }
+  .card-thumb {
+    width: 100%;
+    max-width: 100%;
+    min-width: unset;
+    height: 130px;
+  }
+  .card-title { font-size: 0.825rem; }
+  .card-excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 </style>
 </head>
@@ -1331,8 +1530,24 @@ footer a:hover { color: var(--green); }
   <!-- MAIN -->
   <main class="blog-main">
 
-    <!-- Featured — diisi blog-engine.js -->
-    <div id="js-featured"></div>
+    <!-- BUILD:FEATURED:START -->
+<div id="js-featured"><a href="/blog/tradingview-free-vs-premium" class="featured-wrap reveal" data-cat="perbandingan">
+        <img class="f-img" src="/blog/imgblog/tradingviewpremiumvsfree.jpg" alt="Trading View Premium Vs Free Apa manfaatnya" loading="eager">
+        <div class="f-overlay"></div>
+        <div class="f-body">
+          <div class="f-body-left">
+            <div class="f-badge"><i class="bi bi-arrow-left-right"></i> Perbandingan</div>
+            <div class="f-title">TradingView Free vs Premium: Bedanya Apa dan Kapan Worth It Upgrade?</div>
+            <p class="f-excerpt">Banyak trader masih ragu upgrade ke Premium karena belum tahu apa yang beneran berubah. Artikel ini breakdown fitur per fitur secara jujur — mana yang krusial, mana yang cuma nice-to-have.</p>
+            <div class="f-meta">
+              <span><i class="bi bi-clock"></i> 8 menit baca</span>
+              <span><i class="bi bi-calendar3"></i> Juni 2026</span>
+            </div>
+          </div>
+          <div class="f-cta">Baca Artikel <i class="bi bi-arrow-up-right"></i></div>
+        </div>
+      </a></div>
+    <!-- BUILD:FEATURED:END -->
 
     <!-- Filter Tabs -->
     <div class="filter-tabs-row" id="filterTabsRow">
@@ -1353,7 +1568,129 @@ footer a:hover { color: var(--green); }
 
     <!-- Article Grid -->
     <div class="article-grid" id="articleGrid">
-      <div id="js-grid" style="display:contents"></div>
+      <!-- BUILD:GRID:START -->
+<div id="js-grid" style="display:contents">
+        <a href="/blog/roadmap-belajar-trading-crypto-akademi-crypto-bootcamp" class="article-card reveal" data-cat="panduan">
+        <div class="card-thumb">
+          <img src="/blog/imgblog/kalimasada-trader-crypto.webp" alt="Roadmap Belajar Trading Crypto dari Nol: Pemetaan Crypto Trading Bootcamp Akademi Crypto" loading="lazy">
+          <div class="cat-pill"><i class="bi bi-book"></i> Panduan</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Roadmap Belajar Trading Crypto dari Nol: Pemetaan Crypto Trading Bootcamp Akademi Crypto</div>
+          <p class="card-excerpt">16 video, 1 roadmap. Kami petakan seri Crypto Trading Bootcamp dari Akademi Crypto jadi 4 fase belajar yang lebih mudah diikuti — dari fondasi sampai analisis on-chain.</p>
+          <div class="card-foot">
+            <div class="card-meta">
+              <span><i class="bi bi-clock"></i> 10 menit</span>
+              <span><i class="bi bi-calendar3"></i> 20 Juni 2026</span>
+            </div>
+            <div class="card-arrow"><i class="bi bi-arrow-right"></i></div>
+          </div>
+        </div>
+      </a>
+        <a href="/blog/krypton-framework-siklus-market-crypto" class="article-card reveal" data-cat="market">
+        <div class="card-thumb">
+          <img src="/blog/imgblog/wolf.webp" alt="Krypton Framework — Siklus Market Crypto 9 Fase" loading="lazy">
+          <div class="cat-pill"><i class="bi bi-activity"></i> Market</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Krypton Framework: Cara Baca Siklus Market Crypto Tanpa Tebak-Tebakan</div>
+          <p class="card-excerpt">9 fase siklus crypto dari bull sampai bear, dijelaskan dengan logika MA 50 dan zona supply-demand. Panduan lengkap untuk trader yang capek nebak arah harga.</p>
+          <div class="card-foot">
+            <div class="card-meta">
+              <span><i class="bi bi-clock"></i> 9 menit</span>
+              <span><i class="bi bi-calendar3"></i> 19 Juni 2026</span>
+            </div>
+            <div class="card-arrow"><i class="bi bi-arrow-right"></i></div>
+          </div>
+        </div>
+      </a>
+        <a href="/blog/crypto-etf-2026-panduan-trader-indonesia" class="article-card reveal" data-cat="panduan">
+        <div class="card-thumb">
+          <img src="/blog/imgblog/crypto-cosmos-hijau-jekistore.webp" alt="Panduan Crypto ETF 2026 untuk Trader Indonesia" loading="lazy">
+          <div class="cat-pill"><i class="bi bi-book"></i> Panduan</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Crypto ETF 2026: Apa Artinya Buat Trader Indonesia?</div>
+          <p class="card-excerpt">ETF crypto sudah menyedot $55 miliar+ dan kini jadi penggerak utama harga Bitcoin. Kalau kamu belum memperhatikan data ETF flow, kamu trading dengan mata tertutup.</p>
+          <div class="card-foot">
+            <div class="card-meta">
+              <span><i class="bi bi-clock"></i> 7 menit</span>
+              <span><i class="bi bi-calendar3"></i> 19 Juni 2026</span>
+            </div>
+            <div class="card-arrow"><i class="bi bi-arrow-right"></i></div>
+          </div>
+        </div>
+      </a>
+        <a href="/blog/bitcoin-sideways-juni-2026" class="article-card reveal" data-cat="market">
+        <div class="card-thumb">
+          <img src="/blog/imgblog/coin-btc-eth-jekistore.webp" alt="Analisis Bitcoin Sideways Juni 2026" loading="lazy">
+          <div class="cat-pill"><i class="bi bi-activity"></i> Market</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Bitcoin Sideways di $63K — Ini yang Sebenarnya Terjadi</div>
+          <p class="card-excerpt">Bitcoin stuck di kisaran $60K–$64K hampir sebulan penuh. Bukan karena pasar mati — ada data konkret di baliknya dan ada yang bisa kamu lakukan sekarang.</p>
+          <div class="card-foot">
+            <div class="card-meta">
+              <span><i class="bi bi-clock"></i> 6 menit</span>
+              <span><i class="bi bi-calendar3"></i> 19 Juni 2026</span>
+            </div>
+            <div class="card-arrow"><i class="bi bi-arrow-right"></i></div>
+          </div>
+        </div>
+      </a>
+        <a href="/blog/cara-pakai-bar-replay-tradingview" class="article-card reveal" data-cat="fitur">
+        <div class="card-thumb">
+          <div class="t-pattern"></div><i class="bi bi-skip-backward-circle t-icon"></i>
+          <div class="cat-pill"><i class="bi bi-play-circle"></i> Fitur TradingView</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Cara Pakai Bar Replay TradingView untuk Backtest Manual yang Lebih Akurat</div>
+          <p class="card-excerpt">Bar Replay adalah fitur yang bikin kamu bisa "mundur waktu" di chart. Begini cara pakainya dengan benar untuk melatih entry dan exit point.</p>
+          <div class="card-foot">
+            <div class="card-meta">
+              <span><i class="bi bi-clock"></i> 5 menit</span>
+              <span><i class="bi bi-calendar3"></i> Juni 2026</span>
+            </div>
+            <div class="card-arrow"><i class="bi bi-arrow-right"></i></div>
+          </div>
+        </div>
+      </a>
+        <a href="/blog/market-digerakan-oleh-emosi" class="article-card reveal" data-cat="market">
+        <div class="card-thumb">
+          <img src="/blog/imgblog/behine-market-marketdigerakanemosi.webp" alt="Mengapa 80% Market Digerakkan Emosi" loading="lazy">
+          <div class="cat-pill"><i class="bi bi-activity"></i> Market</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Mengapa 80% Market Digerakkan Emosi dan Hanya 20% Oleh Teori?</div>
+          <p class="card-excerpt">Banyak trader menghabiskan waktu bertahun-tahun mempelajari indikator tapi tetap rugi. Jawabannya ada di psikologi pasar — fear, greed, dan herd mentality.</p>
+          <div class="card-foot">
+            <div class="card-meta">
+              <span><i class="bi bi-clock"></i> 4 menit</span>
+              <span><i class="bi bi-calendar3"></i> 18 Juni 2026</span>
+            </div>
+            <div class="card-arrow"><i class="bi bi-arrow-right"></i></div>
+          </div>
+        </div>
+      </a>
+        <a href="/blog/navigasi-labirin-trading-mindset-vs-strategi" class="article-card reveal" data-cat="market">
+        <div class="card-thumb">
+          <img src="/blog/imgblog/navigasi-labirin-trading.jpg" alt="Mengapa Mindset dan Pemahaman Siklus Jauh Lebih Penting" loading="lazy">
+          <div class="cat-pill"><i class="bi bi-activity"></i> Market</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Navigasi Labirin Trading: Mengapa Mindset dan Pemahaman Siklus Jauh Lebih Penting</div>
+          <p class="card-excerpt">Banyak trader pemula terjebak dalam siklus tanpa akhir mencari strategi ajaib. Padahal kunci konsistensi ada di mindset dan pemahaman siklus pasar struktural.</p>
+          <div class="card-foot">
+            <div class="card-meta">
+              <span><i class="bi bi-clock"></i> 6 menit</span>
+              <span><i class="bi bi-calendar3"></i> 18 Juni 2026</span>
+            </div>
+            <div class="card-arrow"><i class="bi bi-arrow-right"></i></div>
+          </div>
+        </div>
+      </a>
+      </div>
+    <!-- BUILD:GRID:END -->
 
       <!-- Coming soon -->
       <div class="article-card card-coming reveal" data-cat="fitur">
@@ -1446,7 +1783,46 @@ footer a:hover { color: var(--green); }
 
     <div class="widget">
       <div class="widget-title">Populer</div>
-      <ul class="popular-list" id="js-popular"></ul>
+      <!-- BUILD:POPULAR:START -->
+<ul class="popular-list" id="js-popular">
+        <li>
+        <a href="/blog/roadmap-belajar-trading-crypto-akademi-crypto-bootcamp" class="pop-item">
+          <div class="pop-num">01</div>
+          <div class="pop-title">Roadmap Belajar Trading Crypto dari Nol: Pemetaan Crypto Trading Bootcamp Akademi Crypto</div>
+        </a>
+      </li>
+        <li>
+        <a href="/blog/krypton-framework-siklus-market-crypto" class="pop-item">
+          <div class="pop-num">02</div>
+          <div class="pop-title">Krypton Framework: Cara Baca Siklus Market Crypto Tanpa Tebak-Tebakan</div>
+        </a>
+      </li>
+        <li>
+        <a href="/blog/crypto-etf-2026-panduan-trader-indonesia" class="pop-item">
+          <div class="pop-num">03</div>
+          <div class="pop-title">Crypto ETF 2026: Apa Artinya Buat Trader Indonesia?</div>
+        </a>
+      </li>
+        <li>
+        <a href="/blog/bitcoin-sideways-juni-2026" class="pop-item">
+          <div class="pop-num">04</div>
+          <div class="pop-title">Bitcoin Sideways di $63K — Ini yang Sebenarnya Terjadi</div>
+        </a>
+      </li>
+        <li>
+        <a href="/blog/tradingview-free-vs-premium" class="pop-item">
+          <div class="pop-num">05</div>
+          <div class="pop-title">TradingView Free vs Premium: Bedanya Apa dan Kapan Worth It Upgrade?</div>
+        </a>
+      </li>
+        <li>
+        <a href="/blog/cara-pakai-bar-replay-tradingview" class="pop-item">
+          <div class="pop-num">06</div>
+          <div class="pop-title">Cara Pakai Bar Replay TradingView untuk Backtest Manual yang Lebih Akurat</div>
+        </a>
+      </li>
+      </ul>
+    <!-- BUILD:POPULAR:END -->
     </div>
 
     <div class="widget">

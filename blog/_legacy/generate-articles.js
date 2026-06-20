@@ -1,4 +1,144 @@
-<!DOCTYPE html>
+#!/usr/bin/env node
+/**
+ * generate-articles.js
+ * ─────────────────────────────────────────────────────────
+ * Generate halaman artikel statis dari articles.json (meta)
+ * dan articles-content.json (isi konten).
+ *
+ * Output: blog/[slug]/index.html untuk setiap artikel published
+ *
+ * Cara pakai:
+ *   1. Tulis konten artikel di articles-content.json
+ *   2. Pastikan slug & meta sudah ada di articles.json
+ *   3. Jalankan: node generate-articles.js
+ *   4. File blog/[slug]/index.html akan ter-generate otomatis
+ *   5. Commit & push ke Vercel — URL /blog/[slug] langsung aktif
+ *
+ * Format blok konten yang didukung di articles-content.json:
+ *   { "type": "intro", "text": "..." }          — Paragraf pembuka besar
+ *   { "type": "p", "text": "..." }              — Paragraf biasa
+ *   { "type": "h2", "text": "..." }             — Heading section
+ *   { "type": "h3", "text": "..." }             — Heading sub-section
+ *   { "type": "list", "items": [...] }          — Bullet list
+ *   { "type": "steps", "items": [...] }         — Numbered steps
+ *   { "type": "table", "caption", "headers", "rows" } — Tabel perbandingan
+ *   { "type": "cta", "text", "href", "label" } — Call-to-action box
+ *   { "type": "callout", "text": "..." }        — Highlight box / tip
+ * ─────────────────────────────────────────────────────────
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+const ARTICLES_JSON_PATH   = path.join(__dirname, '..', 'articles.json');
+const CONTENT_JSON_PATH    = path.join(__dirname, 'articles-content.json'); // sama folder blog/
+const OUTPUT_DIR           = path.join(__dirname); // output langsung di folder blog/
+const SITE_URL             = 'https://jekistore.com';
+
+// ── Helpers ──────────────────────────────────────────────
+function esc(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// ── Block renderers ───────────────────────────────────────
+function renderBlock(block) {
+  switch (block.type) {
+    case 'intro':
+      return `<p class="article-intro">${esc(block.text)}</p>`;
+
+    case 'p':
+      return `<p>${esc(block.text)}</p>`;
+
+    case 'h2':
+      return `<h2>${esc(block.text)}</h2>`;
+
+    case 'h3':
+      return `<h3>${esc(block.text)}</h3>`;
+
+    case 'list':
+      const liItems = block.items.map(item => `<li>${esc(item)}</li>`).join('\n      ');
+      return `<ul>\n      ${liItems}\n    </ul>`;
+
+    case 'steps':
+      const olItems = block.items.map(item => `<li>${esc(item)}</li>`).join('\n      ');
+      return `<ol>\n      ${olItems}\n    </ol>`;
+
+    case 'table':
+      const thCells = block.headers.map(h => `<th>${esc(h)}</th>`).join('');
+      const tbody = block.rows.map(row => {
+        const tds = row.map(cell => `<td>${esc(cell)}</td>`).join('');
+        return `<tr>${tds}</tr>`;
+      }).join('\n        ');
+      return `<div class="table-wrap">
+      <table>
+        <caption>${esc(block.caption || '')}</caption>
+        <thead><tr>${thCells}</tr></thead>
+        <tbody>
+        ${tbody}
+        </tbody>
+      </table>
+    </div>`;
+
+    case 'cta':
+      return `<div class="article-cta">
+      <p>${esc(block.text)}</p>
+      <a href="${esc(block.href)}" class="btn-cta" target="_blank" rel="noopener">
+        <i class="bi bi-whatsapp"></i> ${esc(block.label)}
+      </a>
+    </div>`;
+
+    case 'callout':
+      return `<div class="article-callout">
+      <i class="bi bi-lightbulb-fill"></i>
+      <p>${esc(block.text)}</p>
+    </div>`;
+
+    default:
+      console.warn(`  ⚠ Tipe blok tidak dikenal: "${block.type}" — dilewati`);
+      return '';
+  }
+}
+
+// ── Artikel lain untuk "Artikel Terkait" ─────────────────
+function renderRelated(allMeta, currentSlug) {
+  const others = allMeta
+    .filter(a => a.slug !== currentSlug && a.status === 'published')
+    .slice(0, 3);
+
+  if (others.length === 0) return '';
+
+  const cards = others.map(a => `
+    <a href="/blog/${esc(a.slug)}" class="related-card">
+      <div class="related-thumb">
+        <div class="thumb-pattern"></div>
+        <i class="bi ${esc(a.thumbIcon)} related-icon"></i>
+      </div>
+      <div class="related-body">
+        <div class="related-cat"><i class="bi ${esc(a.categoryIcon)}"></i> ${esc(a.categoryLabel)}</div>
+        <div class="related-title">${esc(a.title)}</div>
+        <div class="related-meta"><i class="bi bi-clock"></i> ${esc(a.readTime)}</div>
+      </div>
+    </a>`).join('');
+
+  return `<section class="related-section">
+    <h2 class="related-heading">Artikel Lainnya</h2>
+    <div class="related-grid">
+      ${cards}
+    </div>
+  </section>`;
+}
+
+// ── Full HTML page builder ────────────────────────────────
+function buildArticlePage(meta, content, allMeta) {
+  const contentHtml = content.blocks.map(renderBlock).join('\n\n    ');
+  const relatedHtml = renderRelated(allMeta, meta.slug);
+  const canonicalUrl = `${SITE_URL}/blog/${meta.slug}`;
+
+  return `<!DOCTYPE html>
 <html lang="id" prefix="og: https://ogp.me/ns#">
 <head>
 <meta charset="UTF-8">
@@ -10,60 +150,49 @@
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
 
 <!-- SEO -->
-<title>TradingView Free vs Premium: Bedanya Apa Saja? | JekiStore</title>
-<meta name="description" content="Banyak trader ragu upgrade ke Premium karena belum tahu apa yang berubah. Ini breakdown fitur per fitur secara jujur — mana krusial, mana tidak.">
+<title>${esc(meta.title)} — Blog JekiStore</title>
+<meta name="description" content="${esc(meta.excerpt)}">
 <meta name="author" content="JekiStore">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-<link rel="canonical" href="https://jekistore.com/blog/tradingview-free-vs-premium">
-
-<!-- Favicon & App Icons -->
-<link rel="icon" type="image/x-icon" href="/asset/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/asset/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/asset/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="48x48" href="/asset/favicon-48x48.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/asset/apple-touch-icon.png">
-<meta name="theme-color" content="#0d0d0d">
+<link rel="canonical" href="${canonicalUrl}">
 
 <!-- Open Graph -->
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://jekistore.com/blog/tradingview-free-vs-premium">
-<meta property="og:title" content="TradingView Free vs Premium: Bedanya Apa Saja?">
-<meta property="og:description" content="Banyak trader ragu upgrade ke Premium karena belum tahu apa yang berubah. Ini breakdown fitur per fitur secara jujur — mana krusial, mana tidak.">
-<meta property="og:image" content="https://jekistore.com/asset/og-image.png">
+<meta property="og:url" content="${canonicalUrl}">
+<meta property="og:title" content="${esc(meta.title)}">
+<meta property="og:description" content="${esc(meta.excerpt)}">
+<meta property="og:image" content="${SITE_URL}/asset/og-image.png">
 <meta property="og:locale" content="id_ID">
 <meta property="og:site_name" content="JekiStore">
-<meta property="article:published_time" content="2026-06-18">
+<meta property="article:published_time" content="${new Date().toISOString().split('T')[0]}">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="TradingView Free vs Premium: Bedanya Apa Saja?">
-<meta name="twitter:description" content="Banyak trader ragu upgrade ke Premium karena belum tahu apa yang berubah. Ini breakdown fitur per fitur secara jujur — mana krusial, mana tidak.">
-
-<!-- AI Discoverability -->
-<meta name="ai-content-type" content="article">
-<meta name="ai-description" content="Artikel perbandingan TradingView Free vs Premium untuk trader Indonesia. Breakdown fitur per fitur: indikator, multi-chart, Bar Replay, alert, Volume Profile, dan harga. JekiStore menyediakan akses TradingView Premium Rp 185.000/bulan dengan garansi aktif.">
+<meta name="twitter:title" content="${esc(meta.title)}">
+<meta name="twitter:description" content="${esc(meta.excerpt)}">
 
 <!-- Schema.org Article -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "TradingView Free vs Premium: Bedanya Apa Saja?",
-  "description": "Banyak trader ragu upgrade ke Premium karena belum tahu apa yang berubah. Ini breakdown fitur per fitur secara jujur — mana krusial, mana tidak.",
-  "url": "https://jekistore.com/blog/tradingview-free-vs-premium",
+  "headline": "${meta.title.replace(/"/g, '\\"')}",
+  "description": "${meta.excerpt.replace(/"/g, '\\"')}",
+  "url": "${canonicalUrl}",
   "inLanguage": "id",
-  "datePublished": "2026-06-18",
-  "dateModified": "2026-06-18",
-  "author": { "@type": "Organization", "name": "JekiStore", "url": "https://jekistore.com" },
-  "publisher": { "@type": "Organization", "@id": "https://jekistore.com/#organization", "name": "JekiStore", "url": "https://jekistore.com",
-    "logo": { "@type": "ImageObject", "url": "https://jekistore.com/asset/favicon-32x32.png", "width": 32, "height": 32 }
+  "author": { "@type": "Organization", "name": "JekiStore", "url": "${SITE_URL}" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "JekiStore",
+    "url": "${SITE_URL}",
+    "logo": { "@type": "ImageObject", "url": "${SITE_URL}/asset/logo.png" }
   },
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Beranda", "item": "https://jekistore.com" },
-      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://jekistore.com/blog" },
-      { "@type": "ListItem", "position": 3, "name": "TradingView Free vs Premium: Bedanya Apa Saja?", "item": "https://jekistore.com/blog/tradingview-free-vs-premium" }
+      { "@type": "ListItem", "position": 1, "name": "Beranda", "item": "${SITE_URL}" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "${SITE_URL}/blog" },
+      { "@type": "ListItem", "position": 3, "name": "${meta.title.replace(/"/g, '\\"')}", "item": "${canonicalUrl}" }
     ]
   }
 }
@@ -369,15 +498,15 @@ footer a:hover { color:var(--green-deep); }
       <i class="bi bi-chevron-right"></i>
       <a href="/blog">Blog</a>
       <i class="bi bi-chevron-right"></i>
-      <span>Perbandingan</span>
+      <span>${esc(meta.categoryLabel)}</span>
     </div>
     <div class="hero-cat">
-      <i class="bi bi-arrow-left-right"></i> Perbandingan
+      <i class="bi ${esc(meta.categoryIcon)}"></i> ${esc(meta.categoryLabel)}
     </div>
-    <h1>TradingView Free vs Premium: Bedanya Apa dan Kapan Worth It Upgrade?</h1>
+    <h1>${esc(meta.title)}</h1>
     <div class="hero-meta">
-      <span><i class="bi bi-clock"></i>8 menit baca</span>
-      <span><i class="bi bi-calendar3"></i>Juni 2026</span>
+      <span><i class="bi bi-clock"></i>${esc(meta.readTime)}</span>
+      <span><i class="bi bi-calendar3"></i>${esc(meta.date)}</span>
       <span><i class="bi bi-person"></i>JekiStore</span>
     </div>
   </div>
@@ -387,119 +516,9 @@ footer a:hover { color:var(--green-deep); }
 <div class="article-layout">
 
   <article class="article-body">
-    <p class="article-intro">Pertanyaan ini muncul terus di komunitas trader Indonesia: &quot;Worth it gak sih upgrade ke Premium?&quot; Jawabannya tergantung gimana kamu trading — dan artikel ini akan bantu kamu jawab itu dengan jujur, fitur per fitur.</p>
+    ${contentHtml}
 
-    <h2>Perbedaan Utama Free vs Premium</h2>
-
-    <p>TradingView Free sudah cukup poweful untuk pemula. Kamu dapat 1 chart per tab, 3 indikator per chart, dan akses ke data real-time untuk beberapa aset. Tapi begitu kamu mulai serius, batasannya terasa.</p>
-
-    <div class="table-wrap">
-      <table>
-        <caption>Perbandingan fitur Free vs Premium (Essential)</caption>
-        <thead><tr><th>Fitur</th><th>Free</th><th>Essential / Plus</th><th>Premium</th></tr></thead>
-        <tbody>
-        <tr><td>Indikator per chart</td><td>3</td><td>5 / 10</td><td>25</td></tr>
-        <tr><td>Chart per tab</td><td>1</td><td>2 / 4</td><td>8</td></tr>
-        <tr><td>Alert aktif</td><td>1</td><td>20 / 100</td><td>400</td></tr>
-        <tr><td>Bar Replay</td><td>✗</td><td>✓ / ✓</td><td>✓</td></tr>
-        <tr><td>Volume Profile</td><td>✗</td><td>✗ / ✓</td><td>✓</td></tr>
-        <tr><td>Data export (CSV)</td><td>✗</td><td>✓ / ✓</td><td>✓</td></tr>
-        <tr><td>Iklan</td><td>Ada</td><td>Tidak ada</td><td>Tidak ada</td></tr>
-        <tr><td>Second chart (overlay)</td><td>✗</td><td>✗ / ✓</td><td>✓</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h2>Fitur yang Beneran Bikin Perbedaan</h2>
-
-    <h3>1. Jumlah Indikator per Chart</h3>
-
-    <p>Di Free kamu cuma dapat 3 indikator. Kedengarannya cukup, sampai kamu sadar EMA 20, EMA 50, dan RSI saja sudah habis 3 slot — belum MACD, Volume, atau apapun lainnya. Premium memberi 25 indikator per chart, yang artinya kamu bisa setup strategi selengkap apapun tanpa kompromi.</p>
-
-    <h3>2. Multi-Chart Layout</h3>
-
-    <p>Analisis multi-timeframe adalah fondasi trading yang baik. Dengan Free, kamu harus bolak-balik tab setiap kali ingin lihat timeframe berbeda. Premium memungkinkan kamu lihat 4-8 chart sekaligus dalam satu layar — H4, H1, M15, M5 semua terlihat bersamaan.</p>
-
-    <h3>3. Alert yang Cukup</h3>
-
-    <p>Free hanya memberi 1 alert aktif. Satu. Itu hampir tidak berguna kalau kamu watchlist-nya lebih dari 1 aset. Essential sudah memberi 20, dan Premium sampai 400 alert — termasuk alert berbasis kondisi indikator, bukan cuma crossing harga.</p>
-
-    <h3>4. Bar Replay untuk Backtest</h3>
-
-    <p>Fitur ini tidak ada di Free, tapi sudah tersedia sejak Essential. <a href="/blog/cara-pakai-bar-replay-tradingview" style="color:var(--green-deep);font-weight:600;text-decoration:underline;text-underline-offset:3px;">Bar Replay adalah cara paling praktis untuk latihan trading tanpa risiko</a> — kamu bisa &quot;putar ulang&quot; market di masa lalu dan latih keputusan entry/exit kamu secara manual.</p>
-
-    <h3>5. Volume Profile</h3>
-
-    <p>Volume Profile hanya tersedia di Plus ke atas. Ini tool yang dipakai trader profesional untuk identifikasi area high-value (POC, VAH, VAL) berdasarkan distribusi volume nyata — jauh lebih akurat daripada support/resistance biasa.</p>
-
-    <h2>Kapan Worth It Upgrade?</h2>
-
-    <ul>
-      <li>Kamu sudah aktif trading (bukan cuma belajar) dan merasa terhambat oleh limit indikator atau alert</li>
-      <li>Kamu ingin melakukan backtest manual secara rutin dengan Bar Replay</li>
-      <li>Kamu trading lebih dari 1 aset dan butuh multi-chart layout</li>
-      <li>Kamu ingin pakai Volume Profile, Anchored VWAP, atau indikator advanced lainnya</li>
-      <li>Kamu terganggu oleh iklan di Free dan ingin pengalaman bersih</li>
-    </ul>
-
-    <h2>Kapan Free Masih Cukup?</h2>
-
-    <ul>
-      <li>Kamu masih di tahap belajar dan belum konsisten profit</li>
-      <li>Kamu hanya trading 1-2 aset dengan strategi sederhana (1-2 indikator)</li>
-      <li>Kamu menggunakan platform lain untuk charting dan TradingView hanya sebagai referensi</li>
-      <li>Budget untuk upgrade belum ada atau ada prioritas yang lebih penting dulu</li>
-    </ul>
-
-    <h2>Berapa Harganya?</h2>
-
-    <p>Harga resmi TradingView di site mereka bisa sangat mahal untuk trader Indonesia — bisa tembus Rp 400.000–600.000+ per bulan untuk plan Premium. Tapi ada cara legal untuk mendapatkannya jauh lebih murah.</p>
-
-    <p><a href="https://jekistore.com" style="color:var(--green-deep);font-weight:700;">JekiStore</a> menyediakan akses TradingView Premium mulai dari Rp 185.000/bulan dengan garansi aktif. Ini bukan akun bajakan — ini akses resmi yang didapat melalui mekanisme berbagi plan yang diizinkan TradingView.</p>
-
-    <div class="article-cta">
-      <p>Cek harga dan cara order TradingView Premium di JekiStore</p>
-      <a href="https://wa.me/6283119686482" class="btn-cta" target="_blank" rel="noopener">
-        <i class="bi bi-whatsapp"></i> Order via WhatsApp
-      </a>
-    </div>
-
-    <!-- Related articles — diisi otomatis oleh blog-engine.js -->
-    <!-- BUILD:RELATED:START -->
-<div id="js-related"><section class="related-section">
-        <h2 class="related-heading">Artikel Lainnya</h2>
-        <div class="related-grid">
-          <a href="/blog/roadmap-belajar-trading-crypto-akademi-crypto-bootcamp" class="related-card">
-              <div class="related-thumb">
-                <img src="/blog/imgblog/kalimasada-trader-crypto.webp" alt="Roadmap Belajar Trading Crypto dari Nol: Pemetaan Crypto Trading Bootcamp Akademi Crypto" loading="lazy">
-              </div>
-              <div class="related-body">
-                <div class="related-cat">Panduan</div>
-                <div class="related-title">Roadmap Belajar Trading Crypto dari Nol: Pemetaan Crypto Trading Bootcamp Akademi Crypto</div>
-                <div class="related-meta"><i class="bi bi-clock"></i> 10 menit</div>
-              </div>
-            </a><a href="/blog/krypton-framework-siklus-market-crypto" class="related-card">
-              <div class="related-thumb">
-                <img src="/blog/imgblog/wolf.webp" alt="Krypton Framework — Siklus Market Crypto 9 Fase" loading="lazy">
-              </div>
-              <div class="related-body">
-                <div class="related-cat">Market</div>
-                <div class="related-title">Krypton Framework: Cara Baca Siklus Market Crypto Tanpa Tebak-Tebakan</div>
-                <div class="related-meta"><i class="bi bi-clock"></i> 9 menit</div>
-              </div>
-            </a><a href="/blog/crypto-etf-2026-panduan-trader-indonesia" class="related-card">
-              <div class="related-thumb">
-                <img src="/blog/imgblog/crypto-cosmos-hijau-jekistore.webp" alt="Panduan Crypto ETF 2026 untuk Trader Indonesia" loading="lazy">
-              </div>
-              <div class="related-body">
-                <div class="related-cat">Panduan</div>
-                <div class="related-title">Crypto ETF 2026: Apa Artinya Buat Trader Indonesia?</div>
-                <div class="related-meta"><i class="bi bi-clock"></i> 7 menit</div>
-              </div>
-            </a>
-        </div>
-      </section></div>
-    <!-- BUILD:RELATED:END -->
+    ${relatedHtml}
   </article>
 
   <aside class="article-sidebar">
@@ -562,9 +581,57 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 </script>
 
-<!-- Blog Engine -->
-<script src="/blog/articles.js"></script>
-<script src="/blog/blog-engine.js"></script>
-
 </body>
-</html>
+</html>`;
+}
+
+// ── Main ─────────────────────────────────────────────────
+function main() {
+  // Load meta dari articles.json
+  const allMeta = JSON.parse(fs.readFileSync(ARTICLES_JSON_PATH, 'utf8'));
+  const publishedMeta = allMeta.filter(a => a.status === 'published');
+
+  // Load konten dari articles-content.json
+  const allContent = JSON.parse(fs.readFileSync(CONTENT_JSON_PATH, 'utf8'));
+  const contentMap = {};
+  allContent.forEach(c => { contentMap[c.slug] = c; });
+
+  let generated = 0;
+  let skipped = 0;
+
+  publishedMeta.forEach(meta => {
+    const content = contentMap[meta.slug];
+
+    if (!content) {
+      console.warn(`  ⚠ Konten untuk "${meta.slug}" tidak ditemukan di articles-content.json — dilewati`);
+      skipped++;
+      return;
+    }
+
+    // Buat folder blog/[slug]/ kalau belum ada
+    const dir = path.join(OUTPUT_DIR, meta.slug);
+    fs.mkdirSync(dir, { recursive: true });
+
+    const html = buildArticlePage(meta, content, allMeta);
+    const outputPath = path.join(dir, 'index.html');
+    fs.writeFileSync(outputPath, html, 'utf8');
+
+    console.log(`  ✓ blog/${meta.slug}/index.html`);
+    generated++;
+  });
+
+  console.log('\n✅ Generate artikel selesai.');
+  console.log(`   Artikel ter-generate  : ${generated}`);
+  console.log(`   Dilewati (no content) : ${skipped}`);
+  if (skipped > 0) {
+    console.log(`   → Tambahkan konten untuk slug yang dilewati di articles-content.json`);
+  }
+  console.log('\n📁 Struktur output:');
+  console.log('   blog/');
+  publishedMeta.forEach(a => {
+    const hasContent = !!contentMap[a.slug];
+    console.log(`   └── ${a.slug}/index.html ${hasContent ? '✓' : '✗ (belum ada konten)'}`);
+  });
+}
+
+main();

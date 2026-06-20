@@ -9,8 +9,18 @@
  *
  *  Cara menambah artikel baru:
  *  1. Tambahkan objek baru di array ARTICLES (urutan terbaru di atas)
- *  2. Upload file HTML artikel ke folder /blog/
- *  3. Selesai — blog index, related, popular, schema semua otomatis update
+ *  2. Upload file HTML artikel ke folder /blog/ dengan nama [slug].html
+ *  3. Jalankan: node build-blog.js
+ *     → Ini menulis ulang blog.html (featured/grid/popular/schema)
+ *       dan bagian "Artikel Lainnya" di semua artikel, langsung
+ *       sebagai HTML statis (bukan lewat JS), supaya Google &
+ *       AI crawler yang tidak menjalankan JavaScript tetap bisa
+ *       membaca seluruh daftar artikel.
+ *  4. Commit & deploy.
+ *
+ *  blog-engine.js tetap dimuat sebagai fallback (mengisi via JS
+ *  kalau ada yang lupa jalankan build-blog.js), tapi JANGAN
+ *  jadikan itu cara utama — selalu jalankan build-blog.js.
  *
  *  Field yang WAJIB diisi:
  *    slug       → nama file HTML tanpa .html, contoh: "cara-pakai-bar-replay-tradingview"
@@ -168,7 +178,7 @@ const ARTICLES = [
   },
 
   {
-    slug:     "navigasi-labirin-trading-mengapamindsetdanpemahamansiklusjauhlebihpentingdaripadamencaristrategiterbaik",
+    slug:     "navigasi-labirin-trading-mindset-vs-strategi",
     title:    "Navigasi Labirin Trading: Mengapa Mindset dan Pemahaman Siklus Jauh Lebih Penting",
     excerpt:  "Banyak trader pemula terjebak dalam siklus tanpa akhir mencari strategi ajaib. Padahal kunci konsistensi ada di mindset dan pemahaman siklus pasar struktural.",
     category: "market",

@@ -35,6 +35,7 @@
   function renderFeatured() {
     const el = document.getElementById('js-featured');
     if (!el) return;
+    if (el.children.length) return; // sudah di-pre-render oleh build-blog.js
 
     const article = ARTICLES.find(a => a.featured) || ARTICLES[0];
     if (!article) return;
@@ -69,6 +70,7 @@
   function renderGrid() {
     const el = document.getElementById('js-grid');
     if (!el) return;
+    if (el.children.length) return; // sudah di-pre-render oleh build-blog.js
 
     const articles = ARTICLES.filter(a => !a.featured);
 
@@ -100,6 +102,7 @@
   function renderPopular() {
     const el = document.getElementById('js-popular');
     if (!el) return;
+    if (el.children.length) return; // sudah di-pre-render oleh build-blog.js
 
     const articles = ARTICLES.slice(0, 6);
     el.innerHTML = articles.map((article, i) => `
@@ -116,6 +119,7 @@
   function renderBlogSchema() {
     const el = document.getElementById('js-schema-itemlist');
     if (!el) return;
+    if (el.textContent.trim()) return; // sudah di-pre-render oleh build-blog.js
 
     const items = ARTICLES.map((a, i) => ({
       "@type": "ListItem",
@@ -137,6 +141,7 @@
   function renderRelated() {
     const el = document.getElementById('js-related');
     if (!el) return;
+    if (el.children.length) return; // sudah di-pre-render oleh build-blog.js
 
     const canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) return;
