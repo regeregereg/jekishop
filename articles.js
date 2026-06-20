@@ -71,8 +71,8 @@ const ARTICLES = [
     readTime: "10 menit",
     date:     "20 Juni 2026",
     dateISO:  "2026-06-20",
-    image:    "/blog/imgblog/roadmap-trading-bootcamp.webp",
-    imageAlt: "Roadmap belajar trading crypto dari Crypto Trading Bootcamp Akademi Crypto",
+    image:    null,
+    imageAlt: null,
     featured: false,
     tags:     ["Roadmap", "Pemula", "Technical Analysis", "Akademi Crypto"]
   },
