@@ -71,7 +71,7 @@ const ARTICLES = [
     readTime: "10 menit",
     date:     "20 Juni 2026",
     dateISO:  "2026-06-20",
-    image:    null,
+    image:    "/blog/imgblog/kalimasada-trader-crypto.webp",
     imageAlt: null,
     featured: false,
     tags:     ["Roadmap", "Pemula", "Technical Analysis", "Akademi Crypto"]
