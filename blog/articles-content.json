@@ -17,16 +17,61 @@
       {
         "type": "table",
         "caption": "Perbandingan fitur Free vs Premium (Essential)",
-        "headers": ["Fitur", "Free", "Essential / Plus", "Premium"],
+        "headers": [
+          "Fitur",
+          "Free",
+          "Essential / Plus",
+          "Premium"
+        ],
         "rows": [
-          ["Indikator per chart", "3", "5 / 10", "25"],
-          ["Chart per tab", "1", "2 / 4", "8"],
-          ["Alert aktif", "1", "20 / 100", "400"],
-          ["Bar Replay", "✗", "✓ / ✓", "✓"],
-          ["Volume Profile", "✗", "✗ / ✓", "✓"],
-          ["Data export (CSV)", "✗", "✓ / ✓", "✓"],
-          ["Iklan", "Ada", "Tidak ada", "Tidak ada"],
-          ["Second chart (overlay)", "✗", "✗ / ✓", "✓"]
+          [
+            "Indikator per chart",
+            "3",
+            "5 / 10",
+            "25"
+          ],
+          [
+            "Chart per tab",
+            "1",
+            "2 / 4",
+            "8"
+          ],
+          [
+            "Alert aktif",
+            "1",
+            "20 / 100",
+            "400"
+          ],
+          [
+            "Bar Replay",
+            "✗",
+            "✓ / ✓",
+            "✓"
+          ],
+          [
+            "Volume Profile",
+            "✗",
+            "✗ / ✓",
+            "✓"
+          ],
+          [
+            "Data export (CSV)",
+            "✗",
+            "✓ / ✓",
+            "✓"
+          ],
+          [
+            "Iklan",
+            "Ada",
+            "Tidak ada",
+            "Tidak ada"
+          ],
+          [
+            "Second chart (overlay)",
+            "✗",
+            "✗ / ✓",
+            "✓"
+          ]
         ]
       },
       {
@@ -224,286 +269,158 @@
     ]
   },
   {
-    "slug": "bitcoin-sideways-juni-2026",
-    "meta": {
-      "title": "Bitcoin Sideways di $63K — Ini yang Sebenarnya Terjadi",
-      "description": "Bitcoin stuck di kisaran $60K–$64K sejak pertengahan Mei. Bukan karena pasar mati — ada alasan spesifik di baliknya dan ada yang bisa kamu lakukan.",
-      "category": "market",
-      "categoryLabel": "Market",
-      "categoryIcon": "bi-graph-up",
-      "readTime": "6 menit baca",
-      "date": "19 Juni 2026",
-      "dateISO": "2026-06-19",
-      "image": "bitcoin-sideways-juni-2026.jpg"
-    },
+    "slug": "roadmap-belajar-trading-crypto-akademi-crypto-bootcamp",
     "blocks": [
       {
         "type": "intro",
-        "text": "Bitcoin sudah bergerak di kisaran $60.000–$64.000 hampir sebulan penuh. Buat trader yang terbiasa volatilitas tinggi, ini terasa membosankan — tapi kondisi ini bukan tanpa alasan. Ada beberapa faktor fundamental yang sedang bermain, dan memahaminya bisa bantu kamu mengambil posisi yang lebih cerdas."
-      },
-      {
-        "type": "h2",
-        "text": "Konteks: Di Mana Bitcoin Sekarang?"
-      },
-      {
-        "type": "p",
-        "text": "Per pertengahan Juni 2026, Bitcoin diperdagangkan di kisaran $63.000–$64.000 dengan kapitalisasi pasar sekitar $1,33 triliun. Angka ini sebenarnya tidak kecil — tapi setelah pernah menyentuh ATH di atas $100K pada akhir 2025, banyak investor merasa pasar sedang \"mandek\"."
+        "text": "Kalau kamu googling \"cara belajar trading crypto dari nol\", isinya kebanyakan cuma teori indikator yang dipotong-potong tanpa urutan jelas. Akademi Crypto punya pendekatan yang lebih runtut lewat seri Crypto Trading Bootcamp — 16 video yang disusun dari dasar mutlak sampai analisis lanjutan. Di artikel ini kita breakdown jadi roadmap belajar yang lebih mudah diikuti, plus konteks kenapa setiap fase penting sebelum kamu lanjut ke fase berikutnya."
       },
       {
         "type": "callout",
-        "variant": "info",
-        "text": "Berdasarkan data historis, median return Bitcoin di bulan Juni adalah +2,58% — dengan hanya 5 kali Juni merah dalam 12 tahun terakhir. Secara musiman, Juni biasanya bukan bulan terburuk untuk BTC."
+        "text": "Artikel ini adalah ringkasan dan pemetaan dari playlist \"Crypto Trading Bootcamp\" oleh Akademi Crypto. Untuk penjelasan lengkap, contoh chart, dan demo langsung di setiap topik, tonton videonya di channel YouTube Akademi Crypto — link ada di bagian bawah artikel."
       },
       {
         "type": "h2",
-        "text": "4 Penyebab Utama Bitcoin Stuck di Sini"
-      },
-      {
-        "type": "h3",
-        "text": "1. Outflow ETF Terbesar di 2026"
+        "text": "Kenapa Belajar Trading Butuh Roadmap, Bukan Cuma Nonton Acak"
       },
       {
         "type": "p",
-        "text": "Mei 2026 mencatat net outflow dari Bitcoin spot ETF sebesar $2,30 miliar — angka outflow bulanan terbesar sepanjang tahun ini dan terbesar sejak November 2025. Yang mengejutkan: Bitcoin hanya turun 3,69% di Mei, tapi outflow-nya 10x lebih besar dibanding Februari. Artinya: institusi sedang de-risking lebih agresif dari yang terlihat di harga."
-      },
-      {
-        "type": "h3",
-        "text": "2. Sinyal On-Chain: Undervalued tapi Belum Konfirmasi"
-      },
-      {
-        "type": "p",
-        "text": "Data Glassnode per minggu ke-23 menunjukkan AVIV Z-Score Bitcoin di level -1,06. Ini berarti harga pasar saat ini berada di bawah rata-rata biaya investasi investor aktif. Secara historis, level ini sering menandai area undervalued — tapi 'undervalued' tidak berarti 'langsung naik'."
-      },
-      {
-        "type": "h3",
-        "text": "3. Ketidakpastian Makroekonomi Masih Tinggi"
-      },
-      {
-        "type": "p",
-        "text": "Dua katalis eksternal yang masih menarik likuiditas keluar dari pasar crypto: kebijakan suku bunga The Fed yang belum jelas arahnya, dan tekanan geopolitik global yang membuat investor institusional lebih memilih aset 'aman'. Ini menciptakan lingkungan di mana modal belum mau masuk agresif ke crypto."
-      },
-      {
-        "type": "h3",
-        "text": "4. Dominasi Bitcoin vs. Altcoin"
-      },
-      {
-        "type": "p",
-        "text": "Tren 2026 menunjukkan dominasi Bitcoin yang terus menguat sementara altcoin kesulitan mempertahankan relevansi. Modal yang ada di pasar crypto lebih banyak berputar di BTC dan stablecoin, bukan menyebar ke altcoin seperti siklus-siklus sebelumnya."
-      },
-      {
-        "type": "table",
-        "caption": "Snapshot indikator pasar Bitcoin Juni 2026",
-        "headers": ["Indikator", "Kondisi Saat Ini", "Sinyal"],
-        "rows": [
-          ["ETF Net Flow (Mei)", "-$2,30 miliar", "✗ Bearish"],
-          ["AVIV Z-Score", "-1,06", "✓ Undervalued"],
-          ["Kapitalisasi Pasar Global", "$2,18 triliun", "Netral"],
-          ["Bitcoin Dominance", "Meningkat", "✓ Bullish BTC"],
-          ["Altcoin Performance", "Underperform", "✗ Bearish Alts"]
-        ]
+        "text": "Masalah paling umum trader pemula bukan kekurangan informasi — justru kebanyakan informasi yang nggak terurut. Nonton video tentang indikator RSI sebelum paham cara baca trend itu seperti belajar rumus sebelum tahu apa soalnya. Bootcamp ini menariknya nyusun materi dengan logika bertingkat: dari mindset dan fondasi, lanjut ke membaca chart, baru masuk ke tools dan analisis lanjutan. Roadmap di bawah ini ngikutin logika itu, dipecah jadi 4 fase besar."
       },
       {
         "type": "h2",
-        "text": "Apa yang Bisa Terjadi Selanjutnya?"
-      },
-      {
-        "type": "h3",
-        "text": "Skenario Bullish: Reklaim $73.800+"
+        "text": "Fase 1: Fondasi Sebelum Mulai Trading (Ep 1-4)"
       },
       {
         "type": "p",
-        "text": "Bitcoin saat ini bergerak di dalam rising channel sejak 6 Februari 2026. Untuk melanjutkan channel ini, BTC perlu merebut kembali area $73.869. Jika ini terjadi, kemungkinan besar akan ada kelanjutan kenaikan yang signifikan."
-      },
-      {
-        "type": "h3",
-        "text": "Skenario Bearish: Breakdown ke $60K atau Lebih Rendah"
-      },
-      {
-        "type": "p",
-        "text": "Jika area $60.000 tidak bisa dipertahankan sebagai support, beberapa analis memproyeksikan potensi koreksi lebih lanjut ke area $55K–$58K. Analis lain bahkan menyebut kemungkinan bottom baru muncul di September–Oktober 2026."
-      },
-      {
-        "type": "callout",
-        "variant": "green",
-        "text": "Kondisi sideways seperti ini justru waktu terbaik untuk latihan membaca chart dengan Bar Replay di TradingView — backtest strategi kamu di kondisi ranging, dan siapkan plan untuk dua skenario di atas sebelum harga bergerak."
-      },
-      {
-        "type": "h2",
-        "text": "Yang Harus Kamu Lakukan Sekarang sebagai Trader"
+        "text": "Fase ini jawab pertanyaan paling dasar yang sering dilewatkan trader baru: kenapa crypto ini ada, apa beda jadi trader dengan investor, dan apa yang harus disiapkan sebelum buka posisi pertama."
       },
       {
         "type": "list",
         "items": [
-          "Jangan overtrading di kondisi ranging. Sideways market paling sering menguras akun.",
-          "Tandai dua level kritis: $73.869 sebagai resistance utama dan $60.000 sebagai support.",
-          "Perhatikan ETF flow mingguan — ini sekarang leading indicator terkuat untuk BTC jangka pendek.",
-          "Kurangi eksposur altcoin jika tidak punya keyakinan kuat. Dominasi BTC meningkat.",
-          "Gunakan waktu ini untuk backtest. Volatilitas rendah = waktu ideal untuk evaluasi strategi."
+          "Ep 1 — Mulai Sekarang: orientasi awal bootcamp dan mindset yang dibutuhkan sebelum masuk dunia trading crypto",
+          "Ep 2 — Sejarah Bitcoin dan Altcoin: konteks kenapa Bitcoin diciptakan dan bagaimana ekosistem altcoin berkembang dari sana",
+          "Ep 3 — Trader vs Investor Crypto: perbedaan horizon waktu, tujuan, dan cara berpikir antara dua pendekatan ini — penting supaya kamu nggak \"trading\" dengan mindset investor atau sebaliknya",
+          "Ep 4 — Persiapan Wajib Sebelum Trading Crypto: checklist praktis sebelum eksekusi posisi pertama, dari modal sampai mental"
         ]
-      },
-      {
-        "type": "keypoints",
-        "title": "Ringkasan",
-        "items": [
-          "Bitcoin sideways di $60K–$64K karena outflow ETF besar, ketidakpastian makro, dan belum ada katalis kuat",
-          "Data on-chain menunjukkan undervalued — tapi undervalued tidak berarti harga langsung naik",
-          "Dua level kritis: $73.869 (resistance/breakout) dan $60.000 (support/breakdown)",
-          "Kondisi sideways adalah waktu terbaik untuk backtest, bukan untuk overtrading"
-        ]
-      },
-      {
-        "type": "cta",
-        "text": "Siapkan Strategi Sebelum Pasar Bergerak Lagi",
-        "href": "https://wa.me/6283119686482",
-        "label": "Order via WhatsApp"
-      }
-    ]
-  },
-  {
-    "slug": "crypto-etf-2026-panduan-trader-indonesia",
-    "meta": {
-      "title": "Crypto ETF 2026: Apa Artinya Buat Trader Indonesia?",
-      "description": "ETF crypto makin besar, makin berpengaruh ke harga. Pahami cara kerjanya dan bagaimana kamu bisa pakai data ETF untuk keputusan trading yang lebih tajam.",
-      "category": "panduan",
-      "categoryLabel": "Panduan",
-      "categoryIcon": "bi-bar-chart-line",
-      "readTime": "7 menit baca",
-      "date": "19 Juni 2026",
-      "dateISO": "2026-06-19",
-      "image": "crypto-etf-2026-indonesia.jpg"
-    },
-    "blocks": [
-      {
-        "type": "intro",
-        "text": "Dulu crypto dan pasar tradisional jalan sendiri-sendiri. Sekarang tidak lagi. Bitcoin spot ETF sudah menyedot lebih dari $55 miliar net inflow secara kumulatif — dan setiap minggu, data ETF flow menjadi salah satu indikator terkuat yang menggerakkan harga. Kalau kamu belum memperhatikan ini, kamu trading dengan mata tertutup."
-      },
-      {
-        "type": "h2",
-        "text": "Apa Itu Crypto ETF dan Kenapa Penting?"
-      },
-      {
-        "type": "p",
-        "text": "ETF (Exchange-Traded Fund) adalah produk investasi yang diperdagangkan di bursa saham tradisional — tapi isinya aset crypto. Bitcoin spot ETF memungkinkan investor institusional seperti dana pensiun, hedge fund, dan manajer aset besar untuk eksposur ke Bitcoin tanpa harus menyimpan Bitcoin secara langsung."
       },
       {
         "type": "callout",
-        "variant": "info",
-        "text": "Bitcoin dan Ethereum spot ETF gabungan mencatat $31 miliar net inflow sepanjang 2025, dengan total volume trading mencapai $880 miliar. Ini infrastruktur baru yang mengubah cara modal mengalir ke crypto."
+        "text": "Kalau kamu baru mulai, jangan skip fase ini meski kelihatannya \"basic banget\". Kebanyakan trader yang rugi besar di awal justru karena loncat ke chart dan indikator tanpa paham dulu apa bedanya trading dan investasi, atau tanpa persiapan modal dan mental yang jelas."
       },
       {
         "type": "h2",
-        "text": "Perkembangan ETF di 2026: Lebih Besar dari yang Kamu Kira"
-      },
-      {
-        "type": "h3",
-        "text": "Solana ETF Sudah Ada"
+        "text": "Fase 2: Membaca Chart dan Price Action (Ep 5-8)"
       },
       {
         "type": "p",
-        "text": "Pada 2026, lanskap ETF meluas jauh melampaui Bitcoin. Solana staking ETF berhasil disetujui dan mengumpulkan $1 miliar AUM dalam bulan pertama saja. Ini menandai bahwa regulator mulai lebih terbuka terhadap altcoin — bukan hanya BTC dan ETH."
-      },
-      {
-        "type": "h3",
-        "text": "100+ ETF Crypto Baru Akan Hadir"
-      },
-      {
-        "type": "p",
-        "text": "Asset manager Bitwise memproyeksikan lebih dari 100 ETF crypto baru akan diluncurkan di AS tahun ini seiring timeline persetujuan yang semakin cepat. Aset yang sudah mengajukan termasuk XRP, ADA, HYPE, SUI, dan bahkan meme coin seperti PENGU."
-      },
-      {
-        "type": "h3",
-        "text": "ETF Bisa Serap 100%+ dari Penerbitan Bitcoin Baru"
-      },
-      {
-        "type": "p",
-        "text": "Proyeksi yang paling mengejutkan: dengan laju inflow saat ini, ETF berpotensi menyerap lebih dari 100% dari seluruh Bitcoin baru yang ditambang setiap hari. Jika ini terjadi, artinya permintaan struktural dari ETF saja sudah melebihi suplai baru — faktor yang secara teori sangat bullish untuk harga jangka panjang."
-      },
-      {
-        "type": "table",
-        "caption": "Status ETF Crypto Utama per Juni 2026",
-        "headers": ["ETF / Produk", "Status", "AUM / Inflow"],
-        "rows": [
-          ["Bitcoin Spot ETF (gabungan)", "Aktif", "$55,79 miliar kumulatif"],
-          ["Ethereum Spot ETF", "Aktif", "Bagian dari $31B inflow 2025"],
-          ["Solana Staking ETF", "Aktif (2026)", "$1 miliar (bulan pertama)"],
-          ["XRP, ADA, HYPE, SUI ETF", "Dalam proses", "—"],
-          ["Meme Coin ETF (PENGU dll)", "Mengajukan", "—"]
-        ]
-      },
-      {
-        "type": "h2",
-        "text": "Cara Membaca Data ETF Flow untuk Trading"
-      },
-      {
-        "type": "h3",
-        "text": "1. Perhatikan Net Inflow vs Net Outflow Mingguan"
-      },
-      {
-        "type": "p",
-        "text": "Net inflow positif = institusi sedang membeli. Net outflow = institusi sedang menjual atau mengurangi eksposur. Data ini dirilis harian dan bisa ditemukan di SoSoValue atau Coinglass secara gratis."
-      },
-      {
-        "type": "h3",
-        "text": "2. Bandingkan dengan Pergerakan Harga"
-      },
-      {
-        "type": "p",
-        "text": "Sinyal paling kuat muncul ketika ada divergensi: harga turun tapi ETF inflow tetap positif (akumulasi institusional tersembunyi), atau harga stabil tapi ETF outflow besar — seperti yang terjadi di Mei 2026."
-      },
-      {
-        "type": "h3",
-        "text": "3. Jangan Hanya Lihat Angka, Lihat Trennya"
-      },
-      {
-        "type": "p",
-        "text": "Satu hari outflow tidak berarti apa-apa. Yang penting adalah tren 2–4 minggu. Outflow berturut-turut selama 3+ minggu adalah sinyal serius bahwa sentimen institusional sedang bergeser."
-      },
-      {
-        "type": "callout",
-        "variant": "green",
-        "text": "Tip praktis: Jadikan pengecekan data ETF flow bagian dari routine analisis mingguanmu — setiap Senin pagi, cek net flow minggu sebelumnya di SoSoValue sebelum memutuskan posisi untuk minggu itu."
-      },
-      {
-        "type": "h2",
-        "text": "Apa Dampaknya untuk Trader di Indonesia?"
+        "text": "Ini fase inti technical analysis tahap awal — gimana cara baca chart itu sendiri sebelum kamu pakai indikator apapun. Pendekatan ini sejalan dengan prinsip umum technical analysis: harga itu sendiri sudah menyimpan informasi, sebelum ditambah indikator pendukung."
       },
       {
         "type": "list",
         "items": [
-          "Volatilitas sekarang berkorelasi dengan jam trading Wall Street. Pergerakan besar sering terjadi saat pasar AS buka (malam WIB).",
-          "Berita regulasi crypto AS jauh lebih penting dari sebelumnya. Keputusan SEC atau pernyataan Fed sekarang langsung mempengaruhi ETF flow dan otomatis harga.",
-          "Altcoin yang belum dapat ETF approval cenderung underperform BTC karena modal institusional terkonsentrasi di aset yang sudah punya ETF.",
-          "Stablecoin semakin dominan sebagai instrumen yield dan likuiditas dalam ekosistem DeFi."
+          "Ep 5 — Cara Memahami Technical Analysis Crypto dari Nol: pengantar konsep TA, kenapa dipakai, dan batasannya",
+          "Ep 6 — Cara Membaca Chart Crypto: dasar membaca candlestick dan struktur chart",
+          "Ep 7 — Cara Membaca Tren Crypto: identifikasi arah market — uptrend, downtrend, atau sideways",
+          "Ep 8 — Menentukan Support dan Resistance di Crypto: cara menandai area harga yang historis jadi titik balik"
         ]
       },
       {
+        "type": "p",
+        "text": "Kalau kamu sudah pakai TradingView untuk praktik di fase ini, satu kebiasaan yang sering dilewatkan pemula adalah langsung gambar garis support/resistance di chart real-time. Lebih efektif kalau kamu uji dulu di data historis — bisa pakai fitur Bar Replay untuk mundur ke periode lama dan latih mata kamu menandai level-level itu tanpa bias karena sudah tahu hasilnya."
+      },
+      {
         "type": "h2",
-        "text": "Cara Pakai TradingView untuk Analisis ETF + Price Action"
+        "text": "Fase 3: Tools dan Trigger Entry (Ep 9-11)"
+      },
+      {
+        "type": "p",
+        "text": "Setelah paham baca chart manual, fase ini masuk ke alat bantu — indikator dan logika kapan waktu yang tepat untuk eksekusi, bukan cuma tahu arah tren tapi juga momen masuknya."
+      },
+      {
+        "type": "list",
+        "items": [
+          "Ep 9 — Cara Pakai Trading Indicators: pengenalan indikator teknikal umum dan kapan masing-masing relevan dipakai",
+          "Ep 10 — Cara Trigger Analysis di Pasar Kripto: logika menentukan sinyal entry berdasarkan kombinasi price action dan indikator",
+          "Ep 11 — lanjutan seputar membaca data trading di chart sebagai dasar keputusan entry/exit"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Ini fase di mana jumlah indikator yang bisa kamu pasang sekaligus mulai jadi kendala teknis kalau masih pakai TradingView versi gratis — yang cuma kasih jatah 3 indikator per chart. Begitu kamu mulai kombinasi trend indicator, momentum, dan volume sekaligus, batas itu kerasa cepat penuh."
+      },
+      {
+        "type": "h2",
+        "text": "Fase 4: Analisis Lanjutan (Ep 13-15)"
+      },
+      {
+        "type": "p",
+        "text": "Fase ini melampaui chart — masuk ke analisis yang sering dianggap \"level lanjutan\" karena butuh data di luar candlestick: narasi market, fundamental proyek, dan aktivitas on-chain."
+      },
+      {
+        "type": "list",
+        "items": [
+          "Ep 13 — Crypto Narrative Analysis: cara membaca narasi atau tema yang sedang menggerakkan minat pasar terhadap sektor crypto tertentu",
+          "Ep 14 — Analisa Fundamental Crypto: evaluasi proyek dari sisi use case, tim, dan tokenomics, bukan cuma harga",
+          "Ep 15 — Cara Analisa On-Chain di Crypto: membaca data langsung dari blockchain — pergerakan wallet besar, volume transaksi, dan metrik lain yang nggak kelihatan di chart harga biasa"
+        ]
+      },
+      {
+        "type": "p",
+        "text": "Tiga topik ini saling melengkapi: narrative kasih kamu konteks \"kenapa orang tertarik ke sektor ini sekarang\", fundamental kasih konteks \"apakah proyeknya solid\", dan on-chain kasih bukti \"apa yang sebenarnya terjadi di balik harga\". Kombinasi ketiganya jauh lebih kuat daripada cuma andalin chart teknikal sendirian."
+      },
+      {
+        "type": "h2",
+        "text": "Modul Lanjutan yang Belum Tercakup di Sini"
+      },
+      {
+        "type": "p",
+        "text": "Playlist ini berisi 16 video total. Selain 13 episode yang sudah dipetakan di atas, ada 2 episode lain (termasuk episode penutup) yang membahas materi lanjutan dan kemungkinan psikologi trading atau manajemen risiko sebagai penutup bootcamp. Karena materinya cukup teknis dan lebih pas dijelaskan langsung dengan demonstrasi visual, kami sarankan tonton langsung episode-episode itu di playlist aslinya untuk dapat konteks penuh."
+      },
+      {
+        "type": "h2",
+        "text": "Cara Pakai Roadmap Ini Biar Nggak Cuma Jadi Tontonan Pasif"
       },
       {
         "type": "steps",
         "items": [
-          "Plot data ETF di overlay chart. Tambahkan ticker ETF seperti IBIT (BlackRock Bitcoin ETF) dan GBTC sebagai overlay di chart BTC/USD untuk melihat korelasi langsung.",
-          "Gunakan multi-chart layout untuk monitor BTC, IBIT, dan indeks pasar AS (SPX atau NDX) secara bersamaan — melihat korelasi antara ketiga ini dalam satu layar sangat membantu.",
-          "Set alert pada level kritis. Gunakan alert berbasis kondisi indikator untuk notifikasi ketika harga BTC menyentuh level-level yang berkorelasi dengan pola ETF flow tertentu."
+          "Tonton 1 fase per minggu, jangan langsung semua — kasih waktu otak kamu konsolidasi sebelum nambah informasi baru",
+          "Setelah tiap fase, praktikkan langsung di chart TradingView kamu sendiri — bukan cuma manggut-manggut nonton",
+          "Pakai aset yang sama (misal BTC/USDT) di sepanjang proses belajar, biar kamu fokus ke skill, bukan kebingungan ganti-ganti aset",
+          "Catat insight penting tiap episode di jurnal trading kamu — ini akan jadi referensi pribadi yang lebih personal daripada nonton ulang videonya"
         ]
       },
       {
-        "type": "keypoints",
-        "title": "Poin Kunci",
-        "items": [
-          "ETF crypto sekarang adalah pemain dominan — data flow-nya adalah leading indicator harga BTC",
-          "Lanskap ETF di 2026 sudah jauh lebih luas: BTC, ETH, SOL, dan banyak lagi dalam proses",
-          "Divergensi antara ETF flow dan pergerakan harga adalah sinyal trading paling berharga",
-          "Sebagai trader Indonesia, pantau jam trading AS dan berita regulasi AS lebih ketat dari sebelumnya",
-          "Multi-chart di TradingView Premium adalah cara terbaik untuk monitor semua ini sekaligus"
-        ]
+        "type": "h2",
+        "text": "Apresiasi untuk Akademi Crypto"
+      },
+      {
+        "type": "p",
+        "text": "Roadmap di atas adalah hasil pemetaan kami atas struktur edukasi yang sudah disusun Akademi Crypto lewat seri Crypto Trading Bootcamp. Kami sangat menyarankan kamu menonton videonya secara langsung untuk dapat penjelasan detail, contoh chart real, dan gaya mengajar yang nggak bisa digantikan ringkasan teks manapun — termasuk artikel ini."
       },
       {
         "type": "cta",
-        "text": "Tools untuk Trader Serius — TradingView Premium mulai Rp 185.000/bulan",
+        "text": "Tonton playlist lengkap Crypto Trading Bootcamp di channel YouTube Akademi Crypto",
+        "href": "https://youtube.com/playlist?list=PLzHZ6a6dMGhnpv73SMTlX_DVd_1u5UFDj",
+        "label": "Buka Playlist di YouTube"
+      },
+      {
+        "type": "h2",
+        "text": "Setelah Paham Teorinya, Tinggal Praktik di Tools yang Tepat"
+      },
+      {
+        "type": "p",
+        "text": "Begitu kamu mulai praktik fase 2 dan 3 — baca chart, pasang indikator, latihan trigger entry — kamu akan cepat sadar TradingView versi gratis cukup membatasi: cuma 3 indikator per chart, 1 alert aktif, dan nggak ada Bar Replay untuk latihan backtest manual. Kalau kamu serius mau praktikkan roadmap ini sampai tuntas, akses ke fitur-fitur itu bakal banyak membantu proses belajarnya."
+      },
+      {
+        "type": "cta",
+        "text": "Akses TradingView Premium mulai dari Rp 185.000/bulan buat dukung proses belajar trading kamu",
         "href": "https://wa.me/6283119686482",
-        "label": "Order via WhatsApp"
+        "label": "Tanya via WhatsApp"
+      },
+      {
+        "type": "callout",
+        "text": "Disclaimer: artikel ini bersifat edukasi dan bukan nasihat keuangan atau ajakan untuk membeli/menjual aset crypto tertentu. Trading dan investasi crypto memiliki risiko tinggi termasuk risiko kehilangan modal. Selalu lakukan riset mandiri dan sesuaikan dengan profil risiko kamu sendiri."
       }
     ]
   }

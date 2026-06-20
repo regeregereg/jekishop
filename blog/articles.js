@@ -63,6 +63,21 @@ const ARTICLES = [
   //  ARTIKEL LIVE
   // ─────────────────────────────────────────────────────────
   {
+    slug:     "roadmap-belajar-trading-crypto-akademi-crypto-bootcamp",
+    title:    "Roadmap Belajar Trading Crypto dari Nol: Pemetaan Crypto Trading Bootcamp Akademi Crypto",
+    excerpt:  "16 video, 1 roadmap. Kami petakan seri Crypto Trading Bootcamp dari Akademi Crypto jadi 4 fase belajar yang lebih mudah diikuti — dari fondasi sampai analisis on-chain.",
+    category: "panduan",
+    icon:     "bi-signpost-split",
+    readTime: "10 menit",
+    date:     "20 Juni 2026",
+    dateISO:  "2026-06-20",
+    image:    "/blog/imgblog/roadmap-trading-bootcamp.webp",
+    imageAlt: "Roadmap belajar trading crypto dari Crypto Trading Bootcamp Akademi Crypto",
+    featured: false,
+    tags:     ["Roadmap", "Pemula", "Technical Analysis", "Akademi Crypto"]
+  },
+
+  {
     slug:     "krypton-framework-siklus-market-crypto",
     title:    "Krypton Framework: Cara Baca Siklus Market Crypto Tanpa Tebak-Tebakan",
     excerpt:  "9 fase siklus crypto dari bull sampai bear, dijelaskan dengan logika MA 50 dan zona supply-demand. Panduan lengkap untuk trader yang capek nebak arah harga.",
