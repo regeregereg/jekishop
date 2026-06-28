@@ -25,3 +25,12 @@ export function formatDateId(isoDate: string): string {
   const d = new Date(isoDate);
   return `${d.getDate()} ${monthsId[d.getMonth()]} ${d.getFullYear()}`;
 }
+
+/** Ubah teks heading jadi id yang aman untuk anchor link (#id) dan TOC */
+export function slugifyHeading(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-");
+}
