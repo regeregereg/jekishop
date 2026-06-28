@@ -3,7 +3,7 @@
     { "source": "/feedback", "destination": "/feedback.html" },
     {
       "source": "/blog/:path*",
-      "destination": "https://jekiblog-id.vercel.app/:path*"
+      "destination": "https://jekiblog.vercel.app/:path*"
     }
   ]
 }
