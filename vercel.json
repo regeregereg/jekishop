@@ -12,6 +12,10 @@
     {
       "source": "/_next/:path*",
       "destination": "https://jekiblog.vercel.app/_next/:path*"
+    },
+    {
+      "source": "/sitemap-blog.xml",
+      "destination": "https://jekiblog.vercel.app/sitemap.xml"
     }
   ]
 }
