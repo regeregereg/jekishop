@@ -2,8 +2,12 @@
   "rewrites": [
     { "source": "/feedback", "destination": "/feedback.html" },
     {
+      "source": "/blog",
+      "destination": "https://jekiblog.vercel.app/blog"
+    },
+    {
       "source": "/blog/:path*",
-      "destination": "https://jekiblog.vercel.app/:path*"
+      "destination": "https://jekiblog.vercel.app/blog/:path*"
     }
   ]
 }
