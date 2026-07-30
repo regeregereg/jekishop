@@ -3866,14 +3866,27 @@ body.glb-noscroll { overflow: hidden; }
 <!-- ══ HERO ══ -->
 <main id="main-content">
 <section class="hero" aria-label="Hero: TradingView Premium Murah Indonesia">
-  <img
+  <video
     class="hero-bg-gif"
-    src="asset/gifbackgroundreplay.gif"
-    alt=""
+    id="heroBgVideo"
+    poster="asset/hero-bg-poster.jpg"
     aria-hidden="true"
-    loading="eager"
-    decoding="async"
-  >
+    muted
+    loop
+    playsinline
+    preload="none"
+  ></video>
+  <script>
+    /* Cuma request video background di layar desktop (>960px).
+       Dijalankan inline di sini (bukan di script bawah) supaya
+       browser tidak sempat mulai fetch apapun di HP/TikTok in-app browser. */
+    if (window.innerWidth > 960) {
+      var hbv = document.getElementById('heroBgVideo');
+      hbv.src = 'asset/hero-bg.mp4';
+      hbv.setAttribute('preload', 'auto');
+      hbv.play().catch(function(){});
+    }
+  </script>
   <div class="hero-blob"></div>
   <div class="hero-inner">
     <div class="hero-badge anim a1">
@@ -4263,134 +4276,6 @@ body.glb-noscroll { overflow: hidden; }
         <div class="step-num">04</div>
         <h4>Akun Aktif Dikirim</h4>
         <p>Proses &lt; 1 jam setelah bayar dikonfirmasi. Admin bantu sampai kamu berhasil login.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ ORDER SECTION ══ -->
-<section class="order-section" id="order">
-  <div class="container">
-    <div class="order-grid">
-
-      <!-- LEFT -->
-      <div class="reveal">
-        <div class="label-tag">Form Order</div>
-        <h2>Siap Mulai?<br>Isi & Langsung Order.</h2>
-        <p style="margin-top:12px; max-width:420px;">Tidak perlu daftar, tidak perlu akun. Isi form, klik tombol, langsung terhubung ke admin kami.</p>
-
-        <ul class="order-trust-list">
-          <li>
-            <div class="otl-icon"><i class="bi bi-shield-lock-fill"></i></div>
-            <div class="otl-text">
-              <h5>Akun Private — Bukan Shared</h5>
-              <p>Setiap pelanggan mendapat akun sendiri, bukan berbagi dengan orang lain. Privasi terjaga penuh.</p>
-            </div>
-          </li>
-          <li>
-            <div class="otl-icon"><i class="bi bi-chat-dots-fill"></i></div>
-            <div class="otl-text">
-              <h5>Admin Responsif 08.00–22.00 WIB</h5>
-              <p>Ada pertanyaan atau kendala, kirim pesan dan kami respons cepat. Panduan login step-by-step tersedia.</p>
-            </div>
-          </li>
-          <li>
-            <div class="otl-icon"><i class="bi bi-arrow-repeat"></i></div>
-            <div class="otl-text">
-              <h5>Garansi Penggantian Gratis</h5>
-              <p>Jika ada gangguan selama masa berlangganan, akun diganti tanpa biaya tambahan apapun.</p>
-            </div>
-          </li>
-          <li>
-            <div class="otl-icon"><i class="bi bi-clock-history"></i></div>
-            <div class="otl-text">
-              <h5>Setting Chart Bisa Dilanjutkan</h5>
-              <p>Untuk Method 1 & 2, layout dan indikator tersimpan aman dan bisa dipakai kembali bulan depan.</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-      <!-- WIDGET -->
-      <div class="order-widget reveal">
-        <div class="widget-head">
-          <h3>Form Order</h3>
-          <p>Isi di bawah, lanjut ke WhatsApp 🚀</p>
-        </div>
-
-        <div class="form-field">
-          <label for="nama">Nama Kamu</label>
-          <input type="text" id="nama" placeholder="Contoh: Budi Santoso">
-        </div>
-
-        <div class="form-field">
-          <label>Pilih Method</label>
-          <div class="method-opts">
-            <div class="method-opt">
-              <input type="radio" name="method" id="m1" value="1">
-              <label for="m1" class="method-opt-label">
-                <div class="radio-dot"></div>
-                <div class="opt-text">
-                  <div class="opt-name">Method 1 — PC / Laptop</div>
-                  <div class="opt-hint">Paling stabil, tidak back basic</div>
-                </div>
-                <span class="opt-badge">⭐ Best</span>
-              </label>
-            </div>
-            <div class="method-opt">
-              <input type="radio" name="method" id="m2" value="2">
-              <label for="m2" class="method-opt-label">
-                <div class="radio-dot"></div>
-                <div class="opt-text">
-                  <div class="opt-name">Method 2 — PC + HP</div>
-                  <div class="opt-hint">Via browser, 1 PC + 1 HP/tablet</div>
-                </div>
-              </label>
-            </div>
-            <div class="method-opt">
-              <input type="radio" name="method" id="m3" value="3">
-              <label for="m3" class="method-opt-label">
-                <div class="radio-dot"></div>
-                <div class="opt-text">
-                  <div class="opt-name">Method 3 — Semua Device</div>
-                  <div class="opt-hint">Login langsung via app TradingView</div>
-                </div>
-              </label>
-            </div>
-          </div>
-          <div class="gmail-alert" id="gmail-alert">
-            <i class="bi bi-envelope-fill" style="margin-top:2px; flex-shrink:0;"></i>
-            <span><strong>Perlu Gmail baru</strong> — Siapkan Gmail yang belum pernah terdaftar di TradingView. Admin akan minta saat di WhatsApp.</span>
-          </div>
-        </div>
-
-        <div class="order-summary-box">
-          <div class="sum-row">
-            <span class="sum-label">Produk</span>
-            <span class="sum-val">TradingView Premium</span>
-          </div>
-          <div class="sum-row">
-            <span class="sum-label">Masa Aktif</span>
-            <span class="sum-val">30 Hari</span>
-          </div>
-          <div class="sum-row">
-            <span class="sum-label">Garansi</span>
-            <span class="sum-val"><i class="bi bi-check-circle-fill" style="color:#3dab3a;"></i> Selama Berlangganan</span>
-          </div>
-          <div class="sum-row">
-            <span class="sum-label">Total</span>
-            <span class="sum-total">Rp 185.000</span>
-          </div>
-        </div>
-
-        <button id="wa-btn" onclick="orderViaWA()">
-          <i class="bi bi-whatsapp" style="font-size:1.15rem;"></i>
-          Order via WhatsApp
-        </button>
-
-        <p class="widget-note">
-          <i class="bi bi-credit-card"></i> Pembayaran via QRIS &nbsp;·&nbsp; Proses &lt; 1 jam &nbsp;·&nbsp; Layanan 08.00–22.00 WIB
-        </p>
       </div>
     </div>
   </div>
@@ -4872,6 +4757,135 @@ body.glb-noscroll { overflow: hidden; }
     </a>
   </div>
 </section>
+
+<!-- ══ ORDER SECTION ══ -->
+<section class="order-section" id="order">
+  <div class="container">
+    <div class="order-grid">
+
+      <!-- LEFT -->
+      <div class="reveal">
+        <div class="label-tag">Form Order</div>
+        <h2>Siap Mulai?<br>Isi & Langsung Order.</h2>
+        <p style="margin-top:12px; max-width:420px;">Tidak perlu daftar, tidak perlu akun. Isi form, klik tombol, langsung terhubung ke admin kami.</p>
+
+        <ul class="order-trust-list">
+          <li>
+            <div class="otl-icon"><i class="bi bi-shield-lock-fill"></i></div>
+            <div class="otl-text">
+              <h5>Akun Private — Bukan Shared</h5>
+              <p>Setiap pelanggan mendapat akun sendiri, bukan berbagi dengan orang lain. Privasi terjaga penuh.</p>
+            </div>
+          </li>
+          <li>
+            <div class="otl-icon"><i class="bi bi-chat-dots-fill"></i></div>
+            <div class="otl-text">
+              <h5>Admin Responsif 08.00–22.00 WIB</h5>
+              <p>Ada pertanyaan atau kendala, kirim pesan dan kami respons cepat. Panduan login step-by-step tersedia.</p>
+            </div>
+          </li>
+          <li>
+            <div class="otl-icon"><i class="bi bi-arrow-repeat"></i></div>
+            <div class="otl-text">
+              <h5>Garansi Penggantian Gratis</h5>
+              <p>Jika ada gangguan selama masa berlangganan, akun diganti tanpa biaya tambahan apapun.</p>
+            </div>
+          </li>
+          <li>
+            <div class="otl-icon"><i class="bi bi-clock-history"></i></div>
+            <div class="otl-text">
+              <h5>Setting Chart Bisa Dilanjutkan</h5>
+              <p>Untuk Method 1 & 2, layout dan indikator tersimpan aman dan bisa dipakai kembali bulan depan.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- WIDGET -->
+      <div class="order-widget reveal">
+        <div class="widget-head">
+          <h3>Form Order</h3>
+          <p>Isi di bawah, lanjut ke WhatsApp 🚀</p>
+        </div>
+
+        <div class="form-field">
+          <label for="nama">Nama Kamu</label>
+          <input type="text" id="nama" placeholder="Contoh: Budi Santoso">
+        </div>
+
+        <div class="form-field">
+          <label>Pilih Method</label>
+          <div class="method-opts">
+            <div class="method-opt">
+              <input type="radio" name="method" id="m1" value="1">
+              <label for="m1" class="method-opt-label">
+                <div class="radio-dot"></div>
+                <div class="opt-text">
+                  <div class="opt-name">Method 1 — PC / Laptop</div>
+                  <div class="opt-hint">Paling stabil, tidak back basic</div>
+                </div>
+                <span class="opt-badge">⭐ Best</span>
+              </label>
+            </div>
+            <div class="method-opt">
+              <input type="radio" name="method" id="m2" value="2">
+              <label for="m2" class="method-opt-label">
+                <div class="radio-dot"></div>
+                <div class="opt-text">
+                  <div class="opt-name">Method 2 — PC + HP</div>
+                  <div class="opt-hint">Via browser, 1 PC + 1 HP/tablet</div>
+                </div>
+              </label>
+            </div>
+            <div class="method-opt">
+              <input type="radio" name="method" id="m3" value="3">
+              <label for="m3" class="method-opt-label">
+                <div class="radio-dot"></div>
+                <div class="opt-text">
+                  <div class="opt-name">Method 3 — Semua Device</div>
+                  <div class="opt-hint">Login langsung via app TradingView</div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="gmail-alert" id="gmail-alert">
+            <i class="bi bi-envelope-fill" style="margin-top:2px; flex-shrink:0;"></i>
+            <span><strong>Perlu Gmail baru</strong> — Siapkan Gmail yang belum pernah terdaftar di TradingView. Admin akan minta saat di WhatsApp.</span>
+          </div>
+        </div>
+
+        <div class="order-summary-box">
+          <div class="sum-row">
+            <span class="sum-label">Produk</span>
+            <span class="sum-val">TradingView Premium</span>
+          </div>
+          <div class="sum-row">
+            <span class="sum-label">Masa Aktif</span>
+            <span class="sum-val">30 Hari</span>
+          </div>
+          <div class="sum-row">
+            <span class="sum-label">Garansi</span>
+            <span class="sum-val"><i class="bi bi-check-circle-fill" style="color:#3dab3a;"></i> Selama Berlangganan</span>
+          </div>
+          <div class="sum-row">
+            <span class="sum-label">Total</span>
+            <span class="sum-total">Rp 185.000</span>
+          </div>
+        </div>
+
+        <button id="wa-btn" onclick="orderViaWA()">
+          <i class="bi bi-whatsapp" style="font-size:1.15rem;"></i>
+          Order via WhatsApp
+        </button>
+
+        <p class="widget-note">
+          <i class="bi bi-credit-card"></i> Pembayaran via QRIS &nbsp;·&nbsp; Proses &lt; 1 jam &nbsp;·&nbsp; Layanan 08.00–22.00 WIB
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <!-- ══ VIDEO TESTIMONI ══ -->
 <style>
@@ -6173,7 +6187,7 @@ if (trustBar) {
    Only active in hero viewport.
 ══════════════════════════════════════ */
 (function initSparkles() {
-  if (window.innerWidth <= 960) { var g=document.querySelector('.hero-bg-gif'); if(g) g.removeAttribute('src'); return; }
+  if (window.innerWidth <= 960) { return; }
   const hero = document.querySelector('.hero');
   if (!hero) return;
 
@@ -6431,6 +6445,31 @@ document.querySelectorAll('input[name="method"]').forEach(r => {
   });
 });
 
+/* ── Deteksi sumber trafik (UTM atau referrer) ──
+   Disimpan di sessionStorage saat kunjungan pertama, supaya tetap
+   terbawa walau visitor sempat pindah tab lalu balik lagi. */
+function getTrafficSource() {
+  try {
+    const saved = sessionStorage.getItem('jeki_src');
+    if (saved) return saved;
+    const params = new URLSearchParams(window.location.search);
+    let src = params.get('utm_source') || params.get('src');
+    if (!src && document.referrer) {
+      const ref = document.referrer.toLowerCase();
+      if (ref.includes('tiktok.com')) src = 'TikTok';
+      else if (ref.includes('instagram.com')) src = 'Instagram';
+      else if (ref.includes('threads.')) src = 'Threads';
+      else if (ref.includes('youtube.com') || ref.includes('youtu.be')) src = 'YouTube';
+      else if (ref.includes('google.')) src = 'Google';
+      else if (ref.includes('facebook.com') || ref.includes('fb.com')) src = 'Facebook';
+    }
+    if (!src) src = 'Langsung/Tidak diketahui';
+    else src = src.charAt(0).toUpperCase() + src.slice(1);
+    sessionStorage.setItem('jeki_src', src);
+    return src;
+  } catch (e) { return 'Langsung/Tidak diketahui'; }
+}
+
 /* ── WA Order ── */
 function orderViaWA() {
   const nama = document.getElementById('nama').value.trim();
@@ -6439,7 +6478,8 @@ function orderViaWA() {
   if (!methodRadio) { alert('Mohon pilih method terlebih dahulu 😊'); return; }
   const labels = { '1': 'Method 1 (PC / Laptop only)', '2': 'Method 2 (PC + HP via browser)', '3': 'Method 3 (Semua Device via App)' };
   const gmailNote = methodRadio.value === '1' || methodRadio.value === '2' ? '\n📧 *Akan menyiapkan Gmail baru* yang belum terdaftar di TradingView.' : '';
-  const msg = `Halo kak, saya mau order TradingView Premium 🙏\n\n*Nama:* ${nama}\n*Method:* ${labels[methodRadio.value]}\n*Harga:* Rp 185.000 / bulan${gmailNote}\n\nMohon bantuannya ya kak! 😊`;
+  const sumberNote = `\n📍 *Sumber:* ${getTrafficSource()}`;
+  const msg = `Halo kak, saya mau order TradingView Premium 🙏\n\n*Nama:* ${nama}\n*Method:* ${labels[methodRadio.value]}\n*Harga:* Rp 185.000 / bulan${gmailNote}${sumberNote}\n\nMohon bantuannya ya kak! 😊`;
   window.open(`https://wa.me/6283119686482?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
