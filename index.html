@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0B0C0E">
+<meta name="format-detection" content="telephone=no">
 
 <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -18,12 +20,13 @@
   object-src 'none';
   base-uri 'self';
   form-action 'self' https://wa.me;
+  frame-ancestors 'self';
   upgrade-insecure-requests;
 ">
 <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
 
-<title>Jeki Store — TradingView Premium Rp 185.000/bulan | Murah, Aman & Terpercaya</title>
-<meta name="description" content="Beli TradingView Premium harga Rp 185.000/bulan di Jeki Store. Replay Mode semua timeframe, indikator tak terbatas, multi-chart, alert realtime. Proses cepat, garansi aktif selama berlangganan. Order via WhatsApp — diproses 08.00–22.00 WIB.">
+<title>TradingView Premium Rp 185.000/bulan — Jeki Store</title>
+<meta name="description" content="TradingView Premium Rp 185.000/bulan di Jeki Store. Replay Mode semua timeframe, indikator tak terbatas, alert realtime. Proses cepat, garansi aktif.">
 <meta name="keywords" content="tradingview premium murah indonesia, beli tradingview premium, tradingview premium reseller indonesia, jeki store tradingview, harga tradingview premium indonesia">
 <meta name="author" content="Jeki Store">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -60,24 +63,87 @@
   "@graph": [
     {
       "@type": "Product",
+      "@id": "https://jekistore.com/#product",
       "name": "TradingView Premium — Jeki Store",
-      "description": "Akses penuh fitur TradingView Premium: Replay Mode semua timeframe, indikator tak terbatas, alert realtime tanpa batas.",
+      "description": "Akses penuh fitur TradingView Premium: Replay Mode semua timeframe, indikator tak terbatas, alert realtime tanpa batas, multi-chart hingga 8 layout.",
       "image": ["https://jekistore.com/asset/og-image.jpg"],
       "brand": { "@type": "Brand", "name": "Jeki Store" },
-      "offers": { "@type": "Offer", "url": "https://jekistore.com/", "priceCurrency": "IDR", "price": "185000", "availability": "https://schema.org/InStock" },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://jekistore.com/",
+        "priceCurrency": "IDR",
+        "price": "185000",
+        "priceValidUntil": "2026-12-31",
+        "availability": "https://schema.org/InStock",
+        "itemCondition": "https://schema.org/NewCondition"
+      },
       "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "50" }
     },
     {
       "@type": "LocalBusiness",
+      "@id": "https://jekistore.com/#business",
       "name": "Jeki Store",
+      "description": "Reseller TradingView Premium terpercaya di Indonesia sejak Maret 2025.",
       "telephone": "+6283119686482",
       "priceRange": "Rp 185.000/bulan",
       "url": "https://jekistore.com/",
-      "sameAs": ["https://wa.me/6283119686482", "https://www.instagram.com/jekistorecom", "https://www.tiktok.com/@jekistore.com", "https://www.youtube.com/@jekistorecom", "https://www.threads.com/@jekistorecom"]
+      "image": "https://jekistore.com/asset/og-image.jpg",
+      "sameAs": [
+        "https://wa.me/6283119686482",
+        "https://www.instagram.com/jekistorecom",
+        "https://www.tiktok.com/@jekistore.com",
+        "https://www.youtube.com/@jekistorecom",
+        "https://www.threads.com/@jekistorecom"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://jekistore.com/#website",
+      "url": "https://jekistore.com/",
+      "name": "Jeki Store",
+      "inLanguage": "id-ID",
+      "publisher": { "@id": "https://jekistore.com/#business" }
     },
     {
       "@type": "FAQPage",
-      "mainEntity": [{ "@type": "Question", "name": "Berapa harga TradingView Premium di Jeki Store?", "acceptedAnswer": { "@type": "Answer", "text": "Rp 185.000 per bulan, jauh lebih hemat dibanding harga resmi Rp 600.000 lebih per bulan." } }]
+      "@id": "https://jekistore.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apakah ini aman dan terpercaya?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Setiap pembeli mendapat akun private sendiri, bukan shared. Garansi aktif selama masa langganan. Ada kendala, langsung chat admin." }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa itu back basic di Method 3?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Kondisi akun kembali ke mode gratis sementara. Normal untuk Method 3, bisa terjadi 3-4 kali sebulan, tapi masih dalam garansi." }
+        },
+        {
+          "@type": "Question",
+          "name": "Berapa lama proses setelah bayar?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Normalnya kurang dari 1 jam. Order setelah pukul 22.00 WIB diproses keesokan hari pukul 08.00 WIB." }
+        },
+        {
+          "@type": "Question",
+          "name": "Metode pembayaran apa yang tersedia?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Saat ini via QRIS. Bukti pembayaran dikirim ke admin lewat WhatsApp." }
+        },
+        {
+          "@type": "Question",
+          "name": "Method mana yang cocok untuk saya?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Punya PC atau laptop, pilih Method 1. Butuh akses HP juga, pilih Method 2. Hanya HP atau mau yang paling simpel, pilih Method 3." }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah setting chart bisa disimpan?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Untuk Method 1 dan 2, setting dan layout bisa disamakan saat perpanjangan langganan." }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah ada paket tahunan?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Belum tersedia saat ini. Kalau ada event diskon dari TradingView, admin akan menginformasikan ke pelanggan." }
+        }
+      ]
     }
   ]
 }
@@ -88,7 +154,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <style>
-/* ═══ TOKENS — monokrom murni, seperti referensi ═══ */
+/* TOKENS */
 :root {
   --bg:      #0B0C0E;
   --panel:   #131417;
@@ -117,7 +183,7 @@ button { font-family: inherit; cursor: pointer; }
 .container { max-width: var(--container); margin: 0 auto; padding: 0 24px; position: relative; }
 
 h1, h2, h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; margin: 0; }
-/* efek "shine" — gradient putih ke abu pada teks heading, persis referensi */
+/* efek "shine" */
 .grad-text, h1, h2 {
   background: linear-gradient(180deg, #FFFFFF 10%, #A6ABB2 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
@@ -129,7 +195,7 @@ p { margin: 0; color: var(--ink-mid); }
 .section { padding: 88px 0; border-top: 1px solid var(--line); position: relative; }
 @media (max-width: 640px) { .section { padding: 60px 0; } }
 
-/* boxed-section — panel kartu bulat terpisah, persis gambar referensi ke-2 */
+/* boxed-section */
 .section.boxed { border-top: none; padding: 0; margin: 18px auto; max-width: var(--container); padding-left: 24px; padding-right: 24px; }
 .boxed-panel {
   border: 2.5px solid transparent;
@@ -149,12 +215,12 @@ p { margin: 0; color: var(--ink-mid); }
   mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black, transparent 75%);
 }
 
-/* glow — putih/abu lembut, bukan warna, persis referensi (smoke diagonal) */
+/* glow */
 .glow { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
 .glow-hero { width: 680px; height: 460px; top: -220px; left: 50%; transform: translateX(-50%) rotate(-12deg); background: radial-gradient(ellipse, rgba(255,255,255,0.10), transparent 70%); }
 .glow-soft { width: 440px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.07), transparent 70%); }
 
-/* ═══ TOMBOL — glassmorphism, border gradient statis, persis contoh yang dikirim (tanpa animasi putar yang rapuh) ═══ */
+/* TOMBOL */
 .btn-container { position: relative; display: inline-block; border-radius: 9999px; cursor: pointer; box-shadow: 0 0 30px rgba(255,255,255,0.25), 0 10px 30px rgba(0,0,0,0.6); transition: box-shadow 0.3s ease, transform 0.3s ease; }
 .btn-container:hover { transform: scale(1.02); box-shadow: 0 0 50px rgba(255,255,255,0.45), 0 0 90px rgba(255,255,255,0.2), 0 15px 35px rgba(0,0,0,0.8); }
 .gradient-border-wrap { display: block; padding: 2.5px; border-radius: 9999px; background: linear-gradient(120deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.15) 22%, rgba(255,255,255,0.9) 44%, rgba(255,255,255,0.15) 66%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.15) 100%); background-size: 250% 250%; animation: shimmer-move 4.5s ease-in-out infinite; }
@@ -170,7 +236,7 @@ p { margin: 0; color: var(--ink-mid); }
 .btn-container.sm:hover { transform: scale(1.03); box-shadow: 0 0 26px rgba(255,255,255,0.32), 0 6px 18px rgba(0,0,0,0.55); }
 .glass-button-text.sm { padding: 9px 20px; font-size: 0.82rem; font-weight: 600; gap: 6px; }
 
-/* nav — kapsul melayang, satu hamburger fungsional saja (bug dobel diperbaiki) */
+/* nav */
 .nav-wrap { position: sticky; top: 14px; z-index: 100; display: flex; justify-content: center; padding: 0 16px; }
 .nav { display: inline-flex; align-items: center; gap: 10px; background: rgba(19,20,23,0.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--line); border-radius: 999px; padding: 8px 8px 8px 18px; box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
 .nav-mark { font-family: 'Georgia', serif; font-weight: 700; font-size: 1.15rem; color: var(--ink); margin-right: 2px; }
@@ -180,9 +246,7 @@ p { margin: 0; color: var(--ink-mid); }
 .nav-links a:hover { color: var(--ink); background: rgba(255,255,255,0.05); }
 .nav-pill { font-size: 0.82rem; font-weight: 600; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-mid); }
 .nav-pill:hover { color: var(--ink); }
-.nav-pill.solid { border-color: var(--line-hi); color: var(--ink); background: #17181B; }
 .nav-toggle { display: none; background: none; border: none; color: var(--ink); font-size: 1.2rem; padding: 6px 10px; }
-/* FIX bug: sembunyikan hamburger dekoratif di mobile — hanya satu toggle fungsional yang tampil */
 @media (max-width: 760px) {
   .nav-links, .nav-hamburger { display: none; }
   .nav-toggle { display: block; }
@@ -211,7 +275,7 @@ p { margin: 0; color: var(--ink-mid); }
 .stat-sub b { display: block; font-family: var(--font-mono); font-size: 1rem; color: var(--ink); }
 .stat-sub span { font-size: 0.7rem; color: var(--ink-dim); }
 
-/* problem list — dengan strikethrough persis referensi, animasi dari samar ke terang saat scroll */
+/* problem list */
 .lede { max-width: 540px; margin-top: 10px; }
 .plain-list { list-style: none; margin: 36px 0 0; padding: 0; display: flex; flex-direction: column; gap: 0; max-width: 580px; }
 .plain-list li { padding: 16px 0; border-bottom: 1px solid var(--line); font-size: 1.02rem; font-weight: 600; color: var(--ink-mid); text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.3); opacity: 0.3; transition: opacity 0.7s ease, color 0.7s ease; }
@@ -222,10 +286,8 @@ p { margin: 0; color: var(--ink-mid); }
 .boxed-panel .plain-list li:nth-child(3) { transition-delay: 0.2s; }
 .boxed-panel .plain-list li:nth-child(4) { transition-delay: 0.3s; }
 .boxed-panel .plain-list li:nth-child(5) { transition-delay: 0.4s; }
-.plain-list.check li { text-decoration: none; font-weight: 500; font-size: 0.98rem; color: var(--ink); opacity: 1; display: flex; gap: 12px; }
-.plain-list.check li .ck { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--line-hi); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--ink); flex-shrink: 0; }
 
-/* membership — kartu bersarang dengan glow, persis referensi */
+/* membership */
 .member-grid { display: flex; flex-direction: column; gap: 18px; margin-top: 44px; }
 .member-card { border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 30px 0; background: var(--panel); overflow: hidden; }
 .member-num { font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink-dim); margin-bottom: 10px; }
@@ -265,7 +327,7 @@ p { margin: 0; color: var(--ink-mid); }
 .alert-row span { font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink-mid); }
 .alert-row b { color: var(--ink); }
 
-/* mockup 04 — export chart & data */
+/* mockup 04 */
 @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 .export-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .export-head .tag { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-mid); }
@@ -313,7 +375,7 @@ p { margin: 0; color: var(--ink-mid); }
 .fit-col.yes li { font-size: 0.92rem; color: var(--ink); display: flex; gap: 10px; line-height: 1.5; }
 .fit-col.yes li .ck { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--line-hi); display: flex; align-items: center; justify-content: center; font-size: 0.62rem; flex-shrink: 0; margin-top: 1px; }
 
-/* pricing card — dengan divider sparkle persis referensi */
+/* pricing card */
 .price-card { max-width: 460px; margin: 44px auto 0; border: 1px solid var(--line-hi); border-radius: var(--radius); padding: 40px; text-align: left; background: var(--panel); position: relative; z-index: 1; box-shadow: 0 30px 70px rgba(0,0,0,0.4); }
 .price-brand { display: flex; align-items: center; gap: 8px; margin-bottom: 26px; }
 .price-brand .mark { font-family: 'Georgia', serif; font-weight: 700; font-size: 1.1rem; }
@@ -338,7 +400,6 @@ p { margin: 0; color: var(--ink-mid); }
 .method-opt-label { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 10px; cursor: pointer; font-size: 0.85rem; transition: border-color 0.2s ease, background 0.2s ease; }
 .method-opt-label span { color: var(--ink-mid); font-weight: 500; transition: color 0.2s ease; }
 .method-opt-check { margin-left: auto; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--line-hi); display: flex; align-items: center; justify-content: center; flex-shrink: 0; opacity: 0; transform: scale(0.7); transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease, border-color 0.2s ease; font-size: 0.62rem; color: #0B0C0E; }
-/* FIX bug: gunakan :has() pada .method-opt agar mengenai semua elemen di dalam label, bukan hanya sibling langsung dari input */
 .method-opt:has(input:checked) .method-opt-label { border-color: var(--ink); background: rgba(255,255,255,0.08); }
 .method-opt:has(input:checked) .method-opt-label span { color: var(--ink); font-weight: 700; }
 .method-opt:has(input:checked) .radio-dot { border-color: var(--ink); }
@@ -349,10 +410,8 @@ p { margin: 0; color: var(--ink-mid); }
 #wa-btn { width: 100%; background: var(--ink); color: #0B0C0E; border: none; font-weight: 700; font-size: 0.98rem; padding: 15px; border-radius: 999px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 6px; position: relative; }
 #wa-btn:hover { opacity: 0.9; }
 .widget-note { text-align: center; font-size: 0.74rem; color: var(--ink-dim); margin-top: 14px; }
-.promo-link { display: block; text-align: center; font-size: 0.78rem; color: var(--ink-dim); margin-top: 16px; }
-.promo-link:hover { color: var(--ink); }
 
-/* ═══ TESTIMONI FOTO & VIDEO — bukti nyata pelanggan ═══ */
+/* TESTIMONI FOTO & VIDEO */
 .testi-photo-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-top: 40px; }
 @media (max-width: 820px) { .testi-photo-grid { grid-template-columns: repeat(3, 1fr); } }
 .testi-photo-card { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: var(--panel); aspect-ratio: 4/5; transition: transform 0.2s ease, border-color 0.2s ease; }
@@ -371,7 +430,7 @@ p { margin: 0; color: var(--ink-mid); }
 .testi-video-role { font-size: 0.7rem; color: var(--ink-dim); }
 .testi-cta-row { text-align: center; margin-top: 30px; }
 
-/* FAQ — satu kartu besar berisi semua item, persis referensi */
+/* FAQ */
 .faq-card { max-width: 620px; margin: 40px auto 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); overflow: hidden; }
 .faq-item { border-bottom: 1px solid var(--line); }
 .faq-item:last-child { border-bottom: none; }
@@ -406,7 +465,7 @@ footer { border-top: 1px solid var(--line); padding: 56px 0 28px; }
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .reveal.in { opacity: 1; transform: translateY(0); }
 
-/* float WA — kotak membulat dengan border, persis referensi */
+/* float WA */
 .float-wa { position: fixed; bottom: 20px; right: 20px; z-index: 90; width: 54px; height: 54px; border-radius: 16px; background: rgba(19,20,23,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--line-hi); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 10px 28px rgba(0,0,0,0.4); color: #25D366; }
 </style>
 </head>
@@ -431,7 +490,7 @@ footer { border-top: 1px solid var(--line); padding: 56px 0 28px; }
 
 <main id="main">
 
-<!-- ══ HERO ══ -->
+<!-- HERO -->
 <section class="hero">
   <div class="glow glow-hero" aria-hidden="true"></div>
   <div class="grid-bg" aria-hidden="true"></div>
@@ -444,7 +503,7 @@ footer { border-top: 1px solid var(--line); padding: 56px 0 28px; }
   </div>
 </section>
 
-<!-- ══ TRUST BLOCK + MASALAH — dua panel bulat bertumpuk, persis gambar referensi ══ -->
+<!-- TRUST BLOCK + MASALAH -->
 <section class="section boxed" id="kenapa">
   <div class="boxed-panel reveal">
     <div class="trust-block">
@@ -479,8 +538,7 @@ footer { border-top: 1px solid var(--line); padding: 56px 0 28px; }
   </div>
 </section>
 
-
-<!-- ══ MEMBERSHIP — kartu bersarang dengan mockup, persis referensi ══ -->
+<!-- MEMBERSHIP -->
 <section class="section" id="membership">
   <div class="container">
     <div class="eyebrow reveal">Langganan</div>
@@ -574,7 +632,7 @@ footer { border-top: 1px solid var(--line); padding: 56px 0 28px; }
   </div>
 </section>
 
-<!-- ══ METHOD ══ -->
+<!-- METHOD -->
 <section class="section" id="method">
   <div class="container">
     <div class="eyebrow reveal">Pilihan Method</div>
@@ -608,7 +666,7 @@ footer { border-top: 1px solid var(--line); padding: 56px 0 28px; }
   </div>
 </section>
 
-<!-- ══ FIT FILTER — strikethrough vs checkmark, dalam panel bulat ══ -->
+<!-- FIT FILTER -->
 <section class="section boxed">
   <div class="boxed-panel reveal">
     <div class="eyebrow">Kejujuran di Depan</div>
@@ -636,7 +694,7 @@ footer { border-top: 1px solid var(--line); padding: 56px 0 28px; }
 
 </section>
 
-<!-- ══ PRICING / ORDER ══ -->
+<!-- PRICING / ORDER -->
 <section class="section" id="order">
   <div class="glow glow-soft" style="top:20%; left:50%; transform:translateX(-50%);" aria-hidden="true"></div>
   <div class="grid-bg" aria-hidden="true"></div>
@@ -689,7 +747,7 @@ footer { border-top: 1px solid var(--line); padding: 56px 0 28px; }
   </div>
 </section>
 
-<!-- ══ TESTIMONI FOTO & VIDEO — bukti nyata pelanggan ══ -->
+<!-- TESTIMONI FOTO & VIDEO -->
 <section class="section boxed">
   <div class="boxed-panel reveal">
     <div class="eyebrow">Bukti Nyata</div>
@@ -741,7 +799,7 @@ footer { border-top: 1px solid var(--line); padding: 56px 0 28px; }
   </div>
 </section>
 
-<!-- ══ FAQ — satu kartu besar ══ -->
+<!-- FAQ -->
 <section class="section" id="faq">
   <div class="container">
     <div class="eyebrow reveal" style="justify-content:center;display:flex;">FAQ</div>
@@ -758,7 +816,7 @@ footer { border-top: 1px solid var(--line); padding: 56px 0 28px; }
   </div>
 </section>
 
-<!-- ══ CLOSING ══ -->
+<!-- CLOSING -->
 <div class="closing">
   <div class="glow glow-soft" style="bottom:-40%; left:50%; transform:translateX(-50%);" aria-hidden="true"></div>
   <div class="container">
@@ -865,7 +923,6 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!('IntersectionObserver' in window)) { els.forEach(function(e){ e.classList.add('in'); }); return; }
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
-      /* tidak unobserve — animasi replay tiap kali elemen masuk/keluar viewport, tidak "mati" sekali jalan */
       if (entry.isIntersecting) { entry.target.classList.add('in'); }
       else { entry.target.classList.remove('in'); }
     });
